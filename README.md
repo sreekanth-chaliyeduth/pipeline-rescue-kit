@@ -13,6 +13,26 @@ database or dashboard.
 
 Author: [Sreekanth C](https://www.linkedin.com/in/sreekanth-chaliyeduth/)
 
+### What I built
+
+- **prGate**: a Jenkins Shared Library step, written in Groovy, that turns test, coverage and code-quality reports into a clear pass or block decision for each pull request. `jenkins-lib/vars/prGate.groovy`
+- **Module selector**: a shell script that reads which files a change touched and tells Maven which modules to build. Maven adds the modules that depend on them. When the script cannot be sure, it builds everything. `tools/select-modules.sh`
+- **Reproducible Jenkins lab**: Jenkins in Docker, configured entirely as code, with a Python harness that runs and checks every scenario. This site is generated from the recorded results.
+
+### Existing tools it uses
+
+- Jenkins, with the JUnit, Coverage, Warnings NG and Git Forensics plugins
+- Maven, JaCoCo for test coverage, PMD for code-quality warnings
+- Docker and Docker Compose
+- Two open-source test projects: Train-Ticket and Spring PetClinic
+
+### How you would use it
+
+- Add `@Library('prk@lib-v1.1.1') _` and a `prGate(…)` step to a Jenkinsfile (full example in [examples/Jenkinsfile.multibranch](examples/Jenkinsfile.multibranch)).
+- Run `select-modules.sh` before Maven and pass its result to `mvn -pl … -am -amd`, as the Train-Ticket pipeline does.
+
+Where it fits: if your team already uses SonarQube, its pull-request quality gate can enforce new-code coverage and code-quality requirements. Unit-test execution and failure handling remain the responsibility of the CI pipeline. Established Maven tools such as Gitflow Incremental Builder provide change-based module selection, while the Maven Build Cache Extension avoids repeating eligible build work. The selector here is a small, transparent demonstration of change-based build selection.
+
 ## The problem
 
 The original Train-Ticket pipeline has six practical problems that matter to a

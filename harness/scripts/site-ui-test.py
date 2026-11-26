@@ -229,6 +229,51 @@ def main():
             "document.activeElement.classList.contains('author-link')"),
             "the masthead author link receives keyboard focus")
 
+        check(chrome.evaluate("document.querySelectorAll('.what-is').length") == 1,
+              "exactly one What this is section exists")
+        check(chrome.evaluate(
+            "document.querySelector('.what-is').previousElementSibling.classList.contains('byline')"),
+            "the What this is section follows the author byline")
+        check(chrome.evaluate(
+            "document.querySelector('.what-is').nextElementSibling.classList.contains('masthead-grid')"),
+            "the What this is section precedes the masthead grid")
+        check(chrome.evaluate("document.getElementById('what-is-title').textContent") ==
+              "What this is",
+              "the What this is heading is correct")
+        what_is_subheads = json.loads(chrome.evaluate("""JSON.stringify(
+            [...document.querySelectorAll('.what-is h3')].map(h => h.textContent))"""))
+        check(what_is_subheads == ["What I built", "Existing tools it uses",
+                                   "How you would use it"],
+              "the three What this is subsection headings are correct")
+        what_is_text = chrome.evaluate("document.querySelector('.what-is').textContent") or ""
+        check("prGate" in what_is_text,
+              "the What this is section names prGate")
+        check("select-modules.sh" in what_is_text,
+              "the What this is section names select-modules.sh")
+        check("SonarQube" in what_is_text,
+              "the What this is section names SonarQube")
+        check("Gitflow Incremental Builder" in what_is_text,
+              "the What this is section names Gitflow Incremental Builder")
+        check("Maven Build Cache Extension" in what_is_text,
+              "the What this is section names Maven Build Cache Extension")
+        check(all(os.path.isfile(os.path.join(ROOT, path)) for path in
+                  ("jenkins-lib/vars/prGate.groovy", "tools/select-modules.sh",
+                   "examples/Jenkinsfile.multibranch")),
+              "the named implementation paths exist")
+        check(subprocess.run(
+            ["git", "-C", ROOT, "cat-file", "-e",
+             "lib-v1.1.1:jenkins-lib/vars/prGate.groovy"],
+            capture_output=True).returncode == 0,
+            "the referenced shared-library version exists")
+        check(chrome.evaluate("""(() => {
+            const section = document.querySelector('.what-is');
+            const heading = document.getElementById('what-is-title');
+            return section.getAttribute('aria-labelledby') === 'what-is-title'
+              && heading && heading.tagName === 'H2'
+              && heading.textContent === 'What this is';
+        })()"""),
+              "the What this is section has a valid accessible heading association")
+
         check(chrome.evaluate("document.title").startswith("Pipeline Rescue Kit"),
               "root page loads with the expected title")
         check(chrome.evaluate("document.querySelectorAll('main section').length") == 8,
@@ -413,6 +458,8 @@ def main():
                   f"the {label} strip keeps the recorded-build caption")
 
         # Motion order: each step starts after the previous one and all settle.
+        scroll_to(chrome, "#pr-strip")
+        time.sleep(0.3)
         samples = json.loads(chrome.evaluate("""(async () => {
             const chip = document.querySelector('#pr-strip .chip[data-name="pmd-violation-1"]');
             const body = document.querySelector('.strip-body');
@@ -810,6 +857,17 @@ def main():
                 check(len(chrome.evaluate(
                     "getComputedStyle(document.querySelector('.figure-grid-4')).gridTemplateColumns").split()) == 1,
                     "the gate screenshot grid is one column at 375px")
+                check(len(chrome.evaluate(
+                    "getComputedStyle(document.querySelector('.what-is-grid')).gridTemplateColumns").split()) == 1,
+                    "the What this is grid is one column at 375px")
+                check(chrome.evaluate("""(() => {
+                    const section = document.querySelector('.what-is');
+                    return section.scrollWidth <= section.clientWidth + 1;
+                })()"""), "the What this is section has no horizontal overflow at 375px")
+            if width == 1280:
+                check(len(chrome.evaluate(
+                    "getComputedStyle(document.querySelector('.what-is-grid')).gridTemplateColumns").split()) == 2,
+                    "the What this is grid has two columns at 1280px")
             heights = chrome.evaluate("""[...document.querySelectorAll('button, a')]
                 .filter(el => !el.classList.contains('evidence-link') && !el.classList.contains('author-link'))
                 .map(el => el.getBoundingClientRect().height)

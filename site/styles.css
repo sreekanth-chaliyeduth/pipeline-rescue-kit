@@ -917,6 +917,33 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .summary p { font-size: 1rem; margin: 0 0 0.8rem; }
 .summary strong { color: var(--ink); }
 .summary-note { font-size: 0.88rem !important; color: var(--muted); border-left: 2px solid var(--accent); padding-left: 0.7rem; }
+.what-is {
+  margin: 2rem 0 0.4rem;
+  padding-top: 1rem;
+  border-top: 3px solid var(--ink);
+}
+.what-is h2 { margin: 0 0 1rem; }
+.what-is-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.8rem;
+}
+.what-is-grid > div { min-width: 0; }
+.what-is h3 { font-size: 1.05rem; margin: 0 0 0.4rem; }
+.what-is ul {
+  margin: 0 0 1.1rem 1.1rem;
+  padding: 0;
+  font-size: 0.95rem;
+}
+.what-is li { margin: 0 0 0.45rem; }
+.what-is code { overflow-wrap: anywhere; }
+.what-is-note {
+  margin: 1.2rem 0 0;
+  padding-left: 0.7rem;
+  border-left: 2px solid var(--accent);
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
 .strip-wrap { min-width: 0; }
 .strip-intro { font-size: 0.95rem; color: var(--ink-soft); margin: 0.2rem 0 0.6rem; }
 .strip-purpose { font-size: 0.9rem; color: var(--ink-soft); margin: 0 0 0.6rem; }
@@ -971,9 +998,14 @@ details.data-table[open] > summary::before { transform: rotate(45deg); }
 @media (max-width: 900px) {
   .masthead-grid { grid-template-columns: 1fr; gap: 1.4rem; }
   .why-notes { grid-template-columns: 1fr; gap: 0.9rem; }
+  .what-is-grid { grid-template-columns: 1fr; gap: 1.2rem; }
 }
 @media (max-width: 600px) {
   .subhead { margin-bottom: 1.1rem; }
+  .what-is { margin-top: 1.6rem; padding-top: 0.8rem; }
+  .what-is-grid { gap: 0.9rem; }
+  .what-is h3 { margin-top: 0.8rem; }
+  .what-is ul { margin-left: 1rem; }
   section { padding-top: 1.9rem; }
   main { padding-bottom: 2rem; }
   h2 { margin-bottom: 0.6rem; }

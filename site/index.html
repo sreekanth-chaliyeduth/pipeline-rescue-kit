@@ -18,6 +18,35 @@
     change touches.</p>
   <p class="byline">By <a class="author-link" href="https://www.linkedin.com/in/sreekanth-chaliyeduth/" rel="noopener" aria-label="Sreekanth C on LinkedIn">Sreekanth C</a></p>
 
+  <section class="what-is" aria-labelledby="what-is-title">
+    <h2 id="what-is-title">What this is</h2>
+    <div class="what-is-grid">
+      <div>
+        <h3>What I built</h3>
+        <ul>
+          <li><strong>prGate</strong>: a Jenkins Shared Library step, written in Groovy, that turns test, coverage and code-quality reports into a clear pass or block decision for each pull request. <code>jenkins-lib/vars/prGate.groovy</code></li>
+          <li><strong>Module selector</strong>: a shell script that reads which files a change touched and tells Maven which modules to build. Maven adds the modules that depend on them. When the script cannot be sure, it builds everything. <code>tools/select-modules.sh</code></li>
+          <li><strong>Reproducible Jenkins lab</strong>: Jenkins in Docker, configured entirely as code, with a Python harness that runs and checks every scenario. This site is generated from the recorded results.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Existing tools it uses</h3>
+        <ul>
+          <li>Jenkins, with the JUnit, Coverage, Warnings NG and Git Forensics plugins</li>
+          <li>Maven, JaCoCo for test coverage, PMD for code-quality warnings</li>
+          <li>Docker and Docker Compose</li>
+          <li>Two open-source test projects: Train-Ticket and Spring PetClinic</li>
+        </ul>
+        <h3>How you would use it</h3>
+        <ul>
+          <li>Add <code>@Library('prk@lib-v1.1.1') _</code> and a <code>prGate(…)</code> step to a Jenkinsfile (full example in section 7).</li>
+          <li>Run <code>select-modules.sh</code> before Maven and pass its result to <code>mvn -pl … -am -amd</code>, as the Train-Ticket pipeline does.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="what-is-note">Where it fits: if your team already uses SonarQube, its pull-request quality gate can enforce new-code coverage and code-quality requirements. Unit-test execution and failure handling remain the responsibility of the CI pipeline. Established Maven tools such as Gitflow Incremental Builder provide change-based module selection, while the Maven Build Cache Extension avoids repeating eligible build work. The selector here is a small, transparent demonstration of change-based build selection.</p>
+  </section>
+
   <div class="masthead-grid">
     <div class="summary" id="summary">
       <h2 class="summary-title">The short version</h2>
