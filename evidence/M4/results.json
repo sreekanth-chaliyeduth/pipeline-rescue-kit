@@ -1,0 +1,1074 @@
+{
+  "milestone": "M4",
+  "status": "PASS",
+  "source": {
+    "reference": "313886e99befb94be6cd45f085c98e0019f59829",
+    "source_repo": "evidence/M4/work/train-ticket",
+    "jenkins_source_mount": "/src/train-ticket-m4",
+    "service_branch": "m4-service",
+    "service_sha": "dbb9af89eaee3969307153681084e2ad281687bc",
+    "docs_branch": "m4-docs",
+    "docs_sha": "8d5f474960e7d4f5433fdf23de0e9ec8d8427c93"
+  },
+  "selector": {
+    "script": "scripts/m4_select.sh",
+    "method": "git diff plus Maven -pl/-am/-amd",
+    "safe_fallback": "full scope on root build files, unknown POMs or selector failure"
+  },
+  "scenarios": {
+    "milestone": "M4",
+    "reference": "313886e99befb94be6cd45f085c98e0019f59829",
+    "scenarios": [
+      {
+        "name": "one-service",
+        "branch": "m4-service",
+        "head": "dbb9af89eaee3969307153681084e2ad281687bc",
+        "changed": "ts-order-service/m4-scenario-change.txt",
+        "selector": {
+          "M4_MODE": "modules",
+          "M4_PL": "ts-order-service",
+          "M4_AM": "1",
+          "M4_AMD": "1",
+          "M4_REASON": "changed module:ts-order-service/m4-scenario-change.txt -> ts-order-service",
+          "M4_CHANGED": "ts-order-service/m4-scenario-change.txt",
+          "M4_REFERENCE": "313886e99befb94be6cd45f085c98e0019f59829",
+          "M4_HEAD": "dbb9af89eaee3969307153681084e2ad281687bc"
+        },
+        "maven_validate": {
+          "exit_code": 0,
+          "command": "mvn -pl ts-order-service -am -amd validate",
+          "reactor_count": 3,
+          "status_counts": {
+            "SUCCESS": 3
+          },
+          "modules": [
+            "ts-service-cluster 0.1.0",
+            "ts-common 0.1.0",
+            "ts-order-service 1.0"
+          ],
+          "raw_log": "evidence/M4/raw/scenarios/one-service.log",
+          "skipped": false
+        }
+      },
+      {
+        "name": "ts-common",
+        "branch": "m4-common",
+        "head": "5ee8cbe91a6e27ad3b71b556a644dc72992fb780",
+        "changed": "ts-common/m4-scenario-change.txt",
+        "selector": {
+          "M4_MODE": "modules",
+          "M4_PL": "ts-common",
+          "M4_AM": "1",
+          "M4_AMD": "1",
+          "M4_REASON": "changed module:ts-common/m4-scenario-change.txt -> ts-common",
+          "M4_CHANGED": "ts-common/m4-scenario-change.txt",
+          "M4_REFERENCE": "313886e99befb94be6cd45f085c98e0019f59829",
+          "M4_HEAD": "5ee8cbe91a6e27ad3b71b556a644dc72992fb780"
+        },
+        "maven_validate": {
+          "exit_code": 0,
+          "command": "mvn -pl ts-common -am -amd validate",
+          "reactor_count": 42,
+          "status_counts": {
+            "SUCCESS": 42
+          },
+          "modules": [
+            "ts-service-cluster 0.1.0",
+            "ts-common 0.1.0",
+            "ts-verification-code-service 1.0",
+            "ts-contacts-service 1.0",
+            "ts-order-service 1.0",
+            "ts-order-other-service 1.0",
+            "ts-config-service 1.0",
+            "ts-station-service 1.0",
+            "ts-train-service 1.0",
+            "ts-travel-service 1.0",
+            "ts-travel2-service 1.0",
+            "ts-preserve-service 1.0",
+            "ts-preserve-other-service 1.0",
+            "ts-basic-service 1.0",
+            "ts-price-service 1.0",
+            "ts-notification-service 1.0",
+            "ts-security-service 1.0",
+            "ts-inside-payment-service 1.0",
+            "ts-execute-service 1.0",
+            "ts-payment-service 1.0",
+            "ts-rebook-service 1.0",
+            "ts-cancel-service 1.0",
+            "ts-route-service 1.0",
+            "ts-assurance-service 1.0",
+            "ts-seat-service 1.0",
+            "ts-travel-plan-service 1.0",
+            "ts-route-plan-service 1.0",
+            "ts-food-service 1.0",
+            "ts-station-food-service 1.0",
+            "ts-consign-price-service 1.0",
+            "ts-consign-price-service 1.0",
+            "ts-admin-order-service 1.0",
+            "ts-admin-basic-info-service 1.0",
+            "ts-admin-route-service 1.0",
+            "ts-admin-travel-service 1.0",
+            "ts-admin-user-service 1.0",
+            "ts-auth-service 1.0",
+            "ts-user-service 1.0",
+            "ts-delivery-service 1.0",
+            "ts-train-food-service 1.0",
+            "ts-food-delivery-service 1.0",
+            "ts-wait-order-service 1.0"
+          ],
+          "raw_log": "evidence/M4/raw/scenarios/ts-common.log",
+          "skipped": false
+        }
+      },
+      {
+        "name": "root-pom",
+        "branch": "m4-root",
+        "head": "e55a1c8470c69057b39f13ae2eaa6e47282a7cfd",
+        "changed": "pom.xml",
+        "selector": {
+          "M4_MODE": "full",
+          "M4_PL": "",
+          "M4_AM": "1",
+          "M4_AMD": "1",
+          "M4_REASON": "full reactor required:root pom.xml changed",
+          "M4_CHANGED": "pom.xml",
+          "M4_REFERENCE": "313886e99befb94be6cd45f085c98e0019f59829",
+          "M4_HEAD": "e55a1c8470c69057b39f13ae2eaa6e47282a7cfd"
+        },
+        "maven_validate": {
+          "exit_code": 0,
+          "command": "mvn validate (full reactor)",
+          "reactor_count": 43,
+          "status_counts": {
+            "SUCCESS": 43
+          },
+          "modules": [
+            "ts-service-cluster 0.1.0",
+            "ts-common 0.1.0",
+            "ts-verification-code-service 1.0",
+            "ts-contacts-service 1.0",
+            "ts-order-service 1.0",
+            "ts-order-other-service 1.0",
+            "ts-config-service 1.0",
+            "ts-station-service 1.0",
+            "ts-train-service 1.0",
+            "ts-travel-service 1.0",
+            "ts-travel2-service 1.0",
+            "ts-preserve-service 1.0",
+            "ts-preserve-other-service 1.0",
+            "ts-basic-service 1.0",
+            "ts-price-service 1.0",
+            "ts-notification-service 1.0",
+            "ts-security-service 1.0",
+            "ts-inside-payment-service 1.0",
+            "ts-execute-service 1.0",
+            "ts-payment-service 1.0",
+            "ts-rebook-service 1.0",
+            "ts-cancel-service 1.0",
+            "ts-route-service 1.0",
+            "ts-assurance-service 1.0",
+            "ts-seat-service 1.0",
+            "ts-travel-plan-service 1.0",
+            "ts-route-plan-service 1.0",
+            "ts-food-service 1.0",
+            "ts-station-food-service 1.0",
+            "ts-consign-price-service 1.0",
+            "ts-consign-price-service 1.0",
+            "ts-admin-order-service 1.0",
+            "ts-admin-basic-info-service 1.0",
+            "ts-admin-route-service 1.0",
+            "ts-admin-travel-service 1.0",
+            "ts-admin-user-service 1.0",
+            "ts-auth-service 1.0",
+            "ts-user-service 1.0",
+            "ts-delivery-service 1.0",
+            "ts-train-food-service 1.0",
+            "ts-gateway-service 1.0",
+            "ts-food-delivery-service 1.0",
+            "ts-wait-order-service 1.0"
+          ],
+          "raw_log": "evidence/M4/raw/scenarios/root-pom.log",
+          "skipped": false
+        }
+      },
+      {
+        "name": "non-maven-directory",
+        "branch": "m4-nonmaven",
+        "head": "93a52f96f85b7a3b1ae397a0700767dfc2974aa3",
+        "changed": "image/m4-scenario-change.txt",
+        "selector": {
+          "M4_MODE": "none",
+          "M4_PL": "",
+          "M4_AM": "0",
+          "M4_AMD": "0",
+          "M4_REASON": "no Maven module or build-affecting file changed",
+          "M4_CHANGED": "image/m4-scenario-change.txt",
+          "M4_REFERENCE": "313886e99befb94be6cd45f085c98e0019f59829",
+          "M4_HEAD": "93a52f96f85b7a3b1ae397a0700767dfc2974aa3"
+        },
+        "maven_validate": {
+          "exit_code": null,
+          "command": null,
+          "reactor_count": 0,
+          "status_counts": {},
+          "modules": [],
+          "raw_log": "evidence/M4/raw/scenarios/non-maven-directory.log",
+          "skipped": true
+        }
+      },
+      {
+        "name": "documentation-only",
+        "branch": "m4-docs",
+        "head": "8d5f474960e7d4f5433fdf23de0e9ec8d8427c93",
+        "changed": "docs/m4-scenario-change.md",
+        "selector": {
+          "M4_MODE": "none",
+          "M4_PL": "",
+          "M4_AM": "0",
+          "M4_AMD": "0",
+          "M4_REASON": "no Maven module or build-affecting file changed",
+          "M4_CHANGED": "docs/m4-scenario-change.md",
+          "M4_REFERENCE": "313886e99befb94be6cd45f085c98e0019f59829",
+          "M4_HEAD": "8d5f474960e7d4f5433fdf23de0e9ec8d8427c93"
+        },
+        "maven_validate": {
+          "exit_code": null,
+          "command": null,
+          "reactor_count": 0,
+          "status_counts": {},
+          "modules": [],
+          "raw_log": "evidence/M4/raw/scenarios/documentation-only.log",
+          "skipped": true
+        }
+      }
+    ],
+    "summary": {
+      "one_service": "selects the service; Maven -am pulls required upstream",
+      "ts_common": "selects ts-common; Maven -amd pulls dependents",
+      "root_pom": "fail-safe full reactor",
+      "non_maven_directory": "no Maven modules; skip",
+      "documentation_only": "no Maven modules; skip"
+    }
+  },
+  "incremental_runs": [
+    {
+      "label": "incremental-1",
+      "source_commit": "dbb9af89eaee3969307153681084e2ad281687bc",
+      "reference": "313886e99befb94be6cd45f085c98e0019f59829",
+      "expected_mode": "modules",
+      "build_number": 11,
+      "result": "FAILURE",
+      "started_at": "2026-11-23T02:02:58Z",
+      "finished_at": "2026-11-23T02:04:11Z",
+      "host_wall_clock_s": 73.1,
+      "jenkins_duration_ms": 59191,
+      "stages": [
+        {
+          "name": "Declarative: Tool Install",
+          "status": "SUCCESS",
+          "duration_ms": 457
+        },
+        {
+          "name": "Checkout pinned source",
+          "status": "SUCCESS",
+          "duration_ms": 10253
+        },
+        {
+          "name": "Select modules",
+          "status": "SUCCESS",
+          "duration_ms": 870
+        },
+        {
+          "name": "Verify",
+          "status": "FAILED",
+          "duration_ms": 31067
+        },
+        {
+          "name": "Declarative: Post Actions",
+          "status": "UNSTABLE",
+          "duration_ms": 6315
+        }
+      ],
+      "stage_sum_ms": 48962,
+      "post_estimate_ms": 10229,
+      "maven_exit_codes": {
+        "VERIFY": 1
+      },
+      "selection": {
+        "mode": "modules",
+        "pl": "ts-order-service",
+        "reason": "changed module:ts-order-service/m4-scenario-change.txt -> ts-order-service",
+        "changed": "ts-order-service/m4-scenario-change.txt",
+        "reference": "313886e99befb94be6cd45f085c98e0019f59829",
+        "head": "dbb9af89eaee3969307153681084e2ad281687bc",
+        "command": "mvn -pl ts-order-service -am -amd verify"
+      },
+      "reactors": [
+        {
+          "phase": "verify",
+          "counts": {
+            "SUCCESS": 2,
+            "FAILURE": 1
+          },
+          "modules": [
+            {
+              "display_name": "ts-service-cluster 0.1.0",
+              "result": "SUCCESS",
+              "seconds": 2.47
+            },
+            {
+              "display_name": "ts-common 0.1.0",
+              "result": "SUCCESS",
+              "seconds": 6.106
+            },
+            {
+              "display_name": "ts-order-service 1.0",
+              "result": "FAILURE",
+              "seconds": 16.591
+            }
+          ]
+        }
+      ],
+      "tests": {
+        "reported": 51,
+        "passed": 26,
+        "failures": 3,
+        "errors": 22,
+        "skipped": 0,
+        "failed_cases": [
+          {
+            "class": "order.controller.OrderControllerTest",
+            "test": "testQueryOrdersForRefresh",
+            "status": "FAILED"
+          },
+          {
+            "class": "order.controller.OrderControllerTest",
+            "test": "testQueryOrders",
+            "status": "FAILED"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testQueryOrders",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testSaveChanges2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testAlterOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testFindOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testFindOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCancelOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCancelOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testInitOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderPrice1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderPrice2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testPayOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testPayOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testUpdateOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testDeleteOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testDeleteOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testAddNewOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testModifyOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testModifyOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testQueryForStationId",
+            "status": "ERROR"
+          }
+        ],
+        "per_class": [
+          {
+            "class": "order.controller.OrderControllerTest",
+            "tests": 16,
+            "failures": 2,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "tests": 35,
+            "failures": 1,
+            "errors": 22,
+            "skipped": 0
+          }
+        ],
+        "jenkins_reported": 51
+      },
+      "cache_before_mb": 3096,
+      "cache_after_mb": 3096,
+      "peak_container_mem_gib": 1.008,
+      "raw_dir": "evidence/M4/raw/incremental-1"
+    },
+    {
+      "label": "incremental-2",
+      "source_commit": "dbb9af89eaee3969307153681084e2ad281687bc",
+      "reference": "313886e99befb94be6cd45f085c98e0019f59829",
+      "expected_mode": "modules",
+      "build_number": 12,
+      "result": "FAILURE",
+      "started_at": "2026-11-23T02:05:59Z",
+      "finished_at": "2026-11-23T02:06:46Z",
+      "host_wall_clock_s": 47.7,
+      "jenkins_duration_ms": 35335,
+      "stages": [
+        {
+          "name": "Declarative: Tool Install",
+          "status": "SUCCESS",
+          "duration_ms": 255
+        },
+        {
+          "name": "Checkout pinned source",
+          "status": "SUCCESS",
+          "duration_ms": 6006
+        },
+        {
+          "name": "Select modules",
+          "status": "SUCCESS",
+          "duration_ms": 769
+        },
+        {
+          "name": "Verify",
+          "status": "FAILED",
+          "duration_ms": 26380
+        },
+        {
+          "name": "Declarative: Post Actions",
+          "status": "UNSTABLE",
+          "duration_ms": 572
+        }
+      ],
+      "stage_sum_ms": 33982,
+      "post_estimate_ms": 1353,
+      "maven_exit_codes": {
+        "VERIFY": 1
+      },
+      "selection": {
+        "mode": "modules",
+        "pl": "ts-order-service",
+        "reason": "changed module:ts-order-service/m4-scenario-change.txt -> ts-order-service",
+        "changed": "ts-order-service/m4-scenario-change.txt",
+        "reference": "313886e99befb94be6cd45f085c98e0019f59829",
+        "head": "dbb9af89eaee3969307153681084e2ad281687bc",
+        "command": "mvn -pl ts-order-service -am -amd verify"
+      },
+      "reactors": [
+        {
+          "phase": "verify",
+          "counts": {
+            "SUCCESS": 2,
+            "FAILURE": 1
+          },
+          "modules": [
+            {
+              "display_name": "ts-service-cluster 0.1.0",
+              "result": "SUCCESS",
+              "seconds": 2.714
+            },
+            {
+              "display_name": "ts-common 0.1.0",
+              "result": "SUCCESS",
+              "seconds": 6.671
+            },
+            {
+              "display_name": "ts-order-service 1.0",
+              "result": "FAILURE",
+              "seconds": 12.769
+            }
+          ]
+        }
+      ],
+      "tests": {
+        "reported": 51,
+        "passed": 26,
+        "failures": 3,
+        "errors": 22,
+        "skipped": 0,
+        "failed_cases": [
+          {
+            "class": "order.controller.OrderControllerTest",
+            "test": "testQueryOrdersForRefresh",
+            "status": "FAILED"
+          },
+          {
+            "class": "order.controller.OrderControllerTest",
+            "test": "testQueryOrders",
+            "status": "FAILED"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testQueryOrders",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testSaveChanges2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testAlterOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testFindOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testFindOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCancelOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCancelOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testInitOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderPrice1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderPrice2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testPayOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testPayOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testUpdateOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testDeleteOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testDeleteOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testAddNewOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testModifyOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testModifyOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testQueryForStationId",
+            "status": "ERROR"
+          }
+        ],
+        "per_class": [
+          {
+            "class": "order.controller.OrderControllerTest",
+            "tests": 16,
+            "failures": 2,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "tests": 35,
+            "failures": 1,
+            "errors": 22,
+            "skipped": 0
+          }
+        ],
+        "jenkins_reported": 51
+      },
+      "cache_before_mb": 3096,
+      "cache_after_mb": 3096,
+      "peak_container_mem_gib": 0.898,
+      "raw_dir": "evidence/M4/raw/incremental-2"
+    },
+    {
+      "label": "incremental-3",
+      "source_commit": "dbb9af89eaee3969307153681084e2ad281687bc",
+      "reference": "313886e99befb94be6cd45f085c98e0019f59829",
+      "expected_mode": "modules",
+      "build_number": 13,
+      "result": "FAILURE",
+      "started_at": "2026-11-23T02:06:47Z",
+      "finished_at": "2026-11-23T02:07:32Z",
+      "host_wall_clock_s": 45.0,
+      "jenkins_duration_ms": 38220,
+      "stages": [
+        {
+          "name": "Declarative: Tool Install",
+          "status": "SUCCESS",
+          "duration_ms": 202
+        },
+        {
+          "name": "Checkout pinned source",
+          "status": "SUCCESS",
+          "duration_ms": 6495
+        },
+        {
+          "name": "Select modules",
+          "status": "SUCCESS",
+          "duration_ms": 588
+        },
+        {
+          "name": "Verify",
+          "status": "FAILED",
+          "duration_ms": 29562
+        },
+        {
+          "name": "Declarative: Post Actions",
+          "status": "UNSTABLE",
+          "duration_ms": 344
+        }
+      ],
+      "stage_sum_ms": 37191,
+      "post_estimate_ms": 1029,
+      "maven_exit_codes": {
+        "VERIFY": 1
+      },
+      "selection": {
+        "mode": "modules",
+        "pl": "ts-order-service",
+        "reason": "changed module:ts-order-service/m4-scenario-change.txt -> ts-order-service",
+        "changed": "ts-order-service/m4-scenario-change.txt",
+        "reference": "313886e99befb94be6cd45f085c98e0019f59829",
+        "head": "dbb9af89eaee3969307153681084e2ad281687bc",
+        "command": "mvn -pl ts-order-service -am -amd verify"
+      },
+      "reactors": [
+        {
+          "phase": "verify",
+          "counts": {
+            "SUCCESS": 2,
+            "FAILURE": 1
+          },
+          "modules": [
+            {
+              "display_name": "ts-service-cluster 0.1.0",
+              "result": "SUCCESS",
+              "seconds": 2.312
+            },
+            {
+              "display_name": "ts-common 0.1.0",
+              "result": "SUCCESS",
+              "seconds": 8.446
+            },
+            {
+              "display_name": "ts-order-service 1.0",
+              "result": "FAILURE",
+              "seconds": 14.013
+            }
+          ]
+        }
+      ],
+      "tests": {
+        "reported": 51,
+        "passed": 26,
+        "failures": 3,
+        "errors": 22,
+        "skipped": 0,
+        "failed_cases": [
+          {
+            "class": "order.controller.OrderControllerTest",
+            "test": "testQueryOrdersForRefresh",
+            "status": "FAILED"
+          },
+          {
+            "class": "order.controller.OrderControllerTest",
+            "test": "testQueryOrders",
+            "status": "FAILED"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testQueryOrders",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testSaveChanges2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testAlterOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testFindOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testFindOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCancelOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCancelOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testInitOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderPrice1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderPrice2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testPayOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testPayOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testUpdateOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testDeleteOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testDeleteOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testAddNewOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testModifyOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testModifyOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testQueryForStationId",
+            "status": "ERROR"
+          }
+        ],
+        "per_class": [
+          {
+            "class": "order.controller.OrderControllerTest",
+            "tests": 16,
+            "failures": 2,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "tests": 35,
+            "failures": 1,
+            "errors": 22,
+            "skipped": 0
+          }
+        ],
+        "jenkins_reported": 51
+      },
+      "cache_before_mb": 3096,
+      "cache_after_mb": 3096,
+      "peak_container_mem_gib": 0.97,
+      "raw_dir": "evidence/M4/raw/incremental-3"
+    }
+  ],
+  "incremental_medians": {
+    "runs": 3,
+    "jenkins_duration_ms": 38220,
+    "host_wall_clock_s": 47.7,
+    "stages_ms": {
+      "Checkout pinned source": 6495,
+      "Select modules": 769,
+      "Verify": 29562
+    },
+    "cache_before_mb": 3096,
+    "cache_after_mb": 3096,
+    "peak_container_mem_gib": 1.008
+  },
+  "jenkins_docs_skip": {
+    "label": "jenkins-docs-skip",
+    "source_commit": "8d5f474960e7d4f5433fdf23de0e9ec8d8427c93",
+    "reference": "313886e99befb94be6cd45f085c98e0019f59829",
+    "expected_mode": "none",
+    "build_number": 14,
+    "result": "SUCCESS",
+    "started_at": "2026-11-23T02:07:32Z",
+    "finished_at": "2026-11-23T02:07:49Z",
+    "host_wall_clock_s": 16.5,
+    "jenkins_duration_ms": 7746,
+    "stages": [
+      {
+        "name": "Declarative: Tool Install",
+        "status": "SUCCESS",
+        "duration_ms": 146
+      },
+      {
+        "name": "Checkout pinned source",
+        "status": "SUCCESS",
+        "duration_ms": 5233
+      },
+      {
+        "name": "Select modules",
+        "status": "SUCCESS",
+        "duration_ms": 599
+      },
+      {
+        "name": "Verify",
+        "status": "SUCCESS",
+        "duration_ms": 619
+      },
+      {
+        "name": "Declarative: Post Actions",
+        "status": "SUCCESS",
+        "duration_ms": 258
+      }
+    ],
+    "stage_sum_ms": 6855,
+    "post_estimate_ms": 891,
+    "maven_exit_codes": {
+      "VERIFY": "SKIP"
+    },
+    "selection": {
+      "mode": "none",
+      "pl": "",
+      "reason": "no Maven module or build-affecting file changed",
+      "changed": "docs/m4-scenario-change.md",
+      "reference": "313886e99befb94be6cd45f085c98e0019f59829",
+      "head": "8d5f474960e7d4f5433fdf23de0e9ec8d8427c93",
+      "command": null
+    },
+    "reactors": [],
+    "tests": {
+      "reported": 0,
+      "passed": 0,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "failed_cases": [],
+      "jenkins_reported": 0
+    },
+    "cache_before_mb": 3096,
+    "cache_after_mb": 3096,
+    "peak_container_mem_gib": 0.651,
+    "raw_dir": "evidence/M4/raw/jenkins-docs-skip"
+  },
+  "m3_full_scope_reference": {
+    "rescued_median_ms": 359698,
+    "tests": 626,
+    "source": "evidence/M3/results.json"
+  },
+  "scope_comparison": {
+    "incremental_median_ms": 38220,
+    "full_scope_median_ms": 359698,
+    "difference_ms": 321478,
+    "difference_pct_of_full_scope": 89.4,
+    "same_workload": false,
+    "note": "M4 incremental runs execute only ts-order-service and its required upstream modules. M3 executed 626 tests across 43 modules. This is a scope saving, not a same-workload speed comparison."
+  },
+  "test_inventory": {
+    "incremental": {
+      "tests": 51,
+      "passed": 26,
+      "failures": 3,
+      "errors": 22,
+      "skipped": 0
+    },
+    "full_scope": {
+      "tests": 626,
+      "failed_or_errored": 220
+    },
+    "equivalent": false,
+    "note": "A smaller incremental test inventory is not equivalent to the full reactor and is not counted as such."
+  },
+  "limitations": [
+    "The selector is path-based and delegates dependency expansion to Maven -am and -amd; it is not a general dependency-analysis engine.",
+    "The ts-common scenario selects 42 dependent module entries; the aggregator root is not in that reactor.",
+    "Incremental timing covers only the changed service and required upstream modules, so it is scope savings, not a same-workload comparison with M3.",
+    "Warm cache only.",
+    "The M4 source branches are disposable test branches in a clone, not changes to the pinned upstream checkout.",
+    "No application test was excluded, repaired or suppressed.",
+    "M5, quality gates and the shared library are not started."
+  ]
+}

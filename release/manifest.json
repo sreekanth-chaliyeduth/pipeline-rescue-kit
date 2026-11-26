@@ -1,0 +1,521 @@
+{
+  "project": "Pipeline Rescue Kit",
+  "repository": "pipeline-rescue-kit",
+  "github_account": "sreekanth-chaliyeduth",
+  "licence": "Apache-2.0",
+  "source_checkpoint": "accepted private main checkpoint",
+  "evidence_closure": "release/evidence-closure.txt",
+  "redactions": 0,
+  "files": [
+    {
+      "path": ".github/workflows/pages.yml",
+      "action": "generated",
+      "source": "generated",
+      "reason": "GitHub Pages workflow deploying site/ only."
+    },
+    {
+      "path": ".gitignore",
+      "action": "copied",
+      "source": "private-main:.gitignore",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "LICENSE",
+      "action": "generated",
+      "source": "generated",
+      "reason": "Apache License 2.0 text for the kit."
+    },
+    {
+      "path": "Makefile",
+      "action": "copied",
+      "source": "private-main:Makefile",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "NOTICE",
+      "action": "generated",
+      "source": "generated",
+      "reason": "Third-party attribution for Train-Ticket, PetClinic and Jenkins plugins."
+    },
+    {
+      "path": "README.md",
+      "action": "generated",
+      "source": "generated",
+      "reason": "Public README corrected for F1 and F3 and author credit F5."
+    },
+    {
+      "path": "docs/decisions.md",
+      "action": "generated",
+      "source": "generated",
+      "reason": "Public-safe technical decision summary with F1 D2 wording."
+    },
+    {
+      "path": "evidence/M3/results.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/M3/results.json",
+      "reason": "Generator input: full-reactor baseline and rescued timings."
+    },
+    {
+      "path": "evidence/M3/test-inventory.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/M3/test-inventory.json",
+      "reason": "Generator input: upstream test workload and failure inventory."
+    },
+    {
+      "path": "evidence/M4/raw/scenarios/root-pom.log",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/M4/raw/scenarios/root-pom.log",
+      "reason": "Site-data test input: proves the 43-entry full reactor and gateway presence."
+    },
+    {
+      "path": "evidence/M4/raw/scenarios/ts-common.log",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/M4/raw/scenarios/ts-common.log",
+      "reason": "Site-data test input: proves the 42-entry dependent reactor and duplicate display label."
+    },
+    {
+      "path": "evidence/M4/results.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/M4/results.json",
+      "reason": "Generator input: selector scenarios and incremental runs."
+    },
+    {
+      "path": "evidence/M4/scenarios.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/M4/scenarios.json",
+      "reason": "Generator input: selector scenario records and reactor counts."
+    },
+    {
+      "path": "evidence/M5/runs.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/M5/runs.json",
+      "reason": "Generator input: quality-gate reference runs."
+    },
+    {
+      "path": "evidence/M6/results.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/M6/results.json",
+      "reason": "Generator input: PetClinic gate reference runs."
+    },
+    {
+      "path": "evidence/fresh-clone/rerun/verify/verification.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/fresh-clone/rerun/verify/verification.json",
+      "reason": "Generator input: fresh-clone verification totals."
+    },
+    {
+      "path": "evidence/m3-control/results.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/m3-control/results.json",
+      "reason": "Generator input: packaging control timings and comparison."
+    },
+    {
+      "path": "evidence/pr-flow/task-2.5/verify-local/verification.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/pr-flow/task-2.5/verify-local/verification.json",
+      "reason": "Generator input: local demo verification totals."
+    },
+    {
+      "path": "evidence/pr-flow/task-3.1/pr-scenarios.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/pr-flow/task-3.1/pr-scenarios.json",
+      "reason": "Generator input: PetClinic pull-request scenarios and screenshot outcomes."
+    },
+    {
+      "path": "evidence/review-fixes/jenkins-runs.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/review-fixes/jenkins-runs.json",
+      "reason": "Generator input: reference-contamination correction runs."
+    },
+    {
+      "path": "evidence/site/catalog.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/site/catalog.json",
+      "reason": "Generator input: qualitative facts, review corrections, limitations and image catalog."
+    },
+    {
+      "path": "evidence/site/evidence-in-motion-validation/ts-common/ts-consign-service-pom.xml",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/site/evidence-in-motion-validation/ts-common/ts-consign-service-pom.xml",
+      "reason": "Website and test input: proves the artifactId and display name differ."
+    },
+    {
+      "path": "evidence/site/evidence-in-motion-validation/ts-common/ts-gateway-service-pom.xml",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/site/evidence-in-motion-validation/ts-common/ts-gateway-service-pom.xml",
+      "reason": "Website and test input: proves the gateway does not depend on ts-common."
+    },
+    {
+      "path": "evidence/site/images.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/site/images.json",
+      "reason": "Generator input: screenshot catalog and captions."
+    },
+    {
+      "path": "evidence/site/library-releases.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/site/library-releases.json",
+      "reason": "Generator input: immutable library release records."
+    },
+    {
+      "path": "evidence/task-1.3a/immutable-tag.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/task-1.3a/immutable-tag.json",
+      "reason": "Generator input: immutable tag records."
+    },
+    {
+      "path": "evidence/v4/task-1.2/selector-regression/selector-regression.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/v4/task-1.2/selector-regression/selector-regression.json",
+      "reason": "Generator input: selector fail-closed regression suite."
+    },
+    {
+      "path": "evidence/v4/task-1.3/jenkins-runs.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/v4/task-1.3/jenkins-runs.json",
+      "reason": "Generator input: historical verification runs."
+    },
+    {
+      "path": "examples/Jenkinsfile.multibranch",
+      "action": "copied",
+      "source": "private-main:examples/Jenkinsfile.multibranch",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "examples/README.md",
+      "action": "copied",
+      "source": "private-main:examples/README.md",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/docker-compose.yml",
+      "action": "copied",
+      "source": "private-main:harness/docker-compose.yml",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/jenkins/Dockerfile.agent",
+      "action": "copied",
+      "source": "private-main:harness/jenkins/Dockerfile.agent",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/jenkins/Dockerfile.controller",
+      "action": "copied",
+      "source": "private-main:harness/jenkins/Dockerfile.controller",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/jenkins/agent-entrypoint.sh",
+      "action": "copied",
+      "source": "private-main:harness/jenkins/agent-entrypoint.sh",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/jenkins/casc/jenkins.yaml",
+      "action": "copied",
+      "source": "private-main:harness/jenkins/casc/jenkins.yaml",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/jenkins/plugins.txt",
+      "action": "copied",
+      "source": "private-main:harness/jenkins/plugins.txt",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/pipelines/petclinic/Jenkinsfile",
+      "action": "copied",
+      "source": "private-main:harness/pipelines/petclinic/Jenkinsfile",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/pipelines/petclinic/Jenkinsfile.prgate",
+      "action": "copied",
+      "source": "private-main:harness/pipelines/petclinic/Jenkinsfile.prgate",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/pipelines/train-ticket/Jenkinsfile",
+      "action": "copied",
+      "source": "private-main:harness/pipelines/train-ticket/Jenkinsfile",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/pipelines/train-ticket/Jenkinsfile.baseline",
+      "action": "copied",
+      "source": "private-main:harness/pipelines/train-ticket/Jenkinsfile.baseline",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/pipelines/train-ticket/Jenkinsfile.prgate",
+      "action": "copied",
+      "source": "private-main:harness/pipelines/train-ticket/Jenkinsfile.prgate",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/scripts/bootstrap-secrets.sh",
+      "action": "copied",
+      "source": "private-main:harness/scripts/bootstrap-secrets.sh",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/scripts/build_site_data.py",
+      "action": "copied",
+      "source": "private-main:harness/scripts/build_site_data.py",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/scripts/cdp.py",
+      "action": "copied",
+      "source": "private-main:harness/scripts/cdp.py",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/scripts/demo.py",
+      "action": "copied",
+      "source": "private-main:harness/scripts/demo.py",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/scripts/evidence-integrity-test.py",
+      "action": "modified",
+      "source": "private-main:harness/scripts/evidence-integrity-test.py",
+      "reason": "P5.2 public-export checksum integrity suite."
+    },
+    {
+      "path": "harness/scripts/evidence_paths.py",
+      "action": "copied",
+      "source": "private-main:harness/scripts/evidence_paths.py",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/scripts/jenkins_api.py",
+      "action": "copied",
+      "source": "private-main:harness/scripts/jenkins_api.py",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/scripts/library-tag-test.py",
+      "action": "generated",
+      "source": "generated",
+      "reason": "F1 regression checks for immutable library tag verification."
+    },
+    {
+      "path": "harness/scripts/m2_measure.py",
+      "action": "copied",
+      "source": "private-main:harness/scripts/m2_measure.py",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/scripts/m3_measure.py",
+      "action": "copied",
+      "source": "private-main:harness/scripts/m3_measure.py",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/scripts/m4_measure.py",
+      "action": "copied",
+      "source": "private-main:harness/scripts/m4_measure.py",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/scripts/m4_scenarios.py",
+      "action": "copied",
+      "source": "private-main:harness/scripts/m4_scenarios.py",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/scripts/m5_measure.py",
+      "action": "copied",
+      "source": "private-main:harness/scripts/m5_measure.py",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/scripts/m5_prepare_sources.py",
+      "action": "modified",
+      "source": "private-main:harness/scripts/m5_prepare_sources.py",
+      "reason": "F1 removes tag reconstruction and restores recorded fingerprints."
+    },
+    {
+      "path": "harness/scripts/m6_measure.py",
+      "action": "copied",
+      "source": "private-main:harness/scripts/m6_measure.py",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/scripts/m6_prepare_sources.py",
+      "action": "modified",
+      "source": "private-main:harness/scripts/m6_prepare_sources.py",
+      "reason": "F1 correct raw tag-content hash verification."
+    },
+    {
+      "path": "harness/scripts/make-demo-repo.sh",
+      "action": "copied",
+      "source": "private-main:harness/scripts/make-demo-repo.sh",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/scripts/select-modules-regression.py",
+      "action": "copied",
+      "source": "private-main:harness/scripts/select-modules-regression.py",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/scripts/site-data-test.py",
+      "action": "copied",
+      "source": "private-main:harness/scripts/site-data-test.py",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/scripts/site-ui-test.py",
+      "action": "modified",
+      "source": "private-main:harness/scripts/site-ui-test.py",
+      "reason": "F2 evidence-base checks and F5 author-link checks."
+    },
+    {
+      "path": "harness/scripts/up.sh",
+      "action": "copied",
+      "source": "private-main:harness/scripts/up.sh",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "harness/scripts/verify.py",
+      "action": "copied",
+      "source": "private-main:harness/scripts/verify.py",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "jenkins-lib/README.md",
+      "action": "modified",
+      "source": "private-main:jenkins-lib/README.md",
+      "reason": "F1 genuine public tag explanation."
+    },
+    {
+      "path": "jenkins-lib/vars/prGate.groovy",
+      "action": "copied",
+      "source": "private-main:jenkins-lib/vars/prGate.groovy",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "release/EXCLUDED.md",
+      "action": "generated",
+      "source": "generated",
+      "reason": "Exclusion record for private material, including private operational runbooks."
+    },
+    {
+      "path": "release/checksums.txt",
+      "action": "generated",
+      "source": "generated",
+      "reason": "SHA-256 checksums for the curated export."
+    },
+    {
+      "path": "release/evidence-closure.txt",
+      "action": "generated",
+      "source": "generated",
+      "reason": "P5.2 dependency closure."
+    },
+    {
+      "path": "release/manifest.json",
+      "action": "generated",
+      "source": "generated",
+      "reason": "Release manifest."
+    },
+    {
+      "path": "release/sanitise.py",
+      "action": "generated",
+      "source": "generated",
+      "reason": "Repeatable manifest, checksum, evidence closure and library tag verification."
+    },
+    {
+      "path": "site/app.js",
+      "action": "modified",
+      "source": "private-main:site/app.js",
+      "reason": "F2 permanent GitHub evidence base."
+    },
+    {
+      "path": "site/assets/coverage-modified-lines-1600.webp",
+      "action": "copied",
+      "source": "private-main:site/assets/coverage-modified-lines-1600.webp",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "site/assets/coverage-modified-lines-800.webp",
+      "action": "copied",
+      "source": "private-main:site/assets/coverage-modified-lines-800.webp",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "site/assets/coverage-overview-1600.webp",
+      "action": "copied",
+      "source": "private-main:site/assets/coverage-overview-1600.webp",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "site/assets/coverage-overview-800.webp",
+      "action": "copied",
+      "source": "private-main:site/assets/coverage-overview-800.webp",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "site/assets/multibranch-branches-1600.webp",
+      "action": "copied",
+      "source": "private-main:site/assets/multibranch-branches-1600.webp",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "site/assets/multibranch-branches-800.webp",
+      "action": "copied",
+      "source": "private-main:site/assets/multibranch-branches-800.webp",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "site/assets/pmd-new-issue-1600.webp",
+      "action": "copied",
+      "source": "private-main:site/assets/pmd-new-issue-1600.webp",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "site/assets/pmd-new-issue-800.webp",
+      "action": "copied",
+      "source": "private-main:site/assets/pmd-new-issue-800.webp",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "site/assets/selector-decision-1600.webp",
+      "action": "copied",
+      "source": "private-main:site/assets/selector-decision-1600.webp",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "site/assets/selector-decision-800.webp",
+      "action": "copied",
+      "source": "private-main:site/assets/selector-decision-800.webp",
+      "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "site/data.json",
+      "action": "regenerated-identical",
+      "source": "private-main:site/data.json",
+      "reason": "Regenerated from the curated evidence; byte-identical to the accepted data.json."
+    },
+    {
+      "path": "site/index.html",
+      "action": "modified",
+      "source": "private-main:site/index.html",
+      "reason": "F5 masthead and footer author credit."
+    },
+    {
+      "path": "site/styles.css",
+      "action": "modified",
+      "source": "private-main:site/styles.css",
+      "reason": "F5 minimal byline styling."
+    },
+    {
+      "path": "tools/select-modules.sh",
+      "action": "copied",
+      "source": "private-main:tools/select-modules.sh",
+      "reason": "Copied from the accepted private checkpoint."
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "milestone": "M6",
+  "application": "spring-petclinic",
+  "reference": "500158f732419217507c7656904b8e6aa1bcc0d6",
+  "jdk": "17",
+  "library_sha256": "6fe355be631d742e707d57763002055b061422a38ff927c1c82e167373825cca",
+  "library_sha256_after": "6fe355be631d742e707d57763002055b061422a38ff927c1c82e167373825cca",
+  "library_unchanged": true,
+  "library_snapshot_revision": "80477267f1ca9bb21e257e28e671fa3e8a3ca0bf",
+  "coverage_threshold_percent": 90.0,
+  "static_new_issue_threshold": 1,
+  "scenarios": [
+    {
+      "scenario": "seed",
+      "branch": "m6-green",
+      "commit": "500158f732419217507c7656904b8e6aa1bcc0d6",
+      "enforce": false,
+      "build": 1,
+      "result": "SUCCESS",
+      "duration_ms": 86918,
+      "tests": "79 run, 0 failed, 2 skipped",
+      "tests_state": "PASS",
+      "coverage": "PUBLISHED",
+      "coverage_value": "93.99%",
+      "static": "PUBLISHED",
+      "static_value": "1 total, 0 new",
+      "decision": "PASS",
+      "junit": {
+        "passed": 77,
+        "skipped": 2,
+        "failed": 0,
+        "suites": 17
+      }
+    },
+    {
+      "scenario": "green",
+      "branch": "m6-green",
+      "commit": "500158f732419217507c7656904b8e6aa1bcc0d6",
+      "enforce": true,
+      "build": 2,
+      "result": "SUCCESS",
+      "duration_ms": 74243,
+      "tests": "79 run, 0 failed, 2 skipped",
+      "tests_state": "PASS",
+      "coverage": "PASS",
+      "coverage_value": "93.99%",
+      "static": "PASS",
+      "static_value": "1 total, 0 new",
+      "decision": "PASS",
+      "junit": {
+        "passed": 77,
+        "skipped": 2,
+        "failed": 0,
+        "suites": 17
+      }
+    },
+    {
+      "scenario": "coverage-red",
+      "branch": "m6-coverage-red",
+      "commit": "2b75be4d136871acc3f5fe0fe28ab8ab3fbbe990",
+      "enforce": true,
+      "build": 3,
+      "result": "FAILURE",
+      "duration_ms": 71232,
+      "tests": "79 run, 0 failed, 2 skipped",
+      "tests_state": "PASS",
+      "coverage": "FAIL",
+      "coverage_value": "81.09%",
+      "static": "PASS",
+      "static_value": "1 total, 0 new",
+      "decision": "BLOCK",
+      "junit": {
+        "passed": 77,
+        "skipped": 2,
+        "failed": 0,
+        "suites": 17
+      }
+    },
+    {
+      "scenario": "static-red",
+      "branch": "m6-static-red",
+      "commit": "788bc3a9040552c603a0d0c590a9f3421d49c26b",
+      "enforce": true,
+      "build": 4,
+      "result": "FAILURE",
+      "duration_ms": 72108,
+      "tests": "79 run, 0 failed, 2 skipped",
+      "tests_state": "PASS",
+      "coverage": "PASS",
+      "coverage_value": "92.60%",
+      "static": "FAIL",
+      "static_value": "2 total, 1 new",
+      "decision": "BLOCK",
+      "junit": {
+        "passed": 77,
+        "skipped": 2,
+        "failed": 0,
+        "suites": 17
+      }
+    },
+    {
+      "scenario": "fixed",
+      "branch": "m6-fixed",
+      "commit": "51a3d3e36d5331bc0a6cbff0419a37c2dc72196e",
+      "enforce": true,
+      "build": 6,
+      "result": "SUCCESS",
+      "duration_ms": 71243,
+      "tests": "80 run, 0 failed, 2 skipped",
+      "tests_state": "PASS",
+      "coverage": "PASS",
+      "coverage_value": "93.85%",
+      "static": "PASS",
+      "static_value": "1 total, 0 new",
+      "decision": "PASS",
+      "junit": {
+        "passed": 78,
+        "skipped": 2,
+        "failed": 0,
+        "suites": 18
+      }
+    }
+  ],
+  "database_tests": {
+    "mysql": {
+      "tests": 2,
+      "skipped": 2,
+      "failures": 0,
+      "errors": 0,
+      "cases": [
+        "findAll",
+        "ownerDetails"
+      ]
+    },
+    "postgres": {
+      "tests": 0,
+      "skipped": 0,
+      "failures": 0,
+      "errors": 0,
+      "cases": []
+    },
+    "junit_report": {
+      "build": 6,
+      "passed": 78,
+      "skipped": 2,
+      "failed": 0,
+      "suites": 18,
+      "postgres_suite_present": false
+    },
+    "note": "MySQL tests are skipped without Docker. The PostgreSQL class aborts before execution and has zero tests, so it is not a pass. Jenkins JUnit omits the empty PostgreSQL suite; petclinic-test-gap.md and the archived XML keep it visible."
+  },
+  "note": "Build 5 was an intermediate fixed run before the fixed branch retained a corrected static fixture. Build 6 is the canonical fixed run.",
+  "jdk_version": "17.0.21.1"
+}

@@ -1,0 +1,25 @@
+Pipeline Rescue Kit
+Copyright 2026 Sreekanth C
+
+This product includes material from third-party open-source projects:
+
+FudanSELab Train-Ticket
+https://github.com/FudanSELab/train-ticket
+Pinned commit: 313886e99befb94be6cd45f085c98e0019f59829
+Licence: Apache License 2.0
+Material: two POM files reproduced verbatim as selector evidence, and references
+to the recorded pipeline behaviour.
+
+Spring PetClinic
+https://github.com/spring-projects/spring-petclinic
+Pinned commit: 500158f732419217507c7656904b8e6aa1bcc0d6
+Licence: Apache License 2.0
+Material: generated demo-branch diffs that use the PetClinic package namespace.
+No upstream Spring PetClinic source file is reproduced.
+
+Jenkins and Jenkins plugins
+https://www.jenkins.io/
+The plugin names and pinned versions are listed in harness/jenkins/plugins.txt.
+No plugin code or binary is redistributed.
+
+The Apache License 2.0 text is in LICENSE.

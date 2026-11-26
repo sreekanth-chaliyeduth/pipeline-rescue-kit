@@ -1,0 +1,75 @@
+name: prk-m1
+
+services:
+  controller:
+    build:
+      context: ./jenkins
+      dockerfile: Dockerfile.controller
+    image: prk-m1-controller:local
+    container_name: prk-m1-controller
+    platform: linux/amd64
+    env_file:
+      - ../.secrets/jenkins.env
+    environment:
+      CASC_JENKINS_CONFIG: /var/jenkins_home/casc/jenkins.yaml
+      JAVA_OPTS: >-
+        -Xmx768m
+        -Djenkins.install.runSetupWizard=false
+        -Duser.timezone=UTC
+        -Dhudson.plugins.git.GitSCM.ALLOW_LOCAL_CHECKOUT=true
+    ports:
+      - "127.0.0.1:${JENKINS_PORT:-8080}:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - ./jenkins/casc:/var/jenkins_home/casc:ro
+      - ./pipelines:/var/jenkins_home/prk-pipelines:ro
+      # Read-only project Git metadata for the global library release tags.
+      - ../.git:/src/prk.git:ro
+      # Local demo multibranch source. Read-only, loopback-only Jenkins.
+      # The parent directory is mounted so a regenerated repository keeps the
+      # same mount point for running containers.
+      - ../evidence/pr-flow/work:/src/pr-flow:ro
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/login >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 90s
+    mem_limit: 1536m
+    restart: unless-stopped
+
+  agent:
+    build:
+      context: ./jenkins
+      dockerfile: Dockerfile.agent
+    image: prk-m1-agent:local
+    container_name: prk-m1-agent
+    platform: linux/amd64
+    depends_on:
+      controller:
+        condition: service_healthy
+    environment:
+      JENKINS_URL: http://controller:8080/
+      JENKINS_AGENT_NAME: linux-agent
+      JENKINS_WEB_SOCKET: "true"
+      JENKINS_AGENT_WORKDIR: /home/jenkins/agent
+      JENKINS_SECRET_FILE: /run/secrets/agent-secret
+      JAVA_OPTS: -Xmx256m
+    volumes:
+      - agent_work:/home/jenkins/agent
+      - m2_cache:/m2
+      - ../evidence/M2/work/train-ticket:/src/train-ticket:ro
+      - ../evidence/M4/work/train-ticket:/src/train-ticket-m4:ro
+      - ../evidence/M5/work/train-ticket:/src/train-ticket-m5:ro
+      - ../evidence/M6/work/petclinic:/src/petclinic-m6:ro
+      - ../evidence/pr-flow/work:/src/pr-flow:ro
+      - ./scripts:/opt/prk-scripts:ro
+      - ../tools:/opt/prk-tools:ro
+      - ../.secrets/agent-secret:/run/secrets/agent-secret:ro
+    mem_limit: 3072m
+    restart: unless-stopped
+
+volumes:
+  jenkins_home:
+  agent_work:
+  m2_cache:

@@ -1,0 +1,99 @@
+{
+  "tag": "v1.0.0",
+  "tag_commit": "802d69bda71b8abe687ed06056940a30a107a7ce",
+  "tag_tree": "07df720bf8d9811513087fc15c10ddea644f5ca7",
+  "before": {
+    "tag_commit": "802d69bda71b8abe687ed06056940a30a107a7ce",
+    "tag_tree": "07df720bf8d9811513087fc15c10ddea644f5ca7",
+    "head_commit": "802d69bda71b8abe687ed06056940a30a107a7ce",
+    "head_tree": "07df720bf8d9811513087fc15c10ddea644f5ca7",
+    "snapshot_status": "",
+    "snapshot_prgate_sha256": "dc954fe6c37c98430a432d3270d8a41f1b142e90bbc4143a94130e2171b98769",
+    "source_prgate_sha256": "dc954fe6c37c98430a432d3270d8a41f1b142e90bbc4143a94130e2171b98769",
+    "tag_files": "100644 blob 7ce844fd5431d2dadee8e8089d35c00f386cae5b\tvars/prGate.groovy",
+    "branches_json_sha256": "8b1c485c29f55ba2b00fdf64ac98763b6c8dde1aab4eb3ed8fb22f2e57434ab1"
+  },
+  "after_run_1": {
+    "tag_commit": "802d69bda71b8abe687ed06056940a30a107a7ce",
+    "tag_tree": "07df720bf8d9811513087fc15c10ddea644f5ca7",
+    "head_commit": "802d69bda71b8abe687ed06056940a30a107a7ce",
+    "head_tree": "07df720bf8d9811513087fc15c10ddea644f5ca7",
+    "snapshot_status": "",
+    "snapshot_prgate_sha256": "dc954fe6c37c98430a432d3270d8a41f1b142e90bbc4143a94130e2171b98769",
+    "source_prgate_sha256": "dc954fe6c37c98430a432d3270d8a41f1b142e90bbc4143a94130e2171b98769",
+    "tag_files": "100644 blob 7ce844fd5431d2dadee8e8089d35c00f386cae5b\tvars/prGate.groovy",
+    "branches_json_sha256": "e0396ddaf6b729ef3a3b472e03807d1b3656829cc07994ea23a9199fcfc6f457"
+  },
+  "after_run_2": {
+    "tag_commit": "802d69bda71b8abe687ed06056940a30a107a7ce",
+    "tag_tree": "07df720bf8d9811513087fc15c10ddea644f5ca7",
+    "head_commit": "802d69bda71b8abe687ed06056940a30a107a7ce",
+    "head_tree": "07df720bf8d9811513087fc15c10ddea644f5ca7",
+    "snapshot_status": "",
+    "snapshot_prgate_sha256": "dc954fe6c37c98430a432d3270d8a41f1b142e90bbc4143a94130e2171b98769",
+    "source_prgate_sha256": "dc954fe6c37c98430a432d3270d8a41f1b142e90bbc4143a94130e2171b98769",
+    "tag_files": "100644 blob 7ce844fd5431d2dadee8e8089d35c00f386cae5b\tvars/prGate.groovy",
+    "branches_json_sha256": "e0396ddaf6b729ef3a3b472e03807d1b3656829cc07994ea23a9199fcfc6f457"
+  },
+  "prep_runs": {
+    "run_1_exit_code": 0,
+    "run_2_exit_code": 0,
+    "logs": [
+      "logs/prep-run-1.txt",
+      "logs/prep-run-2.txt"
+    ]
+  },
+  "double_run_no_op": true,
+  "no_op_fields": [
+    "tag_commit",
+    "tag_tree",
+    "head_commit",
+    "head_tree",
+    "snapshot_prgate_sha256"
+  ],
+  "rejection": {
+    "probe": "one-line code change: prGate scopeLabel default temporarily changed from 'unspecified' to 'unspecified-probe'",
+    "exit_code": 1,
+    "message": [
+      "error: library changed; bump the version",
+      "v1.0.0 tree: 07df720bf8d9811513087fc15c10ddea644f5ca7",
+      "intended tree: dcd4af4d327a99a6d373eab232d36ec7f9f88e4a"
+    ],
+    "tag_commit_after_reject": "802d69bda71b8abe687ed06056940a30a107a7ce",
+    "tag_tree_after_reject": "07df720bf8d9811513087fc15c10ddea644f5ca7",
+    "tag_unchanged": true,
+    "snapshot_status_after_reject": "M vars/prGate.groovy",
+    "probe_sha256": "86e9f106b9929a2b521f9f6d1a073dd4a156b61a4df034713420a5881250c179",
+    "snapshot_probe_sha256": "86e9f106b9929a2b521f9f6d1a073dd4a156b61a4df034713420a5881250c179"
+  },
+  "restoration": {
+    "exit_code": 0,
+    "source_prgate_sha256": "dc954fe6c37c98430a432d3270d8a41f1b142e90bbc4143a94130e2171b98769",
+    "snapshot_prgate_sha256": "dc954fe6c37c98430a432d3270d8a41f1b142e90bbc4143a94130e2171b98769",
+    "expected_sha256": "dc954fe6c37c98430a432d3270d8a41f1b142e90bbc4143a94130e2171b98769",
+    "restored": true,
+    "snapshot_status": "",
+    "tag_commit": "802d69bda71b8abe687ed06056940a30a107a7ce",
+    "tag_tree": "07df720bf8d9811513087fc15c10ddea644f5ca7",
+    "tag_unchanged": true,
+    "branches_json_sha256": "8b1c485c29f55ba2b00fdf64ac98763b6c8dde1aab4eb3ed8fb22f2e57434ab1",
+    "branches_json_original_sha256": "8b1c485c29f55ba2b00fdf64ac98763b6c8dde1aab4eb3ed8fb22f2e57434ab1",
+    "branches_json_restored": true
+  },
+  "snapshot_contents": [
+    "100644 blob 7ce844fd5431d2dadee8e8089d35c00f386cae5b\tvars/prGate.groovy"
+  ],
+  "snapshot_note": "The tagged snapshot contains vars/prGate.groovy only. README.md is not in the tag.",
+  "forced_tag_updates": {
+    "tag_commands": [
+      "harness/scripts/m5_prepare_sources.py:65:    if lib_git(\"tag\", \"--list\", LIB_VERSION):",
+      "harness/scripts/m5_prepare_sources.py:81:    lib_git(\"tag\", LIB_VERSION, \"HEAD\")"
+    ],
+    "force_flag_matches": [
+      "harness/scripts/verify.py:499:    rc, ps = docker(\"compose\", \"-f\", os.path.join(ROOT, \"harness\", \"docker-compose.yml\"), \"ps\")",
+      "harness/scripts/up.sh:22:docker compose up -d --force-recreate --no-deps agent"
+    ],
+    "forced_tag_update_found": false,
+    "note": "Both force-flag matches are Docker Compose flags, not Git tag updates. A broad script search found only the two tag commands above."
+  }
+}

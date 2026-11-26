@@ -1,0 +1,13 @@
+configuration-as-code:2147.v8a_8d38668c72
+matrix-auth:3.3
+job-dsl:3752.vb_199526b_20c3
+workflow-aggregator:608.v67378e9d3db_1
+git:5.11.0
+junit:1458.1460.vd53b_087eeb_2c
+jacoco:3.3.7
+coverage:4.3620.v407ef5b_88f0d
+warnings-ng:13.10365.v85cd7a_c8110b_
+git-forensics:4.2557.v2c7f200dfc72
+maven-plugin:3.28
+pipeline-stage-view:2.41
+timestamper:1.30

@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pipeline Rescue Kit: stopping untested code from being merged</title>
+<meta name="description" content="A case study in Jenkins: a shared check that blocks a code change when its new code is untested or adds code-quality warnings, and a script that rebuilds only the parts of a large project a change touches. Tested on two open-source Java projects; every number comes from a recorded build.">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <p class="kicker">Case study · Jenkins CI</p>
+  <h1>Pipeline Rescue Kit</h1>
+  <p class="subhead">Stopping untested code from being merged, and rebuilding only what a
+    change touches.</p>
+  <p class="byline">By <a class="author-link" href="https://www.linkedin.com/in/sreekanth-chaliyeduth/" rel="noopener" aria-label="Sreekanth C on LinkedIn">Sreekanth C</a></p>
+
+  <div class="masthead-grid">
+    <div class="summary" id="summary">
+      <h2 class="summary-title">The short version</h2>
+      <p><strong>The problem.</strong> Most software teams pass every code change through an
+        automated build before it is merged into the main code. In Jenkins, a common build
+        server, these builds often measure useful things, such as how much of the code is
+        tested, but only <em>report</em> the result. A change that adds untested code or new
+        code-quality problems can still be merged. Large projects also rebuild everything for
+        every small change, so builds are slow.</p>
+      <p><strong>What I built.</strong> A small shared add-on for Jenkins that turns those
+        reports into a clear pass or block decision for every change, and a script that works
+        out which parts of a large project a change affects, so only those parts are
+        rebuilt.</p>
+      <p><strong>How I tested it.</strong> On two public open-source Java projects, built on my
+        own Jenkins. One is a large project made of <span data-n="full">43</span> parts, whose
+        own build had the problems above. The other is a small web application, where I made
+        test changes, each designed to trip one specific check.</p>
+      <p><strong>What I found.</strong> Every test change received the decision it should
+        have. For a change to one service in the large project, only
+        <span data-n="sel">3</span> of its <span data-n="full">43</span> parts needed
+        rebuilding. My first timing comparison overstated the speed gain; a fairer re-run
+        showed a much smaller difference, within the normal spread between runs, so I
+        withdrew that claim.</p>
+      <p class="summary-note">If you only have a minute, stop here. Each section below shows
+        the build records behind these statements.</p>
+    </div>
+
+    <div class="strip-wrap">
+      <p class="strip-intro"><strong>Try it.</strong> Three test changes I made to the web
+        application, and what the merge check decided for each. Select one.</p>
+      <figure id="pr-strip" class="pr-strip" aria-label="Recorded merge decisions for three test changes"></figure>
+    </div>
+  </div>
+
+  <div class="why-notes" id="why-notes">
+    <div>
+      <h3>Why 92% and 0% at once?</h3>
+      <p>The application's existing code is well tested. The few lines the untested change
+        adds have no test at all. A check on the whole-application figure alone would let that
+        change through; the second check exists for exactly that.</p>
+    </div>
+    <div>
+      <h3>Why "already on main"?</h3>
+      <p>The main code already had <span data-n="mainWarnings">1</span> code-quality warning
+        before any of my changes. The check counts only warnings a change <em>adds</em>, so an
+        old problem never blocks unrelated work.</p>
+    </div>
+    <div>
+      <h3>Why is the warning change 100% tested?</h3>
+      <p>Each test change trips one check only. Its new lines are tested, so the only thing
+        blocking it is the one warning it adds.</p>
+    </div>
+  </div>
+
+  <nav class="section-nav" aria-label="Sections">
+    <a href="#projects">1. Projects</a>
+    <a href="#problem">2. Problem</a>
+    <a href="#gates">3. Merge check</a>
+    <a href="#selective">4. Selection</a>
+    <a href="#benchmark">5. Timings</a>
+    <a href="#review">6. Corrections</a>
+    <a href="#implementation">7. Trying it</a>
+    <a href="#method">8. Evidence</a>
+  </nav>
+</header>
+
+<main id="main">
+
+<section id="projects" aria-labelledby="projects-title">
+  <p class="section-number">Section 1</p>
+  <h2 id="projects-title">The two test projects, and how they were run</h2>
+  <p class="lead">I needed one project with a genuinely poor build to fix, and one with a
+    real pull-request workflow to test the merge check on. No single public project had
+    both.</p>
+
+  <div class="two-apps">
+    <article class="app-card">
+      <h3>Train-Ticket</h3>
+      <p class="app-meta">The large project · <span data-n="full">43</span> parts</p>
+      <p>An open-source train-booking system from Fudan University researchers, built with
+        Maven, the standard Java build tool. Its own Jenkins build had the problems in
+        section 2. Fixed to commit <code>313886e</code>, so every run builds the same code.</p>
+    </article>
+    <article class="app-card">
+      <h3>Spring PetClinic</h3>
+      <p class="app-meta">The small project · test changes</p>
+      <p>The official sample web application for the Spring Java framework. Small and well
+        tested, so the right outcome of each test change is known in advance.</p>
+    </article>
+    <article class="app-card">
+      <h3>The shared check</h3>
+      <p class="app-meta">One add-on, both projects</p>
+      <p>A Jenkins shared library: code that many build files can call. Both projects call
+        the same library; each sets its own limits.</p>
+    </article>
+  </div>
+
+  <p class="callout"><strong>Where the numbers come from.</strong> Everything ran on a
+    Jenkins server in Docker on my own machine. After each build, its results were exported
+    from Jenkins to JSON files, and this page is generated from those files. Every measured
+    figure is generated from those files; the 90% and 80% limits are the settings in the
+    build file shown in section 7. Each figure names the build and the file it came from.</p>
+</section>
+
+<section id="problem" aria-labelledby="problem-title">
+  <p class="section-number">Section 2</p>
+  <h2 id="problem-title">What was wrong with the original build</h2>
+  <p class="lead">Train-Ticket's own Jenkins build, run unchanged, had four problems this kit
+    fixes and three more worth knowing about. Each card quotes the line of the build file
+    that shows it.</p>
+
+  <div id="problems" class="problem-grid" aria-live="polite"></div>
+
+  <details class="extra">
+    <summary>Show 3 more findings</summary>
+    <div id="problems-more" class="problem-grid"></div>
+  </details>
+</section>
+
+<section id="gates" aria-labelledby="gates-title">
+  <p class="section-number">Section 3</p>
+  <h2 id="gates-title">How the merge check decides</h2>
+  <p class="lead">Every pull request (a proposed change waiting to be merged) runs through
+    three checks in order. If any one fails, the change is blocked.</p>
+
+  <ol class="check-list">
+    <li><strong>Is the whole application still tested?</strong> The share of all code lines
+      that the tests run, measured by JaCoCo. It must stay at or above 90%.</li>
+    <li><strong>Is this change tested?</strong> The share of the lines this pull request
+      changed that the tests run. It must be at least 80%.</li>
+    <li><strong>Does this change add code-quality warnings?</strong> PMD, a static checker,
+      reads the code for likely bugs and bad patterns without running it. A change may not
+      add any new warning; existing ones are ignored.</li>
+  </ol>
+  <p class="small">A documentation-only change has no code lines to measure; the check
+    records that and passes it.</p>
+
+  <p class="look">What you are looking at: the two test changes that should be blocked, each
+    by a different check, with the values Jenkins recorded.</p>
+  <div id="gate-highlights" class="gate-highlights" aria-live="polite"></div>
+
+  <p class="look">The same builds as Jenkins shows them. Select a screenshot to open it at
+    full size.</p>
+  <div class="figure-grid figure-grid-4">
+    <figure id="figure-pr-branches" class="figure"></figure>
+    <figure id="figure-pr-overview" class="figure"></figure>
+    <figure id="figure-pr-coverage" class="figure"></figure>
+    <figure id="figure-pr-pmd" class="figure"></figure>
+  </div>
+
+  <details class="extra">
+    <summary>All seven test builds, with their full records</summary>
+    <p class="small">I ran the untested change and the warning change twice each, and got
+      the same result both times. The main branch build is the reference every change is
+      compared against.</p>
+    <div id="pr-scenarios" class="scenario-list" role="group" aria-label="Test builds"></div>
+    <div id="pr-detail" class="detail-panel" aria-live="polite"></div>
+  </details>
+
+  <details class="extra">
+    <summary>Earlier check runs on Train-Ticket (whole-project coverage only)</summary>
+    <div id="tt-gates" class="data-table-inline"></div>
+  </details>
+</section>
+
+<section id="selective" aria-labelledby="selective-title">
+  <p class="section-number">Section 4</p>
+  <h2 id="selective-title">Rebuilding only what a change touches</h2>
+  <p class="lead">Train-Ticket is made of <span data-n="full">43</span> parts that Maven
+    builds together. Normally every change rebuilds all of them. My script reads which files
+    a change touched, picks the parts that contain them plus the parts connected to those,
+    and builds only that set. When it cannot be sure, it builds everything.</p>
+
+  <p class="look">What you are looking at: each square is one part of Train-Ticket. Pick a
+    kind of change to see which parts the script would build.</p>
+  <div class="selector-showcase reactor-showcase">
+    <div class="reactor-panel">
+      <div id="selector-chips" class="chip-row" role="group" aria-label="Kind of change"></div>
+      <p class="reactor-count"><span id="reactor-count">--</span><span class="reactor-of" id="reactor-of">of --</span></p>
+      <div id="reactor-illustration" class="reactor" role="img" aria-label="Parts of Train-Ticket"></div>
+      <p id="reactor-label" class="small"></p>
+      <p class="small reactor-note">Diagram only: highlighted squares show how many parts are
+        built, not which ones.</p>
+    </div>
+    <div class="selector-copy">
+      <p id="selector-summary" class="selector-summary"></p>
+      <div id="selected-modules" class="module-list"></div>
+      <p id="selector-policy" class="small"></p>
+      <p id="selector-method" class="small"></p>
+    </div>
+  </div>
+
+  <p class="result-line">For a change to one service, <span data-n="sel">3</span> parts and
+    <span data-n="selTests">51</span> tests ran in <span data-n="selTime">38.2</span>
+    seconds, against all <span data-n="full">43</span> parts for a full build. This shows the
+    scope one known change needs. It is not an average build time.</p>
+
+  <details class="extra">
+    <summary>Script output for every kind of change</summary>
+    <div class="selector-layout">
+      <div class="selector-list" id="selector-cases" role="group" aria-label="Kinds of change"></div>
+      <div id="selector-detail" class="detail-panel" aria-live="polite"></div>
+    </div>
+    <p class="scroll-hint small">Wide console capture. Scroll sideways to read it.</p>
+    <figure id="figure-selector" class="figure console"></figure>
+  </details>
+</section>
+
+<section id="benchmark" aria-labelledby="benchmark-title">
+  <p class="section-number">Section 5</p>
+  <h2 id="benchmark-title">Build timings, and the claim I withdrew</h2>
+  <p class="lead">I built the whole of Train-Ticket <span data-n="runsWord">nine</span> times
+    on my Jenkins: three times with the original build, three with my new build, and three
+    with my new build made to package every part, as the original does.</p>
+  <p>My first comparison showed the new build <span data-n="firstClaim">38.9</span>% faster. That was not a fair test. Many of Train-Ticket's own tests fail before I change anything: <span data-n="failing">220</span> of <span data-n="tests">626</span> failed or errored in my baseline builds. A separate run of the untouched project recorded <span data-n="failingUpstream">221</span>; one login test behaves differently between runs, and I have not proven why. My new build stops at any part whose tests fail, so only <span data-n="packagedNew">11</span> of the <span data-n="full">43</span> parts were packaged, while the original packaged all of them. When I made the new build package every part, it was <span data-n="controlPct">12.6</span>% faster at the median, and its three runs overlapped with the original's. Even then the work is not identical: the original also installs every part in a separate step. So I do not claim a speed-up.</p>
+
+  <div class="chart-block">
+    <p class="look">What you are looking at: each dot is one full build. The dashed line is
+      the middle of three builds; the grey line runs from the fastest to the slowest.</p>
+    <div class="chart-toolbar" role="group" aria-label="Show builds">
+      <button type="button" class="chip" data-variant="all" aria-pressed="true">All builds</button>
+      <button type="button" class="chip" data-variant="baseline" aria-pressed="false">Original</button>
+      <button type="button" class="chip" data-variant="rescued" aria-pressed="false">New</button>
+      <button type="button" class="chip" data-variant="control" aria-pressed="false">New + packaging</button>
+    </div>
+    <div id="benchmark-chart"></div>
+    <p class="chart-legend small">Original: Train-Ticket's own build. New: my build. New +
+      packaging: my build forced to package every part, like the original.</p>
+    <div class="run-picker">
+      <p class="run-picker-title" id="run-picker-title">Open a build record</p>
+      <div id="benchmark-runs" class="run-picker-grid" role="group"
+        aria-labelledby="run-picker-title"></div>
+    </div>
+    <div id="benchmark-detail" class="detail-panel" aria-live="polite">
+      <p class="muted">Select a build above, or a dot on the chart, to see its time, result
+        and command as Jenkins recorded them.</p>
+    </div>
+    <p class="chart-note" id="benchmark-summary"></p>
+    <details class="data-table">
+      <summary>All nine builds as a table</summary>
+      <div id="benchmark-table"></div>
+    </details>
+  </div>
+</section>
+
+<section id="review" aria-labelledby="review-title">
+  <p class="section-number">Section 6</p>
+  <h2 id="review-title">Mistakes I found and fixed</h2>
+  <p class="lead">After the first results, I re-checked my own work. These things were wrong
+    or overstated. Each card says what was wrong, why it mattered, and what I changed. The
+    original records are kept, not edited.</p>
+  <div id="reviews" class="review-grid"></div>
+</section>
+
+<section id="implementation" aria-labelledby="implementation-title">
+  <p class="section-number">Section 7</p>
+  <h2 id="implementation-title">Trying this on a real team's pipeline</h2>
+  <p class="lead">This is a tested proof of concept, not a production rollout. A team trying
+    it would start small:</p>
+
+  <ol class="check-list">
+    <li>Pick one repository and run the check in report-only mode, so it records decisions
+      without blocking anything.</li>
+    <li>Install the Jenkins plugins it relies on (JUnit, Coverage, Warnings NG and Git
+      Forensics) and add the library as a trusted shared library, fixed to one release.</li>
+    <li>Choose its own limits. 80% of changed lines tested is my choice for this
+      demonstration, not a recommendation.</li>
+    <li>Switch to blocking once the recorded decisions match what reviewers would have
+      decided.</li>
+  </ol>
+
+  <p class="callout"><strong>Not tested here:</strong> Bitbucket or any hosted Git server (I
+    used a local Git server), cloud or container build agents, many builds at once,
+    deployment, and security testing.</p>
+
+  <div class="implementation-grid">
+    <div>
+      <p class="small">A project uses the check by adding one line to its Jenkins build file
+        and one step at the end:</p>
+      <p class="code-line"><code>@Library('prk@lib-v1.1.1') _</code></p>
+      <details class="extra">
+        <summary>Show the build file used for the test changes (<code>examples/Jenkinsfile.multibranch</code>)</summary>
+        <pre class="code"><code>@Library('prk@lib-v1.1.1') _
+pipeline {
+    agent { label 'linux &amp;&amp; java17' }
+    options { timestamps(); timeout(time: 30, unit: 'MINUTES'); disableConcurrentBuilds() }
+    tools { jdk 'jdk17'; maven 'maven-3.9.16' }
+    stages {
+        stage('Build and test') {
+            steps {
+                checkout scm
+                script {
+                    env.PRK_MAVEN_EXIT = sh(returnStatus: true, script: 'JAVA_HOME=/opt/java/jdk17 /opt/maven/bin/mvn -B -Dmaven.repo.local=/m2/repository -DtargetJdk=17 clean verify org.apache.maven.plugins:maven-pmd-plugin:3.28.0:pmd')
+                }
+            }
+        }
+        stage('prGate') { steps {
+            script { if (env.BRANCH_NAME != 'main') { discoverReferenceBuild(referenceJob: 'petclinic-pr/main', requiredResult: 'SUCCESS') } }
+            prGate(
+                testResults: 'target/surefire-reports/*.xml',
+                coverageReport: 'target/site/jacoco/jacoco.xml',
+                coverageThreshold: 90.0,
+                staticAnalysisReport: 'target/pmd.xml',
+                enforce: env.BRANCH_NAME != 'main', modifiedLinesThreshold: env.BRANCH_NAME == 'main' ? 0.0 : 80.0, coverageScm: 'petclinic-demo',
+                mavenExit: env.PRK_MAVEN_EXIT as int,
+                revision: env.GIT_COMMIT,
+                referenceJob: env.BRANCH_NAME == 'main' ? '' : 'petclinic-pr/main'
+            )
+        } }
+    }
+}
+</code></pre>
+      </details>
+    </div>
+    <div>
+      <details class="extra">
+        <summary>Show the library releases</summary>
+        <div id="releases"></div>
+      </details>
+      <details class="extra">
+        <summary>Run it yourself</summary>
+        <pre class="code"><code>make up          # start the pinned Jenkins stack
+make verify      # run the harness checks
+make demo        # build main first, then every test change</code></pre>
+        <p class="small">Needs Docker Desktop, Python 3 and Git. Works from a fresh clone.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="method" aria-labelledby="method-title">
+  <p class="section-number">Section 8</p>
+  <h2 id="method-title">Evidence and limits</h2>
+  <p class="lead">For readers who want to check the work.</p>
+
+  <div class="proves">
+    <div>
+      <h3>What I do not claim</h3>
+      <ul>
+        <li>No speed-up for the same amount of work.</li>
+        <li>Not production-ready, not proven on every kind of project, and no guaranteed
+          build-time saving.</li>
+        <li>Train-Ticket's own tests do not all pass; the project already had failing tests.</li>
+        <li>No security scanning of any kind.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="method-grid">
+    <details class="extra">
+      <summary>Show build conditions</summary>
+      <dl id="conditions-list"></dl>
+      <p class="small" id="benchmark-caveat"></p>
+    </details>
+    <details class="extra">
+      <summary>Show automated checks</summary>
+      <div id="verification-list"></div>
+    </details>
+    <details class="extra">
+      <summary>Show recorded limits</summary>
+      <p class="small">Quoted as written in the evidence files at the time, with the file
+        each came from. Lines later made out of date by further work are left out. One line
+        later found to be wrong is shown with its correction.</p>
+      <ul id="limitations" class="limitations"></ul>
+    </details>
+    <details class="extra">
+      <summary>Show every source file</summary>
+      <p class="small">Every record carries its source JSON. The page generator rejects
+        missing files, missing fields, mismatched medians and invalid percentages.</p>
+      <div id="provenance"></div>
+    </details>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Pipeline Rescue Kit. A personal engineering case study by <a class="author-link" href="https://www.linkedin.com/in/sreekanth-chaliyeduth/" rel="noopener" aria-label="Sreekanth C on LinkedIn">Sreekanth C</a>.
+    Timings are the middle value of three recorded builds unless stated otherwise.</p>
+  <p><a class="back-top" href="#top">Back to top</a></p>
+</footer>
+</body>
+</html>

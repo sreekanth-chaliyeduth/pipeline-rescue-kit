@@ -1,0 +1,112 @@
+{
+  "catalog": "qualitative project facts with provenance, Task 3.1",
+  "pipeline_problems": [
+    {
+      "id": "repeated-reactor",
+      "source_file": "harness/pipelines/train-ticket/Jenkinsfile.baseline",
+      "source_line": 76,
+      "text": "JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -Dmaven.repo.local=/m2/repository clean install -Dmaven.test.skip=true",
+      "explanation": "A full clean install with tests skipped runs first, then a second Maven lifecycle invocation runs the tests. The same reactor is built twice.",
+      "evidence_reference": "harness/pipelines/train-ticket/Jenkinsfile.baseline#L76 and #L133"
+    },
+    {
+      "id": "second-test-pass",
+      "source_file": "harness/pipelines/train-ticket/Jenkinsfile.baseline",
+      "source_line": 133,
+      "text": "JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -Dmaven.repo.local=/m2/repository test $PRK_TEST_ARGS",
+      "explanation": "Tests run in a separate reactor pass after the install pass, which repeats dependency resolution and module traversal.",
+      "evidence_reference": "harness/pipelines/train-ticket/Jenkinsfile.baseline#L133"
+    },
+    {
+      "id": "report-only-pmd",
+      "source_file": "harness/pipelines/train-ticket/Jenkinsfile.baseline",
+      "source_line": 117,
+      "text": "JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -Dmaven.repo.local=/m2/repository pmd:pmd",
+      "explanation": "PMD is invoked as a report-only goal. No quality gate fails the build for new findings.",
+      "evidence_reference": "harness/pipelines/train-ticket/Jenkinsfile.baseline#L117"
+    },
+    {
+      "id": "report-only-jacoco",
+      "source_file": "harness/pipelines/train-ticket/Jenkinsfile.baseline",
+      "source_line": 142,
+      "text": "jacoco(",
+      "explanation": "JaCoCo records coverage but no threshold is enforced, so a coverage regression cannot block a merge.",
+      "evidence_reference": "harness/pipelines/train-ticket/Jenkinsfile.baseline#L142"
+    },
+    {
+      "id": "false-docker-success",
+      "source_file": "harness/pipelines/train-ticket/Jenkinsfile.baseline",
+      "source_line": 85,
+      "text": "echo \"Docker Building...\"",
+      "explanation": "The Docker build and push steps are commented out while the success echos still print, so the console shows success for work that never ran.",
+      "evidence_reference": "harness/pipelines/train-ticket/Jenkinsfile.baseline#L85 and #L97"
+    },
+    {
+      "id": "unsafe-docker-login",
+      "source_file": "harness/pipelines/train-ticket/Jenkinsfile.baseline",
+      "source_line": 12,
+      "text": "//   1. sudo docker login with credentials (password on the command line).",
+      "explanation": "The upstream pipeline used a sudo docker login with the password on the command line. The baseline removes it and records why.",
+      "evidence_reference": "harness/pipelines/train-ticket/Jenkinsfile.baseline#L12"
+    },
+    {
+      "id": "no-timeout-and-cache",
+      "source_file": "harness/pipelines/train-ticket/Jenkinsfile.baseline",
+      "source_line": 28,
+      "text": "disableConcurrentBuilds()",
+      "explanation": "Upstream had no stage bound and no dependency cache. The baseline adds a timeout for the local demonstration but still does not add a cache.",
+      "evidence_reference": "harness/pipelines/train-ticket/Jenkinsfile.baseline#L28"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "packaging-control",
+      "finding": "The original M3 headline compared unequal packaging work, because the baseline installed all 43 reactor entries while the rescued verify stopped failing modules before package.",
+      "correction": "A packaging control was measured and the same-workload speed-up claim was withdrawn. The current material reports the control, overlapping ranges and no established same-workload saving.",
+      "regression_evidence": [
+        "evidence/m3-control/results.json"
+      ]
+    },
+    {
+      "id": "selector-safeguards",
+      "finding": "A path-based selector can build the wrong scope when a change is unknown or touches build files.",
+      "correction": "Unknown paths, unknown POMs and root build files fall back to the full reactor. The five selector scenarios and the isolated regression suite prove the fail-closed behaviour.",
+      "regression_evidence": [
+        "evidence/M4/scenarios.json",
+        "evidence/v4/task-1.2/selector-regression/selector-regression.json"
+      ]
+    },
+    {
+      "id": "reference-contamination",
+      "finding": "A gate job that seeds its static reference from its own history can compare a feature against a contaminated baseline.",
+      "correction": "Dedicated clean baseline jobs publish the Warnings NG reference and refuse any commit other than the pinned reference commit.",
+      "regression_evidence": [
+        "evidence/review-fixes/jenkins-runs.json"
+      ]
+    },
+    {
+      "id": "immutable-library-releases",
+      "finding": "Library versions were generated in a disposable snapshot repository, so a fresh clone could not resolve the same immutable release.",
+      "correction": "Releases are annotated project tags lib-v1.0.0, lib-v1.1.0 and lib-v1.1.1. Preparation verifies tags and never creates or moves them.",
+      "regression_evidence": [
+        "evidence/task-1.3a/immutable-tag.json",
+        "evidence/site/library-releases.json"
+      ]
+    },
+    {
+      "id": "git-forensics-attribution",
+      "finding": "With a pipeline library checked out next to the application, Warnings NG and the Coverage plugin selected the library revision for code deltas.",
+      "correction": "The library is excluded from change sets and prGate passes the application SCM selector to both the coverage and issue steps. The corrected PMD scenario fails on PMD only with the application delta.",
+      "regression_evidence": [
+        "evidence/pr-flow/task-3.1/pr-scenarios.json"
+      ]
+    }
+  ],
+  "limitations": [
+    "The full Train-Ticket reactor is not green. The M3 runs record 626 tests with 220 failed or errored, and the M5 green reference is deliberately narrow.",
+    "The coverage gate is project line coverage. Task 3.1 does not claim modified-lines coverage for the standalone Train-Ticket jobs.",
+    "JCasC build links show port 8080 when Jenkins runs on an alternate loopback port.",
+    "Automatic discovery builds vary in count. The PetClinic acceptance records use the explicitly orchestrated builds.",
+    "A fresh Jenkins instance needs a successful petclinic-baseline build before the standalone PetClinic gate can resolve its clean reference."
+  ]
+}

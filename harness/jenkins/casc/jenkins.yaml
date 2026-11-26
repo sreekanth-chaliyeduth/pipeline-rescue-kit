@@ -1,0 +1,196 @@
+jenkins:
+  systemMessage: "Pipeline Rescue Kit. Managed by JCasC. Evidence is local."
+  numExecutors: 0
+  mode: NORMAL
+  scmCheckoutRetryCount: 1
+
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          password: "${JENKINS_ADMIN_PASSWORD}"
+
+  authorizationStrategy:
+    globalMatrix:
+      permissions:
+        - "Overall/Administer:admin"
+        - "Overall/Read:authenticated"
+
+  nodes:
+    - permanent:
+        name: "linux-agent"
+        nodeDescription: "Build agent: Java 21 remoting, JDK 8 and JDK 17 toolchains, Maven 3.9.16"
+        remoteFS: "/home/jenkins/agent"
+        numExecutors: 2
+        labelString: "linux amd64 java8 java17 maven"
+        mode: NORMAL
+        retentionStrategy: "always"
+        launcher:
+          inbound:
+            webSocket: true
+
+unclassified:
+  location:
+    url: "http://127.0.0.1:8080/"
+  globalLibraries:
+    libraries:
+      - name: "prk"
+        defaultVersion: "lib-v1.0.0"
+        allowVersionOverride: true
+        includeInChangesets: false
+        retriever:
+          modernSCM:
+            libraryPath: "jenkins-lib"
+            scm:
+              git:
+                remote: "file:///src/prk.git"
+                traits:
+                  - "gitBranchDiscovery"
+                  - "gitTagDiscovery"
+
+tool:
+  jdk:
+    installations:
+      - name: "jdk8"
+        home: "/opt/java/jdk8"
+      - name: "jdk17"
+        home: "/opt/java/jdk17"
+  maven:
+    installations:
+      - name: "maven-3.9.16"
+        home: "/opt/maven"
+
+jobs:
+  - script: |
+      pipelineJob('train-ticket-baseline') {
+        description('Train-Ticket baseline: pinned Train-Ticket 313886e99befb94be6cd45f085c98e0019f59829. Upstream Jenkinsfile with unsafe sudo, password Docker login and mail removed. FULL_SCOPE=true is the controlled full-workload baseline: PMD skipped, mvn test -fae. Default false is the unchanged pinned baseline.')
+        parameters {
+          booleanParam('FULL_SCOPE', false, 'controlled comparison mode: run the full 626-test reactor with -fae and skip the report-only PMD goal. Default is the pinned baseline.')
+        }
+        definition {
+          cps {
+            script(new File("/var/jenkins_home/prk-pipelines/train-ticket/Jenkinsfile.baseline").getText("UTF-8"))
+            sandbox(true)
+          }
+        }
+      }
+      pipelineJob('train-ticket') {
+        description('Train-Ticket rescued Train-Ticket pipeline: one Maven verify pass, -fae, conservative reactor parallelism, full 626-test reactor, real FAILURE reporting and archived reports. Incremental mode is optional and selects modules from a Git diff.')
+        parameters {
+          choiceParam('REACTOR_THREADS', ['2', '1', '4'], 'Maven reactor thread count. 2 is the conservative default; 1 and 4 are for the thread investigation.')
+          booleanParam('INCREMENTAL', false, 'Incremental: select changed modules from Git diff before the Maven verify pass. Default false preserves full-scope mode.')
+          booleanParam('IGNORE_TEST_FAILURES', false, 'Controlled M3 measurement: continue Maven after test failures with -Dmaven.test.failure.ignore=true. Default false preserves the rescued pipeline.')
+          stringParam('SOURCE_REPO', '/src/train-ticket', 'Read-only source repository path inside the agent.')
+          stringParam('SOURCE_COMMIT', '313886e99befb94be6cd45f085c98e0019f59829', 'Source commit or branch to check out. Use a commit SHA for incremental scenarios.')
+          stringParam('REFERENCE_COMMIT', '313886e99befb94be6cd45f085c98e0019f59829', 'Git reference for changed-module selection.')
+        }
+        definition {
+          cps {
+            script(new File("/var/jenkins_home/prk-pipelines/train-ticket/Jenkinsfile").getText("UTF-8"))
+            sandbox(true)
+          }
+        }
+      }
+      pipelineJob('train-ticket-prgate') {
+        description('Train-Ticket prGate demonstration: scoped Train-Ticket build plus JUnit, project line-coverage and PMD new-issue gates. Narrow green scope is ts-assurance-service; the full reactor remains non-green and is not claimed.')
+        parameters {
+          booleanParam('ENFORCE', true, 'true applies the quality gates. false publishes reports only and is allowed only on the clean reference commit; do not use it on a feature commit.')
+          booleanParam('BASELINE', false, 'true marks the dedicated clean-reference job. It refuses any source commit other than REFERENCE_COMMIT.')
+          stringParam('SOURCE_REPO', '/src/train-ticket-m5', 'Read-only Train-Ticket source repository path inside the agent.')
+          stringParam('SOURCE_COMMIT', '313886e99befb94be6cd45f085c98e0019f59829', 'Pinned source commit or scenario commit SHA.')
+          stringParam('REFERENCE_COMMIT', '313886e99befb94be6cd45f085c98e0019f59829', 'Clean target commit used to pin the Warnings NG reference build, independent of the current commit.')
+          stringParam('SCOPE_MODULES', 'ts-assurance-service', 'Maven module list passed to -pl. Dependencies are added with -am.')
+          stringParam('REPORT_MODULE', 'ts-assurance-service', 'Module whose Surefire, JaCoCo and PMD reports prGate reads.')
+          stringParam('COVERAGE_THRESHOLD', '70', 'Project line coverage threshold in percent.')
+          stringParam('STATIC_NEW_ISSUE_THRESHOLD', '1', 'PMD NEW quality gate: fail when new issues reach this count. 1 means any new issue blocks.')
+        }
+        definition {
+          cps {
+            script(new File("/var/jenkins_home/prk-pipelines/train-ticket/Jenkinsfile.prgate").getText("UTF-8"))
+            sandbox(true)
+          }
+        }
+      }
+      pipelineJob('train-ticket-prgate-baseline') {
+        description('Train-Ticket clean-reference job: builds only the pinned baseline commit and publishes the PMD report that the gate job uses as its Warnings NG reference.')
+        parameters {
+          booleanParam('BASELINE', true, 'Dedicated clean-reference job. Refuses any source commit other than REFERENCE_COMMIT.')
+          booleanParam('ENFORCE', false, 'Publish reports only. This job is the clean baseline, not a merge gate.')
+          stringParam('SOURCE_REPO', '/src/train-ticket-m5', 'Read-only Train-Ticket source repository path inside the agent.')
+          stringParam('SOURCE_COMMIT', '313886e99befb94be6cd45f085c98e0019f59829', 'Pinned clean baseline commit. Changing this requires a new baseline build.')
+          stringParam('REFERENCE_COMMIT', '313886e99befb94be6cd45f085c98e0019f59829', 'Clean target commit. The baseline build must match this commit.')
+          stringParam('SCOPE_MODULES', 'ts-assurance-service', 'Maven module list passed to -pl. Dependencies are added with -am.')
+          stringParam('REPORT_MODULE', 'ts-assurance-service', 'Module whose Surefire, JaCoCo and PMD reports prGate reads.')
+          stringParam('COVERAGE_THRESHOLD', '70', 'Project line coverage threshold in percent.')
+          stringParam('STATIC_NEW_ISSUE_THRESHOLD', '1', 'PMD NEW quality gate: fail when new issues reach this count.')
+        }
+        definition {
+          cps {
+            script(new File("/var/jenkins_home/prk-pipelines/train-ticket/Jenkinsfile.prgate").getText("UTF-8"))
+            sandbox(true)
+          }
+        }
+      }
+      pipelineJob('petclinic') {
+        description('PetClinic second consumer: PetClinic monolith at 500158f732419217507c7656904b8e6aa1bcc0d6, built with JDK 17 and calling the unchanged prGate library with PetClinic-specific coverage and PMD settings.')
+        parameters {
+          booleanParam('ENFORCE', true, 'true applies the quality gates. false publishes reports only and is allowed only on the clean reference commit; do not use it on a feature commit.')
+          booleanParam('BASELINE', false, 'true marks the dedicated clean-reference job. It refuses any source commit other than REFERENCE_COMMIT.')
+          stringParam('SOURCE_REPO', '/src/petclinic-m6', 'Read-only PetClinic source repository path inside the agent.')
+          stringParam('SOURCE_COMMIT', '500158f732419217507c7656904b8e6aa1bcc0d6', 'Pinned PetClinic commit or scenario commit SHA.')
+          stringParam('REFERENCE_COMMIT', '500158f732419217507c7656904b8e6aa1bcc0d6', 'Clean target commit used to pin the Warnings NG reference build, independent of the current commit.')
+          stringParam('COVERAGE_THRESHOLD', '90', 'Project line coverage threshold in percent. Baseline is 93.99%.')
+          stringParam('STATIC_NEW_ISSUE_THRESHOLD', '1', 'PMD NEW quality gate: fail when new issues reach this count. 1 means any new issue blocks.')
+        }
+        definition {
+          cps {
+            script(new File("/var/jenkins_home/prk-pipelines/petclinic/Jenkinsfile.prgate").getText("UTF-8"))
+            sandbox(true)
+          }
+        }
+      }
+      pipelineJob('petclinic-baseline') {
+        description('PetClinic clean-reference job: builds only the pinned PetClinic baseline commit and publishes the PMD report that the gate job uses as its Warnings NG reference.')
+        parameters {
+          booleanParam('BASELINE', true, 'Dedicated clean-reference job. Refuses any source commit other than REFERENCE_COMMIT.')
+          booleanParam('ENFORCE', false, 'Publish reports only. This job is the clean baseline, not a merge gate.')
+          stringParam('SOURCE_REPO', '/src/petclinic-m6', 'Read-only PetClinic source repository path inside the agent.')
+          stringParam('SOURCE_COMMIT', '500158f732419217507c7656904b8e6aa1bcc0d6', 'Pinned clean baseline commit. Changing this requires a new baseline build.')
+          stringParam('REFERENCE_COMMIT', '500158f732419217507c7656904b8e6aa1bcc0d6', 'Clean target commit. The baseline build must match this commit.')
+          stringParam('COVERAGE_THRESHOLD', '90', 'Project line coverage threshold in percent. Baseline is 93.99%.')
+          stringParam('STATIC_NEW_ISSUE_THRESHOLD', '1', 'PMD NEW quality gate: fail when new issues reach this count.')
+        }
+        definition {
+          cps {
+            script(new File("/var/jenkins_home/prk-pipelines/petclinic/Jenkinsfile.prgate").getText("UTF-8"))
+            sandbox(true)
+          }
+        }
+      }
+      multibranchPipelineJob('petclinic-pr') {
+        description('PetClinic multibranch PR demonstration: discovers branches from the read-only local demo repository and loads examples/Jenkinsfile.multibranch. The main branch is the clean coverage and PMD reference for feature branches.')
+        branchSources {
+          branchSource {
+            source {
+              git {
+                id('petclinic-demo')
+                remote('file:///src/pr-flow/petclinic-demo.git')
+                traits {
+                  gitBranchDiscovery()
+                }
+              }
+            }
+          }
+        }
+        factory {
+          workflowBranchProjectFactory {
+            scriptPath('examples/Jenkinsfile.multibranch')
+          }
+        }
+        orphanedItemStrategy {
+          discardOldItems {
+            numToKeep(20)
+          }
+        }
+      }

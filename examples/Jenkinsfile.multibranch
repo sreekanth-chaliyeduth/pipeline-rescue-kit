@@ -1,0 +1,29 @@
+@Library('prk@lib-v1.1.1') _
+pipeline {
+    agent { label 'linux && java17' }
+    options { timestamps(); timeout(time: 30, unit: 'MINUTES'); disableConcurrentBuilds() }
+    tools { jdk 'jdk17'; maven 'maven-3.9.16' }
+    stages {
+        stage('Build and test') {
+            steps {
+                checkout scm
+                script {
+                    env.PRK_MAVEN_EXIT = sh(returnStatus: true, script: 'JAVA_HOME=/opt/java/jdk17 /opt/maven/bin/mvn -B -Dmaven.repo.local=/m2/repository -DtargetJdk=17 clean verify org.apache.maven.plugins:maven-pmd-plugin:3.28.0:pmd')
+                }
+            }
+        }
+        stage('prGate') { steps {
+            script { if (env.BRANCH_NAME != 'main') { discoverReferenceBuild(referenceJob: 'petclinic-pr/main', requiredResult: 'SUCCESS') } }
+            prGate(
+                testResults: 'target/surefire-reports/*.xml',
+                coverageReport: 'target/site/jacoco/jacoco.xml',
+                coverageThreshold: 90.0,
+                staticAnalysisReport: 'target/pmd.xml',
+                enforce: env.BRANCH_NAME != 'main', modifiedLinesThreshold: env.BRANCH_NAME == 'main' ? 0.0 : 80.0, coverageScm: 'petclinic-demo',
+                mavenExit: env.PRK_MAVEN_EXIT as int,
+                revision: env.GIT_COMMIT,
+                referenceJob: env.BRANCH_NAME == 'main' ? '' : 'petclinic-pr/main'
+            )
+        } }
+    }
+}

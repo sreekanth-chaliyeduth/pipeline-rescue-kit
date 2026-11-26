@@ -1,0 +1,142 @@
+// M5 prGate demonstration pipeline for Train-Ticket.
+//
+// The caller owns every application-specific path, module name and threshold.
+// prGate v1 publishes JUnit, applies a project line-coverage gate and one
+// PMD "new issues only" gate, then writes an archived plain-language summary.
+@Library('prk@lib-v1.0.0') _
+
+pipeline {
+    agent { label 'linux && java8' }
+
+    options {
+        timestamps()
+        timeout(time: 30, unit: 'MINUTES')
+        disableConcurrentBuilds()
+    }
+
+    environment {
+        SOURCE_REPO = "${params.SOURCE_REPO ?: '/src/train-ticket-m5'}"
+        SOURCE_COMMIT = "${params.SOURCE_COMMIT ?: '313886e99befb94be6cd45f085c98e0019f59829'}"
+        REFERENCE_COMMIT = "${params.REFERENCE_COMMIT ?: '313886e99befb94be6cd45f085c98e0019f59829'}"
+        BASELINE_COMMIT = '313886e99befb94be6cd45f085c98e0019f59829'
+        SCOPE_MODULES = "${params.SCOPE_MODULES ?: 'ts-assurance-service'}"
+        REPORT_MODULE = "${params.REPORT_MODULE ?: 'ts-assurance-service'}"
+        COVERAGE_THRESHOLD = "${params.COVERAGE_THRESHOLD ?: '70'}"
+        STATIC_NEW_ISSUE_THRESHOLD = "${params.STATIC_NEW_ISSUE_THRESHOLD ?: '1'}"
+        BASELINE = "${params.BASELINE ?: false}"
+    }
+
+    tools {
+        jdk 'jdk8'
+        maven 'maven-3.9.16'
+    }
+
+    stages {
+        stage('Checkout pinned source') {
+            steps {
+                deleteDir()
+                sh '''
+                    set -eu
+                    case "$SOURCE_REPO" in
+                        /src/train-ticket-m5) ;;
+                        *)
+                            echo "PRK_SOURCE_REPO_NOT_ALLOWED=$SOURCE_REPO"
+                            exit 1
+                            ;;
+                    esac
+                    if ! printf '%s' "$SOURCE_COMMIT" | grep -Eq '^[0-9a-f]{40}$'; then
+                        echo "PRK_SOURCE_COMMIT_INVALID=$SOURCE_COMMIT"
+                        exit 1
+                    fi
+                    if [ "$BASELINE" = "true" ] && [ "$SOURCE_COMMIT" != "$BASELINE_COMMIT" ]; then
+                        echo "PRK_BASELINE_COMMIT_MISMATCH=$SOURCE_COMMIT"
+                        echo "PRK_BASELINE_COMMIT=$BASELINE_COMMIT"
+                        exit 1
+                    fi
+                    if [ "$REFERENCE_COMMIT" != "$BASELINE_COMMIT" ]; then
+                        echo "PRK_REFERENCE_COMMIT_MISMATCH=$REFERENCE_COMMIT"
+                        echo "PRK_BASELINE_COMMIT=$BASELINE_COMMIT"
+                        exit 1
+                    fi
+                    case "$SCOPE_MODULES" in
+                        *[!A-Za-z0-9,._-]*)
+                            echo "PRK_SCOPE_MODULES_INVALID=$SCOPE_MODULES"
+                            exit 1
+                            ;;
+                    esac
+                    case "$REPORT_MODULE" in
+                        *[!A-Za-z0-9._-]*)
+                            echo "PRK_REPORT_MODULE_INVALID=$REPORT_MODULE"
+                            exit 1
+                            ;;
+                    esac
+                    git -c safe.directory="$SOURCE_REPO" clone --no-checkout "file://$SOURCE_REPO" .
+                    git -c advice.detachedHead=false checkout "$SOURCE_COMMIT"
+                    echo "PRK_SOURCE_REPO=$SOURCE_REPO"
+                    echo "PRK_SOURCE_COMMIT=$SOURCE_COMMIT"
+                    echo "PRK_CHECKED_OUT_HEAD=$(git rev-parse HEAD)"
+                    echo "PRK_SCOPE_MODULES=$SCOPE_MODULES"
+                    echo "PRK_REPORT_MODULE=$REPORT_MODULE"
+                    echo "PRK_COVERAGE_THRESHOLD=$COVERAGE_THRESHOLD"
+                    echo "PRK_STATIC_NEW_ISSUE_THRESHOLD=$STATIC_NEW_ISSUE_THRESHOLD"
+                    /opt/java/jdk8/bin/java -version
+                    JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -v
+                '''
+            }
+        }
+
+        stage('Scoped build and test') {
+            steps {
+                script {
+                    env.PRK_MAVEN_EXIT = sh(
+                        returnStatus: true,
+                        script: '''
+                            set +e
+                            JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn \
+                                -B \
+                                -Dmaven.repo.local=/m2/repository \
+                                -pl "$SCOPE_MODULES" -am \
+                                clean install pmd:pmd
+                            rc=$?
+                            echo "PRK_MAVEN_EXIT=$rc"
+                            exit $rc
+                        '''
+                    )
+                    echo "PRK_MAVEN_EXIT=${env.PRK_MAVEN_EXIT}"
+                }
+            }
+        }
+
+        stage('prGate') {
+            steps {
+                prGate(
+                    testResults: "${env.REPORT_MODULE}/target/surefire-reports/*.xml",
+                    coverageReport: "${env.REPORT_MODULE}/target/jacoco-ut/jacoco.xml",
+                    coverageParser: 'JACOCO',
+                    coverageThreshold: env.COVERAGE_THRESHOLD as double,
+                    staticAnalysisTool: 'pmd',
+                    staticAnalysisReport: "${env.REPORT_MODULE}/target/pmd.xml",
+                    staticNewIssueThreshold: env.STATIC_NEW_ISSUE_THRESHOLD as int,
+                    enforce: params.ENFORCE,
+                    mavenExit: env.PRK_MAVEN_EXIT,
+                    scopeLabel: "${env.SCOPE_MODULES} (reports from ${env.REPORT_MODULE})",
+                    revision: env.SOURCE_COMMIT,
+                    referenceCommit: env.REFERENCE_COMMIT,
+                    referenceJob: params.BASELINE ? '' : 'train-ticket-prgate-baseline',
+                    summaryFile: 'prgate-summary.md'
+                )
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: [
+                "${env.REPORT_MODULE}/target/surefire-reports/*.xml",
+                "${env.REPORT_MODULE}/target/jacoco-ut/jacoco.xml",
+                "${env.REPORT_MODULE}/target/pmd.xml",
+                'prgate-summary.md'
+            ].join(', '), allowEmptyArchive: true
+        }
+    }
+}

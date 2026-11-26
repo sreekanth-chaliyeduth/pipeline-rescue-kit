@@ -1,0 +1,235 @@
+{
+  "milestone": "M4",
+  "reference": "313886e99befb94be6cd45f085c98e0019f59829",
+  "scenarios": [
+    {
+      "name": "one-service",
+      "branch": "m4-service",
+      "head": "dbb9af89eaee3969307153681084e2ad281687bc",
+      "changed": "ts-order-service/m4-scenario-change.txt",
+      "selector": {
+        "M4_MODE": "modules",
+        "M4_PL": "ts-order-service",
+        "M4_AM": "1",
+        "M4_AMD": "1",
+        "M4_REASON": "changed module:ts-order-service/m4-scenario-change.txt -> ts-order-service",
+        "M4_CHANGED": "ts-order-service/m4-scenario-change.txt",
+        "M4_REFERENCE": "313886e99befb94be6cd45f085c98e0019f59829",
+        "M4_HEAD": "dbb9af89eaee3969307153681084e2ad281687bc"
+      },
+      "maven_validate": {
+        "exit_code": 0,
+        "command": "mvn -pl ts-order-service -am -amd validate",
+        "reactor_count": 3,
+        "status_counts": {
+          "SUCCESS": 3
+        },
+        "modules": [
+          "ts-service-cluster 0.1.0",
+          "ts-common 0.1.0",
+          "ts-order-service 1.0"
+        ],
+        "raw_log": "evidence/M4/raw/scenarios/one-service.log",
+        "skipped": false
+      }
+    },
+    {
+      "name": "ts-common",
+      "branch": "m4-common",
+      "head": "5ee8cbe91a6e27ad3b71b556a644dc72992fb780",
+      "changed": "ts-common/m4-scenario-change.txt",
+      "selector": {
+        "M4_MODE": "modules",
+        "M4_PL": "ts-common",
+        "M4_AM": "1",
+        "M4_AMD": "1",
+        "M4_REASON": "changed module:ts-common/m4-scenario-change.txt -> ts-common",
+        "M4_CHANGED": "ts-common/m4-scenario-change.txt",
+        "M4_REFERENCE": "313886e99befb94be6cd45f085c98e0019f59829",
+        "M4_HEAD": "5ee8cbe91a6e27ad3b71b556a644dc72992fb780"
+      },
+      "maven_validate": {
+        "exit_code": 0,
+        "command": "mvn -pl ts-common -am -amd validate",
+        "reactor_count": 42,
+        "status_counts": {
+          "SUCCESS": 42
+        },
+        "modules": [
+          "ts-service-cluster 0.1.0",
+          "ts-common 0.1.0",
+          "ts-verification-code-service 1.0",
+          "ts-contacts-service 1.0",
+          "ts-order-service 1.0",
+          "ts-order-other-service 1.0",
+          "ts-config-service 1.0",
+          "ts-station-service 1.0",
+          "ts-train-service 1.0",
+          "ts-travel-service 1.0",
+          "ts-travel2-service 1.0",
+          "ts-preserve-service 1.0",
+          "ts-preserve-other-service 1.0",
+          "ts-basic-service 1.0",
+          "ts-price-service 1.0",
+          "ts-notification-service 1.0",
+          "ts-security-service 1.0",
+          "ts-inside-payment-service 1.0",
+          "ts-execute-service 1.0",
+          "ts-payment-service 1.0",
+          "ts-rebook-service 1.0",
+          "ts-cancel-service 1.0",
+          "ts-route-service 1.0",
+          "ts-assurance-service 1.0",
+          "ts-seat-service 1.0",
+          "ts-travel-plan-service 1.0",
+          "ts-route-plan-service 1.0",
+          "ts-food-service 1.0",
+          "ts-station-food-service 1.0",
+          "ts-consign-price-service 1.0",
+          "ts-consign-price-service 1.0",
+          "ts-admin-order-service 1.0",
+          "ts-admin-basic-info-service 1.0",
+          "ts-admin-route-service 1.0",
+          "ts-admin-travel-service 1.0",
+          "ts-admin-user-service 1.0",
+          "ts-auth-service 1.0",
+          "ts-user-service 1.0",
+          "ts-delivery-service 1.0",
+          "ts-train-food-service 1.0",
+          "ts-food-delivery-service 1.0",
+          "ts-wait-order-service 1.0"
+        ],
+        "raw_log": "evidence/M4/raw/scenarios/ts-common.log",
+        "skipped": false
+      }
+    },
+    {
+      "name": "root-pom",
+      "branch": "m4-root",
+      "head": "e55a1c8470c69057b39f13ae2eaa6e47282a7cfd",
+      "changed": "pom.xml",
+      "selector": {
+        "M4_MODE": "full",
+        "M4_PL": "",
+        "M4_AM": "1",
+        "M4_AMD": "1",
+        "M4_REASON": "full reactor required:root pom.xml changed",
+        "M4_CHANGED": "pom.xml",
+        "M4_REFERENCE": "313886e99befb94be6cd45f085c98e0019f59829",
+        "M4_HEAD": "e55a1c8470c69057b39f13ae2eaa6e47282a7cfd"
+      },
+      "maven_validate": {
+        "exit_code": 0,
+        "command": "mvn validate (full reactor)",
+        "reactor_count": 43,
+        "status_counts": {
+          "SUCCESS": 43
+        },
+        "modules": [
+          "ts-service-cluster 0.1.0",
+          "ts-common 0.1.0",
+          "ts-verification-code-service 1.0",
+          "ts-contacts-service 1.0",
+          "ts-order-service 1.0",
+          "ts-order-other-service 1.0",
+          "ts-config-service 1.0",
+          "ts-station-service 1.0",
+          "ts-train-service 1.0",
+          "ts-travel-service 1.0",
+          "ts-travel2-service 1.0",
+          "ts-preserve-service 1.0",
+          "ts-preserve-other-service 1.0",
+          "ts-basic-service 1.0",
+          "ts-price-service 1.0",
+          "ts-notification-service 1.0",
+          "ts-security-service 1.0",
+          "ts-inside-payment-service 1.0",
+          "ts-execute-service 1.0",
+          "ts-payment-service 1.0",
+          "ts-rebook-service 1.0",
+          "ts-cancel-service 1.0",
+          "ts-route-service 1.0",
+          "ts-assurance-service 1.0",
+          "ts-seat-service 1.0",
+          "ts-travel-plan-service 1.0",
+          "ts-route-plan-service 1.0",
+          "ts-food-service 1.0",
+          "ts-station-food-service 1.0",
+          "ts-consign-price-service 1.0",
+          "ts-consign-price-service 1.0",
+          "ts-admin-order-service 1.0",
+          "ts-admin-basic-info-service 1.0",
+          "ts-admin-route-service 1.0",
+          "ts-admin-travel-service 1.0",
+          "ts-admin-user-service 1.0",
+          "ts-auth-service 1.0",
+          "ts-user-service 1.0",
+          "ts-delivery-service 1.0",
+          "ts-train-food-service 1.0",
+          "ts-gateway-service 1.0",
+          "ts-food-delivery-service 1.0",
+          "ts-wait-order-service 1.0"
+        ],
+        "raw_log": "evidence/M4/raw/scenarios/root-pom.log",
+        "skipped": false
+      }
+    },
+    {
+      "name": "non-maven-directory",
+      "branch": "m4-nonmaven",
+      "head": "93a52f96f85b7a3b1ae397a0700767dfc2974aa3",
+      "changed": "image/m4-scenario-change.txt",
+      "selector": {
+        "M4_MODE": "none",
+        "M4_PL": "",
+        "M4_AM": "0",
+        "M4_AMD": "0",
+        "M4_REASON": "no Maven module or build-affecting file changed",
+        "M4_CHANGED": "image/m4-scenario-change.txt",
+        "M4_REFERENCE": "313886e99befb94be6cd45f085c98e0019f59829",
+        "M4_HEAD": "93a52f96f85b7a3b1ae397a0700767dfc2974aa3"
+      },
+      "maven_validate": {
+        "exit_code": null,
+        "command": null,
+        "reactor_count": 0,
+        "status_counts": {},
+        "modules": [],
+        "raw_log": "evidence/M4/raw/scenarios/non-maven-directory.log",
+        "skipped": true
+      }
+    },
+    {
+      "name": "documentation-only",
+      "branch": "m4-docs",
+      "head": "8d5f474960e7d4f5433fdf23de0e9ec8d8427c93",
+      "changed": "docs/m4-scenario-change.md",
+      "selector": {
+        "M4_MODE": "none",
+        "M4_PL": "",
+        "M4_AM": "0",
+        "M4_AMD": "0",
+        "M4_REASON": "no Maven module or build-affecting file changed",
+        "M4_CHANGED": "docs/m4-scenario-change.md",
+        "M4_REFERENCE": "313886e99befb94be6cd45f085c98e0019f59829",
+        "M4_HEAD": "8d5f474960e7d4f5433fdf23de0e9ec8d8427c93"
+      },
+      "maven_validate": {
+        "exit_code": null,
+        "command": null,
+        "reactor_count": 0,
+        "status_counts": {},
+        "modules": [],
+        "raw_log": "evidence/M4/raw/scenarios/documentation-only.log",
+        "skipped": true
+      }
+    }
+  ],
+  "summary": {
+    "one_service": "selects the service; Maven -am pulls required upstream",
+    "ts_common": "selects ts-common; Maven -amd pulls dependents",
+    "root_pom": "fail-safe full reactor",
+    "non_maven_directory": "no Maven modules; skip",
+    "documentation_only": "no Maven modules; skip"
+  }
+}

@@ -1,0 +1,41 @@
+Evidence dependency closure
+Candidate: curated public evidence set for the approved public export
+Generated: deterministic closure script, P5.2
+
+path	bytes	root	disposition	reason
+evidence/site/catalog.json	6558	A,B	INCLUDE	Generator input: qualitative facts, review corrections, limitations and image catalog.
+evidence/site/images.json	3778	A,B	INCLUDE	Generator input: screenshot catalog and captions.
+evidence/site/library-releases.json	1044	A,B	INCLUDE	Generator input: immutable library release records.
+evidence/M3/results.json	884206	A,B	INCLUDE	Generator input: full-reactor baseline and rescued timings.
+evidence/M3/test-inventory.json	303539	A,B	INCLUDE	Generator input: upstream test workload and failure inventory.
+evidence/m3-control/results.json	186404	A,B	INCLUDE	Generator input: packaging control timings and comparison.
+evidence/M4/results.json	33496	A,B	INCLUDE	Generator input: selector scenarios and incremental runs.
+evidence/M4/scenarios.json	8048	A,B	INCLUDE	Generator input: selector scenario records and reactor counts.
+evidence/M5/runs.json	2996	A,B	INCLUDE	Generator input: quality-gate reference runs.
+evidence/M6/results.json	4256	A,B	INCLUDE	Generator input: PetClinic gate reference runs.
+evidence/review-fixes/jenkins-runs.json	23991	A,B	INCLUDE	Generator input: reference-contamination correction runs.
+evidence/v4/task-1.3/jenkins-runs.json	1548	A,B	INCLUDE	Generator input: historical verification runs.
+evidence/pr-flow/task-3.1/pr-scenarios.json	5232	A,B	INCLUDE	Generator input: PetClinic pull-request scenarios and screenshot outcomes.
+evidence/fresh-clone/rerun/verify/verification.json	10970	A,B	INCLUDE	Generator input: fresh-clone verification totals.
+evidence/pr-flow/task-2.5/verify-local/verification.json	11663	A,B	INCLUDE	Generator input: local demo verification totals.
+evidence/task-1.3a/immutable-tag.json	4944	A,B	INCLUDE	Generator input: immutable tag records.
+evidence/v4/task-1.2/selector-regression/selector-regression.json	6828	A,B	INCLUDE	Generator input: selector fail-closed regression suite.
+evidence/M4/raw/scenarios/ts-common.log	20051	B,C	INCLUDE	Site-data test input: proves the 42-entry dependent reactor and duplicate display label.
+evidence/M4/raw/scenarios/root-pom.log	20500	B,C	INCLUDE	Site-data test input: proves the 43-entry full reactor and gateway presence.
+evidence/site/evidence-in-motion-validation/ts-common/ts-consign-service-pom.xml	1628	B,C	INCLUDE	Website and test input: proves the artifactId and display name differ.
+evidence/site/evidence-in-motion-validation/ts-common/ts-gateway-service-pom.xml	1684	B,C	INCLUDE	Website and test input: proves the gateway does not depend on ts-common.
+
+Summary
+unique_files	21
+total_bytes	1543364
+root_a_data_json	17
+root_b_generator_and_tests	4
+root_c_website_references	0 new (2 logs and 2 POMs already counted in root B)
+root_d_screenshot_evidence	0 new (10 website assets are in site/assets, not evidence)
+transitive_added	0
+unresolved_references	0
+privacy_findings_in_closure	8 local_path_username findings, all container_home, 0 personal_home
+
+
+Incidental references: evidence strings inside closure JSON that point to private work trees, raw directories or raw logs were inspected and classed as historical provenance, not generator or test inputs. They are not published as dependencies.
+No closure file contains a personal home path, private address, personal email, employer reference or credential value.

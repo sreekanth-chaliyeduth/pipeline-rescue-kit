@@ -1,0 +1,213 @@
+{
+  "application": "spring-petclinic",
+  "suite": "petclinic multibranch PR acceptance, Task 2.5 demo run",
+  "export": {
+    "method": "Jenkins REST API export of accepted builds",
+    "exported_at": "2026-11-24T08:30:30Z",
+    "endpoints": [
+      "/api/json",
+      "/consoleText",
+      "/coverage/api/json",
+      "/pmd/api/json"
+    ]
+  },
+  "scenarios": [
+    {
+      "scenario": "main",
+      "job": "petclinic-pr/main",
+      "build": 14,
+      "result": "SUCCESS",
+      "duration_ms": 65142,
+      "timestamp_ms": 1795505465603,
+      "revision": "60418d1b28887e98a18d75fa3a3a2c36e2a3e62c",
+      "library": "prk@lib-v1.1.1",
+      "reference_build": null,
+      "project": {
+        "value": "93.99%",
+        "gate": "INACTIVE"
+      },
+      "modified_lines": {
+        "value": null,
+        "gate": "INACTIVE",
+        "no_modified_lines": false
+      },
+      "pmd": {
+        "total": 1,
+        "new": 0,
+        "gate": "INACTIVE"
+      },
+      "decision": "PASS",
+      "failing_gates": []
+    },
+    {
+      "scenario": "small-untested-change-1",
+      "job": "petclinic-pr/feature/small-untested-change",
+      "build": 11,
+      "result": "FAILURE",
+      "duration_ms": 65731,
+      "timestamp_ms": 1795505540626,
+      "revision": "261eab0961357cab0a694e3121d24c8ca15ca53e",
+      "library": "prk@lib-v1.1.1",
+      "reference_build": 14,
+      "project": {
+        "value": "92.33%",
+        "gate": "SUCCESS"
+      },
+      "modified_lines": {
+        "value": "0.00%",
+        "gate": "FAILURE",
+        "no_modified_lines": false
+      },
+      "pmd": {
+        "total": 1,
+        "new": 0,
+        "gate": "SUCCESS"
+      },
+      "decision": "BLOCK",
+      "failing_gates": [
+        "modified lines"
+      ]
+    },
+    {
+      "scenario": "small-untested-change-2",
+      "job": "petclinic-pr/feature/small-untested-change",
+      "build": 12,
+      "result": "FAILURE",
+      "duration_ms": 64413,
+      "timestamp_ms": 1795505615645,
+      "revision": "261eab0961357cab0a694e3121d24c8ca15ca53e",
+      "library": "prk@lib-v1.1.1",
+      "reference_build": 14,
+      "project": {
+        "value": "92.33%",
+        "gate": "SUCCESS"
+      },
+      "modified_lines": {
+        "value": "0.00%",
+        "gate": "FAILURE",
+        "no_modified_lines": false
+      },
+      "pmd": {
+        "total": 1,
+        "new": 0,
+        "gate": "SUCCESS"
+      },
+      "decision": "BLOCK",
+      "failing_gates": [
+        "modified lines"
+      ]
+    },
+    {
+      "scenario": "pmd-violation-1",
+      "job": "petclinic-pr/feature/pmd-violation",
+      "build": 13,
+      "result": "FAILURE",
+      "duration_ms": 65893,
+      "timestamp_ms": 1795505690665,
+      "revision": "4e9aaa9a22dff3918476a143aefc906d0c16c7b6",
+      "library": "prk@lib-v1.1.1",
+      "reference_build": 14,
+      "project": {
+        "value": "94.08%",
+        "gate": "SUCCESS"
+      },
+      "modified_lines": {
+        "value": "100.00%",
+        "gate": "SUCCESS",
+        "no_modified_lines": false
+      },
+      "pmd": {
+        "total": 2,
+        "new": 1,
+        "gate": "FAILURE"
+      },
+      "decision": "BLOCK",
+      "failing_gates": [
+        "pmd"
+      ]
+    },
+    {
+      "scenario": "pmd-violation-2",
+      "job": "petclinic-pr/feature/pmd-violation",
+      "build": 14,
+      "result": "FAILURE",
+      "duration_ms": 64266,
+      "timestamp_ms": 1795505765684,
+      "revision": "4e9aaa9a22dff3918476a143aefc906d0c16c7b6",
+      "library": "prk@lib-v1.1.1",
+      "reference_build": 14,
+      "project": {
+        "value": "94.08%",
+        "gate": "SUCCESS"
+      },
+      "modified_lines": {
+        "value": "100.00%",
+        "gate": "SUCCESS",
+        "no_modified_lines": false
+      },
+      "pmd": {
+        "total": 2,
+        "new": 1,
+        "gate": "FAILURE"
+      },
+      "decision": "BLOCK",
+      "failing_gates": [
+        "pmd"
+      ]
+    },
+    {
+      "scenario": "fixed",
+      "job": "petclinic-pr/feature/fixed",
+      "build": 8,
+      "result": "SUCCESS",
+      "duration_ms": 65912,
+      "timestamp_ms": 1795505840676,
+      "revision": "235882eb57c3dbda1eaa09cc02c033a534201c33",
+      "library": "prk@lib-v1.1.1",
+      "reference_build": 14,
+      "project": {
+        "value": "94.17%",
+        "gate": "SUCCESS"
+      },
+      "modified_lines": {
+        "value": "100.00%",
+        "gate": "SUCCESS",
+        "no_modified_lines": false
+      },
+      "pmd": {
+        "total": 1,
+        "new": 0,
+        "gate": "SUCCESS"
+      },
+      "decision": "PASS",
+      "failing_gates": []
+    },
+    {
+      "scenario": "docs-only",
+      "job": "petclinic-pr/feature/docs-only",
+      "build": 3,
+      "result": "SUCCESS",
+      "duration_ms": 63831,
+      "timestamp_ms": 1795505915689,
+      "revision": "5a2ef11f1f6bb9ab6ecf0d1263f651feb9c6292d",
+      "library": "prk@lib-v1.1.1",
+      "reference_build": 14,
+      "project": {
+        "value": "93.99%",
+        "gate": "SUCCESS"
+      },
+      "modified_lines": {
+        "value": null,
+        "gate": "NOT_BUILT",
+        "no_modified_lines": true
+      },
+      "pmd": {
+        "total": 1,
+        "new": 0,
+        "gate": "SUCCESS"
+      },
+      "decision": "PASS",
+      "failing_gates": []
+    }
+  ]
+}

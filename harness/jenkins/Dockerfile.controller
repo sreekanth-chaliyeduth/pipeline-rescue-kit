@@ -1,0 +1,14 @@
+# Jenkins LTS controller, Java 21. Plugins are installed at image build time
+# from a pinned list so startup does not depend on the Jenkins update center.
+ARG JENKINS_IMAGE=jenkins/jenkins:lts-jdk21@sha256:74401de6a6f92e1afe1b02d1c8e3d0c33f263bfb5275dd8813f9150355f2367b
+
+FROM ${JENKINS_IMAGE}
+
+USER root
+COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
+RUN jenkins-plugin-cli \
+      --plugin-file /usr/share/jenkins/ref/plugins.txt \
+      --jenkins-version 2.580.2 \
+    && git config --system --add safe.directory /src/prk.git \
+    && git config --system --add safe.directory /src/pr-flow/petclinic-demo.git
+USER jenkins

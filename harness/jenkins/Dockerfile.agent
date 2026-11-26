@@ -1,0 +1,34 @@
+# Inbound Jenkins agent, Java 21 remoting, with pinned JDK 8 and JDK 17
+# build toolchains and Maven 3.9.16. Build toolchains come from pinned
+# upstream images; nothing is installed from an unpinned JDK archive.
+ARG AGENT_IMAGE=jenkins/inbound-agent:jdk21@sha256:4cdc9b77a15b2e04949bece53129e0f3cb142d4589f38ed5229abaf2d37641dc
+ARG TEMURIN8_IMAGE=eclipse-temurin:8-jdk@sha256:238468a6b1e411e775bf264e639189a938eb0e887f16a2dea027c854c616b4f1
+ARG TEMURIN17_IMAGE=eclipse-temurin:17-jdk@sha256:7a0b2bc7e1372bb05ee361fb79e8a9e822df47343b8716253b3bbaa75060653e
+ARG MAVEN_IMAGE=maven:3.9-eclipse-temurin-21@sha256:99e61abcff91a9b1333463bd8451fb18495d6eba9250ac66a338b518f8278320
+
+FROM ${TEMURIN8_IMAGE} AS jdk8
+FROM ${TEMURIN17_IMAGE} AS jdk17
+FROM ${MAVEN_IMAGE} AS maven
+
+FROM ${AGENT_IMAGE}
+
+USER root
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends unzip \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /m2 /src/train-ticket \
+    && chown -R jenkins:jenkins /m2 \
+    && git config --system --add safe.directory /src/train-ticket \
+    && git config --system --add safe.directory /src/pr-flow/petclinic-demo.git
+
+COPY --from=jdk8  /opt/java/openjdk /opt/java/jdk8
+COPY --from=jdk17 /opt/java/openjdk /opt/java/jdk17
+COPY --from=maven /usr/share/maven /opt/maven
+
+COPY agent-entrypoint.sh /usr/local/bin/prk-agent-entrypoint.sh
+RUN chmod 0755 /usr/local/bin/prk-agent-entrypoint.sh \
+    && mkdir -p /home/jenkins/agent \
+    && chown -R jenkins:jenkins /home/jenkins/agent
+
+USER jenkins
+ENTRYPOINT ["/usr/local/bin/prk-agent-entrypoint.sh"]

@@ -1,0 +1,154 @@
+// M6 second consumer: PetClinic monolith calls the unchanged prGate library.
+//
+// The caller owns PetClinic report paths, the pinned PMD plugin, the Java 17
+// toolchain and the 90% line-coverage threshold.
+@Library('prk@lib-v1.0.0') _
+
+pipeline {
+    agent { label 'linux && java17' }
+
+    options {
+        timestamps()
+        timeout(time: 30, unit: 'MINUTES')
+        disableConcurrentBuilds()
+    }
+
+    environment {
+        SOURCE_REPO = "${params.SOURCE_REPO ?: '/src/petclinic-m6'}"
+        SOURCE_COMMIT = "${params.SOURCE_COMMIT ?: '500158f732419217507c7656904b8e6aa1bcc0d6'}"
+        REFERENCE_COMMIT = "${params.REFERENCE_COMMIT ?: '500158f732419217507c7656904b8e6aa1bcc0d6'}"
+        BASELINE_COMMIT = '500158f732419217507c7656904b8e6aa1bcc0d6'
+        COVERAGE_THRESHOLD = "${params.COVERAGE_THRESHOLD ?: '90'}"
+        STATIC_NEW_ISSUE_THRESHOLD = "${params.STATIC_NEW_ISSUE_THRESHOLD ?: '1'}"
+        BASELINE = "${params.BASELINE ?: false}"
+    }
+
+    tools {
+        jdk 'jdk17'
+        maven 'maven-3.9.16'
+    }
+
+    stages {
+        stage('Checkout pinned source') {
+            steps {
+                deleteDir()
+                sh '''
+                    set -eu
+                    case "$SOURCE_REPO" in
+                        /src/petclinic-m6) ;;
+                        *)
+                            echo "PRK_SOURCE_REPO_NOT_ALLOWED=$SOURCE_REPO"
+                            exit 1
+                            ;;
+                    esac
+                    if ! printf '%s' "$SOURCE_COMMIT" | grep -Eq '^[0-9a-f]{40}$'; then
+                        echo "PRK_SOURCE_COMMIT_INVALID=$SOURCE_COMMIT"
+                        exit 1
+                    fi
+                    if [ "$BASELINE" = "true" ] && [ "$SOURCE_COMMIT" != "$BASELINE_COMMIT" ]; then
+                        echo "PRK_BASELINE_COMMIT_MISMATCH=$SOURCE_COMMIT"
+                        echo "PRK_BASELINE_COMMIT=$BASELINE_COMMIT"
+                        exit 1
+                    fi
+                    if [ "$REFERENCE_COMMIT" != "$BASELINE_COMMIT" ]; then
+                        echo "PRK_REFERENCE_COMMIT_MISMATCH=$REFERENCE_COMMIT"
+                        echo "PRK_BASELINE_COMMIT=$BASELINE_COMMIT"
+                        exit 1
+                    fi
+                    git -c safe.directory="$SOURCE_REPO" clone --no-checkout "file://$SOURCE_REPO" .
+                    git -c advice.detachedHead=false checkout "$SOURCE_COMMIT"
+                    echo "PRK_SOURCE_REPO=$SOURCE_REPO"
+                    echo "PRK_SOURCE_COMMIT=$SOURCE_COMMIT"
+                    echo "PRK_CHECKED_OUT_HEAD=$(git rev-parse HEAD)"
+                    echo "PRK_COVERAGE_THRESHOLD=$COVERAGE_THRESHOLD"
+                    echo "PRK_STATIC_NEW_ISSUE_THRESHOLD=$STATIC_NEW_ISSUE_THRESHOLD"
+                    /opt/java/jdk17/bin/java -version
+                    JAVA_HOME=/opt/java/jdk17 /opt/maven/bin/mvn -v
+                '''
+            }
+        }
+
+        stage('Build, test and static analysis') {
+            steps {
+                script {
+                    env.PRK_MAVEN_EXIT = sh(
+                        returnStatus: true,
+                        script: '''
+                            set +e
+                            JAVA_HOME=/opt/java/jdk17 /opt/maven/bin/mvn \
+                                -B \
+                                -Dmaven.repo.local=/m2/repository \
+                                -DtargetJdk=17 \
+                                clean verify \
+                                org.apache.maven.plugins:maven-pmd-plugin:3.28.0:pmd
+                            rc=$?
+                            echo "PRK_MAVEN_EXIT=$rc"
+                            exit $rc
+                        '''
+                    )
+                    echo "PRK_MAVEN_EXIT=${env.PRK_MAVEN_EXIT}"
+                }
+            }
+        }
+
+        stage('Database test gap note') {
+            steps {
+                sh '''
+                    set -eu
+                    {
+                        echo "# PetClinic database test gap"
+                        echo
+                        echo "These are the upstream Testcontainers tests at the pinned revision."
+                        echo
+                        for f in target/surefire-reports/TEST-*MySqlIntegrationTests.xml \
+                                 target/surefire-reports/TEST-*PostgresIntegrationTests.xml; do
+                            [ -f "$f" ] || continue
+                            name=$(sed -n 's/.*name="\\([^"]*\\)".*/\\1/p' "$f" | head -1)
+                            attrs=$(grep -o '<testsuite [^>]*' "$f" | head -1)
+                            tests=$(printf '%s' "$attrs" | sed -n 's/.* tests="\\([0-9]*\\)".*/\\1/p')
+                            skipped=$(printf '%s' "$attrs" | sed -n 's/.* skipped="\\([0-9]*\\)".*/\\1/p')
+                            echo "- ${name}: tests=${tests}, skipped=${skipped}"
+                        done
+                        echo
+                        echo "MySQL tests are skipped without Docker. The PostgreSQL class aborts"
+                        echo "before execution and is reported with zero tests, so it is not a pass."
+                    } > petclinic-test-gap.md
+                    cat petclinic-test-gap.md
+                '''
+            }
+        }
+
+        stage('prGate') {
+            steps {
+                prGate(
+                    testResults: 'target/surefire-reports/*.xml',
+                    coverageReport: 'target/site/jacoco/jacoco.xml',
+                    coverageParser: 'JACOCO',
+                    coverageThreshold: env.COVERAGE_THRESHOLD as double,
+                    staticAnalysisTool: 'pmd',
+                    staticAnalysisReport: 'target/pmd.xml',
+                    staticNewIssueThreshold: env.STATIC_NEW_ISSUE_THRESHOLD as int,
+                    enforce: params.ENFORCE,
+                    mavenExit: env.PRK_MAVEN_EXIT,
+                    scopeLabel: 'spring-petclinic (single Maven module, Java 17)',
+                    revision: env.SOURCE_COMMIT,
+                    referenceCommit: env.REFERENCE_COMMIT,
+                    referenceJob: params.BASELINE ? '' : 'petclinic-baseline',
+                    summaryFile: 'prgate-summary.md'
+                )
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: [
+                'target/surefire-reports/*.xml',
+                'target/site/jacoco/jacoco.xml',
+                'target/pmd.xml',
+                'petclinic-test-gap.md',
+                'prgate-summary.md'
+            ].join(', '), allowEmptyArchive: true
+        }
+    }
+}

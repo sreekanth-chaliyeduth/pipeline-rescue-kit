@@ -1,0 +1,29 @@
+{
+  "method": "git tag export from the project repository",
+  "releases": [
+    {
+      "tag": "lib-v1.0.0",
+      "tag_object": "accd4033b8187be23c4a18fa77406be95242f053",
+      "commit": "845a9063ecb4a2e4528ecc270f1738ebdf9264e0",
+      "vars_tree": "fd6be673861bc2dc7a72bc417802024d4cc6c54e",
+      "jenkins_lib_tree": "0b9c43152339f2299a0b5c8ec5397a952eda73bd",
+      "immutable": true
+    },
+    {
+      "tag": "lib-v1.1.0",
+      "tag_object": "e7a8e39c36d76e19181b475ac3d19dc1cd6ff417",
+      "commit": "0e4a7db838cc74ce9964add183a092a031056096",
+      "vars_tree": "39403d5c9a1551dbdf203599fab84be8d8ede44f",
+      "jenkins_lib_tree": "b9481f51feec8a27697cdf8e28929ef02babe823",
+      "immutable": true
+    },
+    {
+      "tag": "lib-v1.1.1",
+      "tag_object": "4c718fcc013cdb9e5468d3da0014269b84031555",
+      "commit": "a6e033c12651e5a09e13ec75e6f4eee006cc0e2d",
+      "vars_tree": "3e4930c580eb742b90a4785139e2ed2e92d41e1c",
+      "jenkins_lib_tree": "aa01b22fc442793e8eee1f8edbf4e3605df17681",
+      "immutable": true
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+// M1 scaffold only. M6 replaces this with the PetClinic pipeline calling the
+// shared prGate library. No application build, test or gate is implemented here.
+pipeline {
+    agent { label 'linux && java17' }
+    options {
+        timestamps()
+        timeout(time: 5, unit: 'MINUTES')
+        disableConcurrentBuilds()
+    }
+    stages {
+        stage('M1 scaffold') {
+            steps {
+                sh '''
+                    set -eu
+                    echo "M1 SCAFFOLD ONLY: petclinic has no M6 pipeline yet."
+                    echo "JOB_NAME=${JOB_NAME}"
+                    echo "NODE_NAME=${NODE_NAME}"
+                    echo "NODE_LABELS=${NODE_LABELS}"
+                    echo "WORKSPACE=${WORKSPACE}"
+                    JAVA17_VERSION="$(/opt/java/jdk17/bin/java -version 2>&1 | head -n 1)"
+                    MAVEN_VERSION="$(JAVA_HOME=/opt/java/jdk17 /opt/maven/bin/mvn -v | head -n 1)"
+                    MAVEN_JAVA="$(JAVA_HOME=/opt/java/jdk17 /opt/maven/bin/mvn -v | sed -n 's/^Java version: //p')"
+                    echo "JAVA17_VERSION=${JAVA17_VERSION}"
+                    echo "MAVEN_VERSION=${MAVEN_VERSION}"
+                    echo "MAVEN_JAVA_VERSION=${MAVEN_JAVA}"
+                '''
+            }
+        }
+    }
+    post {
+        always {
+            echo "M1 scaffold finished on ${env.NODE_NAME}"
+        }
+    }
+}

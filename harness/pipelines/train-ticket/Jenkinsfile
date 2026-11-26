@@ -1,0 +1,140 @@
+// M3 rescued Train-Ticket pipeline with optional M4 changed-module selection.
+//
+// Default full-scope mode is the M3 measurement pipeline: one Maven verify
+// pass over the full pinned reactor, -fae, 2 threads, real FAILURE reporting.
+// M4 incremental mode is opt-in. It selects changed modules from a Git diff,
+// uses Maven -pl with -am and -amd, and fails safe to full scope.
+pipeline {
+    agent { label 'linux && java8' }
+
+    options {
+        timestamps()
+        timeout(time: 60, unit: 'MINUTES')
+        disableConcurrentBuilds()
+    }
+
+    environment {
+        REACTOR_THREADS = "${params.REACTOR_THREADS ?: '2'}"
+        INCREMENTAL_MODE = "${params.INCREMENTAL ?: false}"
+        IGNORE_TEST_FAILURES = "${params.IGNORE_TEST_FAILURES ?: false}"
+        SOURCE_REPO = "${params.SOURCE_REPO ?: '/src/train-ticket'}"
+        SOURCE_COMMIT = "${params.SOURCE_COMMIT ?: '313886e99befb94be6cd45f085c98e0019f59829'}"
+        REFERENCE_COMMIT = "${params.REFERENCE_COMMIT ?: '313886e99befb94be6cd45f085c98e0019f59829'}"
+    }
+
+    tools {
+        jdk 'jdk8'
+        maven 'maven-3.9.16'
+    }
+
+    stages {
+        stage('Checkout pinned source') {
+            steps {
+                deleteDir()
+                sh '''
+                    set -eu
+                    case "$SOURCE_REPO" in
+                        /src/train-ticket|/src/train-ticket-m4) ;;
+                        *)
+                            echo "PRK_SOURCE_REPO_NOT_ALLOWED=$SOURCE_REPO"
+                            exit 1
+                            ;;
+                    esac
+                    if ! printf '%s' "$SOURCE_COMMIT" | grep -Eq '^[0-9a-f]{40}$'; then
+                        echo "PRK_SOURCE_COMMIT_INVALID=$SOURCE_COMMIT"
+                        exit 1
+                    fi
+                    if ! printf '%s' "$REFERENCE_COMMIT" | grep -Eq '^[0-9a-f]{40}$'; then
+                        echo "PRK_REFERENCE_COMMIT_INVALID=$REFERENCE_COMMIT"
+                        exit 1
+                    fi
+                    git -c safe.directory="$SOURCE_REPO" clone --no-checkout "file://$SOURCE_REPO" .
+                    git -c advice.detachedHead=false checkout "$SOURCE_COMMIT"
+                    echo "SOURCE_REPO=$SOURCE_REPO"
+                    echo "SOURCE_COMMIT=$SOURCE_COMMIT"
+                    echo "REFERENCE_COMMIT=$REFERENCE_COMMIT"
+                    echo "CHECKED_OUT_HEAD=$(git rev-parse HEAD)"
+                    echo "INCREMENTAL=$INCREMENTAL_MODE"
+                    echo "IGNORE_TEST_FAILURES=$IGNORE_TEST_FAILURES"
+                    echo "MAVEN_REPO=/m2/repository"
+                    echo "MAVEN_CACHE_MB=$(du -sm /m2/repository 2>/dev/null | cut -f1)"
+                    echo "REACTOR_THREADS=${REACTOR_THREADS}"
+                    /opt/java/jdk8/bin/java -version
+                    JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -v
+                '''
+            }
+        }
+
+        stage('Select modules') {
+            when {
+                expression { params.INCREMENTAL == true }
+            }
+            steps {
+                sh '''
+                    set -eu
+                    sh /opt/prk-tools/select-modules.sh --repo . --reference "$REFERENCE_COMMIT" > m4-selection.env
+                    cat m4-selection.env
+                '''
+            }
+        }
+
+        stage('Verify') {
+            steps {
+                sh '''
+                    set +e
+                    IGNORE_ARG=""
+                    if [ "$IGNORE_TEST_FAILURES" = "true" ]; then
+                        IGNORE_ARG="-Dmaven.test.failure.ignore=true"
+                        echo "IGNORE_TEST_FAILURES=true"
+                    fi
+                    if [ "$INCREMENTAL_MODE" = "true" ]; then
+                        if [ ! -f m4-selection.env ]; then
+                            echo "PRK_SELECTION_MISSING"
+                            exit 1
+                        fi
+                        . ./m4-selection.env
+                        echo "PRK_MODE=$PRK_MODE"
+                        echo "PRK_PL=$PRK_PL"
+                        echo "PRK_REASON=$PRK_REASON"
+                        echo "PRK_CHANGED=$PRK_CHANGED"
+                        echo "PRK_REFERENCE=$PRK_REFERENCE"
+                        echo "PRK_HEAD=$PRK_HEAD"
+                        if [ "$PRK_MODE" = "none" ]; then
+                            echo "PRK_SKIP_MAVEN: no Maven modules selected"
+                            echo "PRK_MAVEN_EXIT_VERIFY=SKIP"
+                            exit 0
+                        fi
+                        if [ "$PRK_MODE" = "full" ]; then
+                            echo "PRK_MAVEN_COMMAND=JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -T ${REACTOR_THREADS} -fae -Dmaven.repo.local=/m2/repository $IGNORE_ARG verify"
+                            JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn \
+                                -B -T "${REACTOR_THREADS}" -fae \
+                                -Dmaven.repo.local=/m2/repository $IGNORE_ARG verify
+                        else
+                            echo "PRK_MAVEN_COMMAND=JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -T ${REACTOR_THREADS} -fae -Dmaven.repo.local=/m2/repository $IGNORE_ARG -pl $PRK_PL -am -amd verify"
+                            JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn \
+                                -B -T "${REACTOR_THREADS}" -fae \
+                                -Dmaven.repo.local=/m2/repository \
+                                $IGNORE_ARG -pl "$PRK_PL" -am -amd verify
+                        fi
+                    else
+                        echo "INCREMENTAL=false full-scope verify"
+                        echo "PRK_MAVEN_COMMAND=JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -T ${REACTOR_THREADS} -fae -Dmaven.repo.local=/m2/repository $IGNORE_ARG verify"
+                        JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn \
+                            -B -T "${REACTOR_THREADS}" -fae \
+                            -Dmaven.repo.local=/m2/repository $IGNORE_ARG verify
+                    fi
+                    rc=$?
+                    echo "PRK_MAVEN_EXIT_VERIFY=$rc"
+                    exit $rc
+                '''
+            }
+        }
+    }
+
+    post {
+        always {
+            junit testResults: "**/target/surefire-reports/*.xml", allowEmptyResults: true
+            archiveArtifacts artifacts: '**/target/surefire-reports/*.xml, **/target/jacoco.exec, **/target/jacoco-ut/jacoco.xml, m4-selection.env', allowEmptyArchive: true
+        }
+    }
+}

@@ -1,0 +1,410 @@
+{
+  "milestone": "current-stack verification",
+  "timestamp_utc": "2026-11-24T03:47:27Z",
+  "checks": [
+    {
+      "check": "controller_running",
+      "pass": true,
+      "detail": "running"
+    },
+    {
+      "check": "controller_healthy",
+      "pass": true,
+      "detail": "healthy"
+    },
+    {
+      "check": "agent_running",
+      "pass": true,
+      "detail": "running"
+    },
+    {
+      "check": "controller_not_privileged",
+      "pass": true,
+      "detail": "Privileged=False"
+    },
+    {
+      "check": "controller_not_host_network",
+      "pass": true,
+      "detail": "prk-fresh15b_default"
+    },
+    {
+      "check": "controller_no_docker_socket_mount",
+      "pass": true,
+      "detail": "socket mounts=none"
+    },
+    {
+      "check": "controller_no_docker_socket_in_container",
+      "pass": true,
+      "detail": "no /var/run/docker.sock"
+    },
+    {
+      "check": "controller_no_sudo",
+      "pass": true,
+      "detail": "sudo absent"
+    },
+    {
+      "check": "agent_not_privileged",
+      "pass": true,
+      "detail": "Privileged=False"
+    },
+    {
+      "check": "agent_not_host_network",
+      "pass": true,
+      "detail": "prk-fresh15b_default"
+    },
+    {
+      "check": "agent_no_docker_socket_mount",
+      "pass": true,
+      "detail": "socket mounts=none"
+    },
+    {
+      "check": "agent_no_docker_socket_in_container",
+      "pass": true,
+      "detail": "no /var/run/docker.sock"
+    },
+    {
+      "check": "agent_no_sudo",
+      "pass": true,
+      "detail": "sudo absent"
+    },
+    {
+      "check": "controller_only_configured_localhost",
+      "pass": true,
+      "detail": "[{\"container_port\": \"8080/tcp\", \"host_ip\": \"127.0.0.1\", \"host_port\": \"18080\"}]"
+    },
+    {
+      "check": "agent_no_published_ports",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "check": "controller_java_21",
+      "pass": true,
+      "detail": "openjdk version \"21.0.13\" 2026-10-20 LTS"
+    },
+    {
+      "check": "jenkins_core_version",
+      "pass": true,
+      "detail": "2.580.2"
+    },
+    {
+      "check": "agent_java_21",
+      "pass": true,
+      "detail": "openjdk version \"21.0.13.1\" 2026-11-17 LTS"
+    },
+    {
+      "check": "agent_jdk8",
+      "pass": true,
+      "detail": "openjdk version \"1.8.0_512\""
+    },
+    {
+      "check": "agent_jdk17",
+      "pass": true,
+      "detail": "openjdk version \"17.0.21.1\" 2026-11-17"
+    },
+    {
+      "check": "agent_maven_3916_on_jdk17",
+      "pass": true,
+      "detail": "Apache Maven 3.9.16 (2bdd9fddda4b155ebf8000e807eb73fd829a51d5) / Java version: 17.0.21.1, vendor: Eclipse Adoptium, runtime: /opt/java/jdk17"
+    },
+    {
+      "check": "agent_maven_3916_on_jdk8",
+      "pass": true,
+      "detail": "Apache Maven 3.9.16 (2bdd9fddda4b155ebf8000e807eb73fd829a51d5) / Java version: 1.8.0_512, vendor: Temurin, runtime: /opt/java/jdk8/jre"
+    },
+    {
+      "check": "controller_zero_executors",
+      "pass": true,
+      "detail": "numExecutors=0"
+    },
+    {
+      "check": "jenkins_security_enabled",
+      "pass": true,
+      "detail": "useSecurity=True"
+    },
+    {
+      "check": "anonymous_api_denied",
+      "pass": true,
+      "detail": "anonymous /api/json -> 403"
+    },
+    {
+      "check": "agent_online",
+      "pass": true,
+      "detail": "offline=False"
+    },
+    {
+      "check": "agent_two_executors",
+      "pass": true,
+      "detail": "numExecutors=2"
+    },
+    {
+      "check": "agent_labels",
+      "pass": true,
+      "detail": "amd64,java17,java8,linux,linux-agent,maven"
+    },
+    {
+      "check": "exactly_six_jobs",
+      "pass": true,
+      "detail": "petclinic,petclinic-baseline,train-ticket,train-ticket-baseline,train-ticket-prgate,train-ticket-prgate-baseline"
+    },
+    {
+      "check": "job_train-ticket-baseline_current_pipeline",
+      "pass": true,
+      "detail": "harness/pipelines/train-ticket/Jenkinsfile.baseline missing=none"
+    },
+    {
+      "check": "job_train-ticket-baseline_parameters",
+      "pass": true,
+      "detail": "missing=none"
+    },
+    {
+      "check": "job_train-ticket_current_pipeline",
+      "pass": true,
+      "detail": "harness/pipelines/train-ticket/Jenkinsfile missing=none"
+    },
+    {
+      "check": "job_train-ticket_parameters",
+      "pass": true,
+      "detail": "missing=none"
+    },
+    {
+      "check": "job_train-ticket-prgate_current_pipeline",
+      "pass": true,
+      "detail": "harness/pipelines/train-ticket/Jenkinsfile.prgate missing=none"
+    },
+    {
+      "check": "job_train-ticket-prgate_parameters",
+      "pass": true,
+      "detail": "missing=none"
+    },
+    {
+      "check": "job_train-ticket-prgate_shared_library",
+      "pass": true,
+      "detail": "loads prk@v1.0.0"
+    },
+    {
+      "check": "job_train-ticket-prgate-baseline_current_pipeline",
+      "pass": true,
+      "detail": "harness/pipelines/train-ticket/Jenkinsfile.prgate missing=none"
+    },
+    {
+      "check": "job_train-ticket-prgate-baseline_parameters",
+      "pass": true,
+      "detail": "missing=none"
+    },
+    {
+      "check": "job_train-ticket-prgate-baseline_shared_library",
+      "pass": true,
+      "detail": "loads prk@v1.0.0"
+    },
+    {
+      "check": "job_petclinic_current_pipeline",
+      "pass": true,
+      "detail": "harness/pipelines/petclinic/Jenkinsfile.prgate missing=none"
+    },
+    {
+      "check": "job_petclinic_parameters",
+      "pass": true,
+      "detail": "missing=none"
+    },
+    {
+      "check": "job_petclinic_shared_library",
+      "pass": true,
+      "detail": "loads prk@v1.0.0"
+    },
+    {
+      "check": "job_petclinic-baseline_current_pipeline",
+      "pass": true,
+      "detail": "harness/pipelines/petclinic/Jenkinsfile.prgate missing=none"
+    },
+    {
+      "check": "job_petclinic-baseline_parameters",
+      "pass": true,
+      "detail": "missing=none"
+    },
+    {
+      "check": "job_petclinic-baseline_shared_library",
+      "pass": true,
+      "detail": "loads prk@v1.0.0"
+    },
+    {
+      "check": "required_plugins_active",
+      "pass": true,
+      "detail": "missing/inactive=none"
+    },
+    {
+      "check": "top_level_plugin_versions_pinned",
+      "pass": true,
+      "detail": "13 pinned plugins match"
+    },
+    {
+      "check": "no_secrets_in_git_status",
+      "pass": true,
+      "detail": "git status clean of .secrets"
+    },
+    {
+      "check": "secrets_files_gitignored",
+      "pass": true,
+      "detail": ".secrets/{admin-password,agent-secret,jenkins.env}"
+    },
+    {
+      "check": "secrets_file_permissions",
+      "pass": true,
+      "detail": "{\"admin-password\": \"0o600\", \"jenkins.env\": \"0o600\", \"agent-secret\": \"0o644\"}"
+    },
+    {
+      "check": "agent_secret_mounted_readable",
+      "pass": true,
+      "detail": "secret file is present and readable in the agent"
+    },
+    {
+      "check": "secret_values_not_in_project_files",
+      "pass": true,
+      "detail": "no matches"
+    },
+    {
+      "check": "1_build_result",
+      "pass": true,
+      "detail": "#1 SUCCESS in 29138 ms"
+    },
+    {
+      "check": "1_ran_on_agent",
+      "pass": true,
+      "detail": "Running on linux-agent in /home/jenkins/agent/workspace/train-ticket"
+    },
+    {
+      "check": "1_jdk8_visible",
+      "pass": true,
+      "detail": "JDK 8 version printed by the real pipeline"
+    },
+    {
+      "check": "1_maven_visible",
+      "pass": true,
+      "detail": "Maven 3.9.16 on JDK 8 printed"
+    },
+    {
+      "check": "1_incremental_no_change",
+      "pass": true,
+      "detail": "no-change selector skipped Maven"
+    },
+    {
+      "check": "make_down",
+      "pass": true,
+      "detail": "containers removed"
+    },
+    {
+      "check": "make_up_after_down",
+      "pass": true,
+      "detail": "restart took 39 s"
+    },
+    {
+      "check": "restart_controller_ready",
+      "pass": true,
+      "detail": "controller and agent ready"
+    },
+    {
+      "check": "restart_zero_executors",
+      "pass": true,
+      "detail": "numExecutors=0"
+    },
+    {
+      "check": "restart_six_jobs",
+      "pass": true,
+      "detail": "petclinic,petclinic-baseline,train-ticket,train-ticket-baseline,train-ticket-prgate,train-ticket-prgate-baseline"
+    },
+    {
+      "check": "2_build_result",
+      "pass": true,
+      "detail": "#2 SUCCESS in 20741 ms"
+    },
+    {
+      "check": "2_ran_on_agent",
+      "pass": true,
+      "detail": "Running on linux-agent in /home/jenkins/agent/workspace/train-ticket"
+    },
+    {
+      "check": "2_jdk8_visible",
+      "pass": true,
+      "detail": "JDK 8 version printed by the real pipeline"
+    },
+    {
+      "check": "2_maven_visible",
+      "pass": true,
+      "detail": "Maven 3.9.16 on JDK 8 printed"
+    },
+    {
+      "check": "2_incremental_no_change",
+      "pass": true,
+      "detail": "no-change selector skipped Maven"
+    }
+  ],
+  "passed": 67,
+  "failed": 0,
+  "builds": {
+    "1": {
+      "number": 1,
+      "result": "SUCCESS",
+      "duration_ms": 29138,
+      "built_on": null,
+      "agent_line": "Running on linux-agent in /home/jenkins/agent/workspace/train-ticket",
+      "params": {
+        "INCREMENTAL": "true",
+        "SOURCE_REPO": "/src/train-ticket",
+        "SOURCE_COMMIT": "313886e99befb94be6cd45f085c98e0019f59829",
+        "REFERENCE_COMMIT": "313886e99befb94be6cd45f085c98e0019f59829",
+        "REACTOR_THREADS": "2"
+      },
+      "log": "../pipeline-rescue-kit/evidence/fresh-clone/rerun/verify/pipeline-smoke-1.log"
+    },
+    "2": {
+      "number": 2,
+      "result": "SUCCESS",
+      "duration_ms": 20741,
+      "built_on": null,
+      "agent_line": "Running on linux-agent in /home/jenkins/agent/workspace/train-ticket",
+      "params": {
+        "INCREMENTAL": "true",
+        "SOURCE_REPO": "/src/train-ticket",
+        "SOURCE_COMMIT": "313886e99befb94be6cd45f085c98e0019f59829",
+        "REFERENCE_COMMIT": "313886e99befb94be6cd45f085c98e0019f59829",
+        "REACTOR_THREADS": "2"
+      },
+      "log": "../pipeline-rescue-kit/evidence/fresh-clone/rerun/verify/pipeline-smoke-2.log"
+    }
+  },
+  "details": {
+    "controller_image": "prk-m1-controller:local",
+    "agent_image": "prk-m1-agent:local",
+    "controller_image_id": "sha256:4ad817506200d726a3dc051df1515d781e2beaef3eae068d9622002b7522084e",
+    "agent_image_id": "sha256:58d081e468c501071b9fd7e5b92e243903ff2d9fe59184155afc176f8f773bbe",
+    "controller_user": "jenkins",
+    "agent_user": "jenkins",
+    "controller_port_bindings": [
+      {
+        "container_port": "8080/tcp",
+        "host_ip": "127.0.0.1",
+        "host_port": "18080"
+      }
+    ],
+    "agent_port_bindings": [],
+    "jenkins_version": "2.580.2",
+    "agent_labels": [
+      "amd64",
+      "java17",
+      "java8",
+      "linux",
+      "linux-agent",
+      "maven"
+    ],
+    "jobs": [
+      "petclinic",
+      "petclinic-baseline",
+      "train-ticket",
+      "train-ticket-baseline",
+      "train-ticket-prgate",
+      "train-ticket-prgate-baseline"
+    ],
+    "installed_plugin_count": 90,
+    "restart_seconds": 39
+  }
+}

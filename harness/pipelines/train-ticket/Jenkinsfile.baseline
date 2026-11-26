@@ -1,0 +1,170 @@
+// M2 faithful Train-Ticket baseline.
+//
+// Source: upstream jenkins-ci/Jenkinsfile at
+// 313886e99befb94be6cd45f085c98e0019f59829.
+//
+// This file preserves the upstream build shape and its inefficiencies:
+// a full clean build with tests skipped, a second reactor pass for tests,
+// report-only PMD/JaCoCo, and Docker echos that claim success while the
+// actual build and push steps are commented out.
+//
+// Removed only where required for a safe local baseline:
+//   1. sudo docker login with credentials (password on the command line).
+//   2. sudo clean.sh, which deletes Docker images and requires host sudo.
+//   3. The hard-coded failure mail block.
+//
+// The Jenkins PMD publisher is replaced by archiveArtifacts because the old
+// PMD plugin is not available on this Jenkins version. The Maven PMD run is
+// preserved.
+pipeline {
+    // M2: upstream used "agent any"; the baseline must use the Java 8 agent.
+    agent { label 'linux && java8' }
+
+    options {
+        // M2 instrumentation: timestamps for stage evidence, a safety bound,
+        // and no concurrent builds. Upstream had no options.
+        timestamps()
+        timeout(time: 45, unit: 'MINUTES')
+        disableConcurrentBuilds()
+    }
+
+    // M2: the upstream job was multibranch and ran this block on master.
+    // This single pipeline job sets master explicitly to exercise that path.
+    environment {
+        BRANCH_NAME = 'master'
+    }
+
+    tools {
+        jdk 'jdk8'
+        // M2: upstream requested maven-3.6.1. This project pins Maven 3.9.16
+        // on the agent; the Maven lifecycle commands are unchanged. The stage
+        // commands also use the absolute pinned paths so the Java 8 toolchain
+        // is explicit.
+        maven 'maven-3.9.16'
+    }
+
+    stages {
+        // M2 instrumentation: check out the pinned source into a fresh
+        // workspace. The upstream job received its source from SCM.
+        stage('Checkout pinned source') {
+            steps {
+                deleteDir()
+                sh '''
+                    set -eu
+                    git -c safe.directory=/src/train-ticket clone --no-checkout file:///src/train-ticket .
+                    git -c advice.detachedHead=false checkout 313886e99befb94be6cd45f085c98e0019f59829
+                    test "$(git rev-parse HEAD)" = "313886e99befb94be6cd45f085c98e0019f59829"
+                    echo "TRAIN_TICKET_HEAD=$(git rev-parse HEAD)"
+                    echo "MAVEN_REPO=/m2/repository"
+                    /opt/java/jdk8/bin/java -version
+                    JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -v
+                '''
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo "Maven Building..."
+                sh '''
+                    set +e
+                    # M2 baseline fix: upstream used 'clean package'. In a clean
+                    # workspace that leaves org.services:ts-common only in target/,
+                    # so the unchanged 'mvn pmd:pmd' direct goal cannot resolve it
+                    # and the pipeline dies before tests. 'install' is the minimal
+                    # change that populates the local repository. It adds packaging
+                    # and install work; it skips no tests and removes no stage.
+                    JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -Dmaven.repo.local=/m2/repository clean install -Dmaven.test.skip=true
+                    rc=$?
+                    echo "PRK_MAVEN_EXIT_BUILD=$rc"
+                    exit $rc
+                '''
+                echo "Package Successful!"
+
+                script {
+                    if (env.BRANCH_NAME == 'master') {
+                        echo "Docker Building..."
+                        // M2: preserved upstream commented Docker build step.
+                        // It is not executed.
+                        // sh 'sudo /usr/local/bin/docker-compose build'
+                        echo "Building images Successful!"
+
+                        echo "Pushing images..."
+                        // M2: REMOVED unsafe upstream withCredentials + sudo docker login -p block.
+                        // The credential-bearing login is removed. The surrounding
+                        // echos are preserved so the false-success behaviour stays visible.
+                        // M2: preserved upstream commented image push step.
+                        // sh "sudo /bin/bash ./jenkins-ci/image-tag-push.sh"
+                        echo "Push Successful"
+                    } else {
+                        echo "This isn't the master branch. Skip the docker building & pushing step!"
+                    }
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // M3 controlled supplemental mode. FULL_SCOPE=true skips the
+                // report-only PMD goal and runs 'mvn test -fae' so the full
+                // 626-test workload can be compared with the rescued one-pass
+                // verify pipeline. The default false path is the unchanged M2
+                // baseline: PMD runs, and 'mvn test' stops at the first failure.
+                script {
+                    if (params.FULL_SCOPE != true) {
+                        echo "P3C-PMD"
+                        sh '''
+                            set +e
+                            JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -Dmaven.repo.local=/m2/repository pmd:pmd
+                            rc=$?
+                            echo "PRK_MAVEN_EXIT_PMD=$rc"
+                            exit $rc
+                        '''
+                    } else {
+                        echo "M3 FULL_SCOPE: skipping report-only PMD for the full-workload baseline."
+                    }
+                }
+
+                echo "Unit Test..."
+                script {
+                    def testArgs = (params.FULL_SCOPE == true) ? '-fae' : ''
+                    withEnv(["PRK_TEST_ARGS=${testArgs}"]) {
+                        sh '''
+                            set +e
+                            JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -Dmaven.repo.local=/m2/repository test $PRK_TEST_ARGS
+                            rc=$?
+                            echo "PRK_MAVEN_EXIT_TEST=$rc"
+                            exit $rc
+                        '''
+                    }
+                }
+                echo "Test Successful"
+
+                jacoco(
+                    execPattern: '**/target/jacoco.exec',
+                    classPattern: '**/target/classes',
+                    sourcePattern: '**/src/main/java',
+                    exclusionPattern: '**/src/test*',
+                    changeBuildStatus: true
+                )
+            }
+        }
+    }
+
+    post {
+        always {
+            // M2 environment constraint: the upstream pmd(...) publisher needs
+            // the old Jenkins PMD plugin (pmd 4.0.0 -> analysis-core), which is
+            // absent from the Jenkins 2.580.2 update center. The Maven PMD run
+            // is preserved; the XML is archived instead of published to a trend.
+            archiveArtifacts artifacts: '**/target/pmd.xml', allowEmptyArchive: true
+
+            junit testResults: "**/target/surefire-reports/*.xml"
+
+            // M2: REMOVED unsafe upstream step:
+            // sh 'sudo /bin/bash ./jenkins-ci/clean.sh'
+            // clean.sh deletes Docker images with sudo and is not needed for this
+            // baseline. The next run starts with deleteDir().
+        }
+        // M2: REMOVED hard-coded upstream failure mail block (addresses omitted).
+    }
+}

@@ -1,0 +1,50 @@
+{
+  "runs": [
+    {
+      "application": "Train-Ticket",
+      "job": "train-ticket-prgate",
+      "build": 41,
+      "result": "SUCCESS",
+      "duration_ms": 95963,
+      "url": "http://127.0.0.1:8080/job/train-ticket-prgate/41/",
+      "tag_lines": [
+        "Loading library prk@v1.0.0",
+        "Found match: refs/tags/v1.0.0 revision 802d69bda71b8abe687ed06056940a30a107a7ce",
+        "Commit message: \"prGate library snapshot\""
+      ],
+      "summary": {
+        "unit_tests": "25 run, 0 failed, 0 skipped",
+        "coverage_state": "PASS",
+        "coverage_value": "78.09%",
+        "static_state": "PASS",
+        "static_value": "37 total, 0 new",
+        "reference_build": "#1",
+        "reference_job": "train-ticket-prgate-baseline",
+        "decision": "PASS"
+      }
+    },
+    {
+      "application": "PetClinic",
+      "job": "petclinic",
+      "build": 15,
+      "result": "SUCCESS",
+      "duration_ms": 104206,
+      "url": "http://127.0.0.1:8080/job/petclinic/15/",
+      "tag_lines": [
+        "Loading library prk@v1.0.0",
+        "Found match: refs/tags/v1.0.0 revision 802d69bda71b8abe687ed06056940a30a107a7ce",
+        "Commit message: \"prGate library snapshot\""
+      ],
+      "summary": {
+        "unit_tests": "79 run, 0 failed, 2 skipped",
+        "coverage_state": "PASS",
+        "coverage_value": "93.99%",
+        "static_state": "PASS",
+        "static_value": "1 total, 0 new",
+        "reference_build": "#1",
+        "reference_job": "petclinic-baseline",
+        "decision": "PASS"
+      }
+    }
+  ]
+}

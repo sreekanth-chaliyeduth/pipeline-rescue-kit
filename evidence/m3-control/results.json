@@ -1,0 +1,6227 @@
+{
+  "milestone": "M3 control",
+  "status": "PASS",
+  "source": {
+    "repository": "https://github.com/FudanSELab/train-ticket.git",
+    "checkout": "evidence/M2/work/train-ticket",
+    "commit": "313886e99befb94be6cd45f085c98e0019f59829"
+  },
+  "condition": {
+    "job": "train-ticket",
+    "params": {
+      "REACTOR_THREADS": "2",
+      "INCREMENTAL": "false",
+      "SOURCE_REPO": "/src/train-ticket",
+      "SOURCE_COMMIT": "313886e99befb94be6cd45f085c98e0019f59829",
+      "REFERENCE_COMMIT": "313886e99befb94be6cd45f085c98e0019f59829",
+      "IGNORE_TEST_FAILURES": "true"
+    },
+    "maven_command_expected": "JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -T 2 -fae -Dmaven.repo.local=/m2/repository -Dmaven.test.failure.ignore=true verify",
+    "threads": 2,
+    "failure_ignore": true,
+    "cache": "warm /m2/repository",
+    "jdk": "Temurin 1.8.0_512",
+    "maven": "Apache Maven 3.9.16",
+    "agent": "linux-agent"
+  },
+  "control_runs": [
+    {
+      "label": "control-1",
+      "job": "train-ticket",
+      "params": {
+        "REACTOR_THREADS": "2",
+        "INCREMENTAL": "false",
+        "SOURCE_REPO": "/src/train-ticket",
+        "SOURCE_COMMIT": "313886e99befb94be6cd45f085c98e0019f59829",
+        "REFERENCE_COMMIT": "313886e99befb94be6cd45f085c98e0019f59829",
+        "IGNORE_TEST_FAILURES": "true"
+      },
+      "maven_command": "JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -T 2 -fae -Dmaven.repo.local=/m2/repository -Dmaven.test.failure.ignore=true verify",
+      "build_number": 37,
+      "result": "UNSTABLE",
+      "started_at": "2026-11-23T14:25:30Z",
+      "finished_at": "2026-11-23T14:32:42Z",
+      "host_wall_clock_s": 432.1,
+      "jenkins_duration_ms": 421555,
+      "stages": [
+        {
+          "name": "Declarative: Tool Install",
+          "status": "SUCCESS",
+          "duration_ms": 427
+        },
+        {
+          "name": "Checkout pinned source",
+          "status": "SUCCESS",
+          "duration_ms": 6408
+        },
+        {
+          "name": "Select modules",
+          "status": "NOT_EXECUTED",
+          "duration_ms": 284
+        },
+        {
+          "name": "Verify",
+          "status": "SUCCESS",
+          "duration_ms": 402602
+        },
+        {
+          "name": "Declarative: Post Actions",
+          "status": "UNSTABLE",
+          "duration_ms": 5610
+        }
+      ],
+      "stage_sum_ms": 415331,
+      "post_estimate_ms": 6224,
+      "maven_exit_codes": {
+        "VERIFY": 0
+      },
+      "cache_before_mb": 3290,
+      "cache_after_mb": 3290,
+      "reactors": [
+        {
+          "phase": "verify",
+          "counts": {
+            "SUCCESS": 43
+          },
+          "modules": [
+            {
+              "display_name": "ts-service-cluster 0.1.0",
+              "result": "SUCCESS",
+              "seconds": 1.457
+            },
+            {
+              "display_name": "ts-common 0.1.0",
+              "result": "SUCCESS",
+              "seconds": 5.368
+            },
+            {
+              "display_name": "ts-verification-code-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 12.125
+            },
+            {
+              "display_name": "ts-contacts-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 12.279
+            },
+            {
+              "display_name": "ts-order-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 13.816
+            },
+            {
+              "display_name": "ts-order-other-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 14.324
+            },
+            {
+              "display_name": "ts-config-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 10.772
+            },
+            {
+              "display_name": "ts-station-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 11.372
+            },
+            {
+              "display_name": "ts-train-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 12.51
+            },
+            {
+              "display_name": "ts-travel-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 17.096
+            },
+            {
+              "display_name": "ts-travel2-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 24.185
+            },
+            {
+              "display_name": "ts-preserve-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 33.958
+            },
+            {
+              "display_name": "ts-preserve-other-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 30.665
+            },
+            {
+              "display_name": "ts-basic-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 21.356
+            },
+            {
+              "display_name": "ts-price-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 17.189
+            },
+            {
+              "display_name": "ts-notification-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 20.601
+            },
+            {
+              "display_name": "ts-security-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 17.429
+            },
+            {
+              "display_name": "ts-inside-payment-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 19.549
+            },
+            {
+              "display_name": "ts-execute-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 17.766
+            },
+            {
+              "display_name": "ts-payment-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 18.187
+            },
+            {
+              "display_name": "ts-rebook-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 17.218
+            },
+            {
+              "display_name": "ts-cancel-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 16.032
+            },
+            {
+              "display_name": "ts-route-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 17.506
+            },
+            {
+              "display_name": "ts-assurance-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 17.351
+            },
+            {
+              "display_name": "ts-seat-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 16.946
+            },
+            {
+              "display_name": "ts-travel-plan-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 15.985
+            },
+            {
+              "display_name": "ts-route-plan-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 15.787
+            },
+            {
+              "display_name": "ts-food-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 20.643
+            },
+            {
+              "display_name": "ts-station-food-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 20.131
+            },
+            {
+              "display_name": "ts-consign-price-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 18.988
+            },
+            {
+              "display_name": "ts-consign-price-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 20.649
+            },
+            {
+              "display_name": "ts-admin-order-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 17.181
+            },
+            {
+              "display_name": "ts-admin-basic-info-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 18.356
+            },
+            {
+              "display_name": "ts-admin-route-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 16.529
+            },
+            {
+              "display_name": "ts-admin-travel-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 18.118
+            },
+            {
+              "display_name": "ts-admin-user-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 19.042
+            },
+            {
+              "display_name": "ts-auth-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 18.797
+            },
+            {
+              "display_name": "ts-user-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 16.958
+            },
+            {
+              "display_name": "ts-delivery-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 2.444
+            },
+            {
+              "display_name": "ts-train-food-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 2.637
+            },
+            {
+              "display_name": "ts-gateway-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 6.232
+            },
+            {
+              "display_name": "ts-food-delivery-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 19.114
+            },
+            {
+              "display_name": "ts-wait-order-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 63
+            }
+          ]
+        }
+      ],
+      "tests": {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0,
+        "failed_cases": [
+          {
+            "class": "adminbasic.controller.AdminBasicInfoControllerTest",
+            "test": "testDeletePrice",
+            "status": "FAILED"
+          },
+          {
+            "class": "adminbasic.controller.AdminBasicInfoControllerTest",
+            "test": "testDeleteStation",
+            "status": "FAILED"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testDeletePrice",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testDeleteTrain",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testModifyPrice",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testModifyTrain",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testDeleteContact",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testModifyStation",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testAddStation",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testAddPrice",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testAddTrain",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testGetAllStations",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testGetAllConfigs",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testDeleteStation",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testDeleteConfig",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testAddConfig",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testGetAllPrices",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testGetAllTrains",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testModifyConfig",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testGetAllContacts",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testModifyContact",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testAddContact",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testUpdateOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testUpdateOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testDeleteOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testDeleteOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testAddOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testAddOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testGetAllOrders1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testGetAllOrders2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminroute.controller.AdminRouteControllerTest",
+            "test": "testAddRoute",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminroute.service.AdminRouteServiceImplTest",
+            "test": "testCreateAndModifyRoute",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminroute.service.AdminRouteServiceImplTest",
+            "test": "testDeleteRoute",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminroute.service.AdminRouteServiceImplTest",
+            "test": "testGetAllRoutes",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testUpdateTravel1",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testUpdateTravel2",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testGetAllTravels1",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testGetAllTravels2",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testAddTravel1",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testAddTravel2",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testAddTravel3",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testAddTravel4",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testDeleteTravel1",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testDeleteTravel2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminuser.service.AdminUserServiceImplTest",
+            "test": "testAddUser",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminuser.service.AdminUserServiceImplTest",
+            "test": "testGetAllUsers",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminuser.service.AdminUserServiceImplTest",
+            "test": "testUpdateUser",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminuser.service.AdminUserServiceImplTest",
+            "test": "testDeleteUser",
+            "status": "ERROR"
+          },
+          {
+            "class": "auth.controller.UserControllerTest",
+            "test": "testDeleteUserById",
+            "status": "ERROR"
+          },
+          {
+            "class": "auth.service.TokenServiceImplTest",
+            "test": "testGetToken1",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.BasicServiceImplTest",
+            "test": "testCheckStationExists",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.BasicServiceImplTest",
+            "test": "testQueryTrainType",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.BasicServiceImplTest",
+            "test": "testQueryForTravel",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.BasicServiceImplTest",
+            "test": "testQueryForStationId",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testCancelOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testCancelOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testGetAccount",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testSendEmail",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testCalculateRefund1",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testCalculateRefund2",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testDrawbackMoney",
+            "status": "ERROR"
+          },
+          {
+            "class": "consign.service.ConsignServiceImplTest",
+            "test": "testUpdateConsignRecord1",
+            "status": "ERROR"
+          },
+          {
+            "class": "consign.service.ConsignServiceImplTest",
+            "test": "testInsertConsignRecord",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.controller.ContactsControllerTest",
+            "test": "testGetContactsByContactsId",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.controller.ContactsControllerTest",
+            "test": "testDeleteContacts",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.controller.ContactsControllerTest",
+            "test": "testFindContactsByAccountId",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.controller.ContactsControllerTest",
+            "test": "testGetAllContacts",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testFindContactsById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testFindContactsById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testCreateContacts1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testCreateContacts2",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testModify1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testModify2",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testDelete1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testDelete2",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testFindContactsByAccountId",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testGetAllContacts1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testGetAllContacts2",
+            "status": "ERROR"
+          },
+          {
+            "class": "execute.service.ExecuteServiceImplTest",
+            "test": "testTicketCollect1",
+            "status": "ERROR"
+          },
+          {
+            "class": "execute.service.ExecuteServiceImplTest",
+            "test": "testTicketCollect2",
+            "status": "ERROR"
+          },
+          {
+            "class": "execute.service.ExecuteServiceImplTest",
+            "test": "testTicketExecute1",
+            "status": "ERROR"
+          },
+          {
+            "class": "execute.service.ExecuteServiceImplTest",
+            "test": "testTicketExecute2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testCreateFoodOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testCreateFoodOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testDeleteFoodOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testDeleteFoodOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testUpdateFoodOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testUpdateFoodOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testFindByOrderId1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testFindByOrderId2",
+            "status": "ERROR"
+          },
+          {
+            "class": "inside_payment.service.InsidePaymentServiceImplTest",
+            "test": "testPay",
+            "status": "ERROR"
+          },
+          {
+            "class": "inside_payment.service.InsidePaymentServiceImplTest",
+            "test": "testInitPayment1",
+            "status": "ERROR"
+          },
+          {
+            "class": "inside_payment.service.InsidePaymentServiceImplTest",
+            "test": "testInitPayment2",
+            "status": "ERROR"
+          },
+          {
+            "class": "inside_payment.service.InsidePaymentServiceImplTest",
+            "test": "testCreateAccount2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.controller.OrderOtherControllerTest",
+            "test": "testQueryOrdersForRefresh",
+            "status": "FAILED"
+          },
+          {
+            "class": "other.controller.OrderOtherControllerTest",
+            "test": "testQueryOrders",
+            "status": "FAILED"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testQueryOrders",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testGetOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testGetOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testSaveChanges2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testAlterOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testFindOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testFindOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testCancelOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testCancelOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testInitOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testGetOrderPrice1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testGetOrderPrice2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testPayOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testPayOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testUpdateOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testDeleteOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testDeleteOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testAddNewOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testModifyOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testModifyOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testQueryForStationId",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.controller.OrderControllerTest",
+            "test": "testQueryOrdersForRefresh",
+            "status": "FAILED"
+          },
+          {
+            "class": "order.controller.OrderControllerTest",
+            "test": "testQueryOrders",
+            "status": "FAILED"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testQueryOrders",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testSaveChanges2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testAlterOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testFindOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testFindOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCancelOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCancelOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testInitOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderPrice1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderPrice2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testPayOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testPayOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testUpdateOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testDeleteOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testDeleteOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testAddNewOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testModifyOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testModifyOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testQueryForStationId",
+            "status": "ERROR"
+          },
+          {
+            "class": "com.trainticket.service.PaymentServiceImplTest",
+            "test": "testAddMoney",
+            "status": "ERROR"
+          },
+          {
+            "class": "com.trainticket.service.PaymentServiceImplTest",
+            "test": "testInitPayment1",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserveOther.service.PreserveOtherServiceImplTest",
+            "test": "testGetAccount",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserveOther.service.PreserveOtherServiceImplTest",
+            "test": "testPreserve",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserveOther.service.PreserveOtherServiceImplTest",
+            "test": "testDipatchSeat",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserveOther.service.PreserveOtherServiceImplTest",
+            "test": "testSendEmail",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserve.service.PreserveServiceImplTest",
+            "test": "testGetAccount",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserve.service.PreserveServiceImplTest",
+            "test": "testPreserve",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserve.service.PreserveServiceImplTest",
+            "test": "testDipatchSeat",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserve.service.PreserveServiceImplTest",
+            "test": "testSendEmail",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.controller.PriceControllerTest",
+            "test": "testDelete",
+            "status": "FAILED"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testFindById",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testDeletePriceConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testDeletePriceConfig2",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testUpdatePriceConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testUpdatePriceConfig2",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testCreateNewPriceConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testCreateNewPriceConfig2",
+            "status": "ERROR"
+          },
+          {
+            "class": "rebook.service.RebookServiceImplTest",
+            "test": "testDipatchSeat",
+            "status": "ERROR"
+          },
+          {
+            "class": "plan.service.RoutePlanServiceImplTest",
+            "test": "testSearchMinStopStations",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testGetRouteById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testGetRouteById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testCreateAndModify2",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testCreateAndModify3",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testDeleteRoute1",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testDeleteRoute2",
+            "status": "ERROR"
+          },
+          {
+            "class": "seat.service.SeatServiceImplTest",
+            "test": "testDistributeSeat1",
+            "status": "ERROR"
+          },
+          {
+            "class": "seat.service.SeatServiceImplTest",
+            "test": "testDistributeSeat2",
+            "status": "ERROR"
+          },
+          {
+            "class": "seat.service.SeatServiceImplTest",
+            "test": "testGetLeftTicketOfInterva2",
+            "status": "ERROR"
+          },
+          {
+            "class": "seat.service.SeatServiceImplTest",
+            "test": "testGetLeftTicketOfInterval",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testAddNewSecurityConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testDeleteSecurityConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testDeleteSecurityConfig2",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testCheck",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testModifySecurityConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testModifySecurityConfig2",
+            "status": "ERROR"
+          },
+          {
+            "class": "food.controller.StationFoodControllerTest",
+            "test": "testGetFoodStoresOfStation",
+            "status": "FAILED"
+          },
+          {
+            "class": "food.controller.StationFoodControllerTest",
+            "test": "testHome",
+            "status": "FAILED"
+          },
+          {
+            "class": "food.controller.StationFoodControllerTest",
+            "test": "testGetFoodStoresByStationNames",
+            "status": "FAILED"
+          },
+          {
+            "class": "food.controller.StationFoodControllerTest",
+            "test": "testGetAllFoodStores",
+            "status": "FAILED"
+          },
+          {
+            "class": "food.service.StationFoodServiceImplTest",
+            "test": "testCreateFoodStore1",
+            "status": "FAILED"
+          },
+          {
+            "class": "fdse.microservice.controller.StationControllerTest",
+            "test": "testDelete",
+            "status": "FAILED"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testQueryByIdBatch2",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testQueryById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testQueryById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testUpdate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testDelete1",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testUpdate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testRetrieve1",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testRetrieve2",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testDelete1",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testDelete2",
+            "status": "ERROR"
+          },
+          {
+            "class": "travelplan.controller.TravelPlanControllerTest",
+            "test": "testGetTransferResult",
+            "status": "ERROR"
+          },
+          {
+            "class": "travelplan.service.TravelPlanServiceImplTest",
+            "test": "testGetCheapest",
+            "status": "ERROR"
+          },
+          {
+            "class": "travelplan.service.TravelPlanServiceImplTest",
+            "test": "testGetMinStation",
+            "status": "ERROR"
+          },
+          {
+            "class": "travelplan.service.TravelPlanServiceImplTest",
+            "test": "testGetQuickest",
+            "status": "ERROR"
+          },
+          {
+            "class": "travel.controller.TravelControllerTest",
+            "test": "testQueryInfo2",
+            "status": "FAILED"
+          },
+          {
+            "class": "travel.service.TravelServiceImplTest",
+            "test": "testGetTripAllDetailInfo",
+            "status": "FAILED"
+          },
+          {
+            "class": "travel2.controller.TravelControllerTest",
+            "test": "testQueryInfo2",
+            "status": "FAILED"
+          },
+          {
+            "class": "travel2.service.TravelServiceImplTest",
+            "test": "testGetTripAllDetailInfo",
+            "status": "FAILED"
+          },
+          {
+            "class": "user.controller.UserControllerTest",
+            "test": "testDeleteUserById",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testDeleteUser1",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testDeleteUser2",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testSaveUser",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testFindByUserId1",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testFindByUserId2",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testUpdateUser1",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testUpdateUser2",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testGetAllUsers1",
+            "status": "ERROR"
+          },
+          {
+            "class": "waitorder.WaitOrderApplicationTests",
+            "test": "contextLoads",
+            "status": "ERROR"
+          }
+        ],
+        "per_class": [
+          {
+            "class": "verifycode.controller.VerifyCodeControllerTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "verifycode.service.VerifyCodeServiceImplTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "contacts.controller.ContactsControllerTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "tests": 13,
+            "failures": 0,
+            "errors": 13,
+            "skipped": 0
+          },
+          {
+            "class": "order.controller.OrderControllerTest",
+            "tests": 16,
+            "failures": 2,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "tests": 35,
+            "failures": 1,
+            "errors": 22,
+            "skipped": 0
+          },
+          {
+            "class": "other.controller.OrderOtherControllerTest",
+            "tests": 16,
+            "failures": 2,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "tests": 35,
+            "failures": 1,
+            "errors": 22,
+            "skipped": 0
+          },
+          {
+            "class": "config.controller.ConfigControllerTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "config.service.ConfigServiceImplTest",
+            "tests": 10,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "fdse.microservice.controller.StationControllerTest",
+            "tests": 9,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "tests": 18,
+            "failures": 0,
+            "errors": 7,
+            "skipped": 0
+          },
+          {
+            "class": "train.controller.TrainControllerTest",
+            "tests": 11,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "tests": 9,
+            "failures": 0,
+            "errors": 7,
+            "skipped": 0
+          },
+          {
+            "class": "travel.controller.TravelControllerTest",
+            "tests": 13,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "travel.service.TravelServiceImplTest",
+            "tests": 19,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "travel2.controller.TravelControllerTest",
+            "tests": 13,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "travel2.service.TravelServiceImplTest",
+            "tests": 19,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "preserve.controller.PreserveControllerTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "preserve.service.PreserveServiceImplTest",
+            "tests": 4,
+            "failures": 1,
+            "errors": 3,
+            "skipped": 0
+          },
+          {
+            "class": "preserveOther.controller.PreserveOtherControllerTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "preserveOther.service.PreserveOtherServiceImplTest",
+            "tests": 4,
+            "failures": 1,
+            "errors": 3,
+            "skipped": 0
+          },
+          {
+            "class": "fdse.microservice.controller.BasicControllerTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "fdse.microservice.service.BasicServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "price.controller.PriceControllerTest",
+            "tests": 6,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "tests": 11,
+            "failures": 0,
+            "errors": 7,
+            "skipped": 0
+          },
+          {
+            "class": "notification.controller.NotificationControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "notification.service.NotificationServiceImplTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "security.controller.SecurityControllerTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "tests": 9,
+            "failures": 1,
+            "errors": 5,
+            "skipped": 0
+          },
+          {
+            "class": "inside_payment.controller.InsidePaymentControllerTest",
+            "tests": 9,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "inside_payment.service.InsidePaymentServiceImplTest",
+            "tests": 15,
+            "failures": 2,
+            "errors": 2,
+            "skipped": 0
+          },
+          {
+            "class": "execute.controller.ExecuteControlllerTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "execute.service.ExecuteServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "com.trainticket.controller.PaymentControllerTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "com.trainticket.service.PaymentServiceImplTest",
+            "tests": 7,
+            "failures": 1,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "rebook.controller.RebookControllerTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "rebook.service.RebookServiceImplTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "cancel.controller.CancelControllerTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 7,
+            "skipped": 0
+          },
+          {
+            "class": "route.controller.RouteControllerTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "tests": 11,
+            "failures": 2,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "assurance.controller.AssuranceControllerTest",
+            "tests": 9,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "assurance.service.AssuranceServiceImplTest",
+            "tests": 16,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "seat.controller.SeatControllerTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "seat.service.SeatServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "travelplan.controller.TravelPlanControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "travelplan.service.TravelPlanServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 3,
+            "skipped": 0
+          },
+          {
+            "class": "plan.controller.RoutePlanControllerTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "plan.service.RoutePlanServiceImplTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "adminorder.controller.FoodControllerTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "tests": 11,
+            "failures": 0,
+            "errors": 8,
+            "skipped": 0
+          },
+          {
+            "class": "food.controller.StationFoodControllerTest",
+            "tests": 4,
+            "failures": 4,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "food.service.StationFoodServiceImplTest",
+            "tests": 8,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "consignprice.controller.ConsignPriceControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "consignprice.service.ConsignPriceServiceImplTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "consign.controller.ConsignControllerTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "consign.service.ConsignServiceImplTest",
+            "tests": 9,
+            "failures": 0,
+            "errors": 2,
+            "skipped": 0
+          },
+          {
+            "class": "adminorder.controller.AdminOrderControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 8,
+            "skipped": 0
+          },
+          {
+            "class": "adminbasic.controller.AdminBasicInfoControllerTest",
+            "tests": 21,
+            "failures": 2,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "tests": 20,
+            "failures": 0,
+            "errors": 20,
+            "skipped": 0
+          },
+          {
+            "class": "adminroute.controller.AdminRouteControllerTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "adminroute.service.AdminRouteServiceImplTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 3,
+            "skipped": 0
+          },
+          {
+            "class": "admintravel.controller.AdminTravelControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "tests": 10,
+            "failures": 0,
+            "errors": 10,
+            "skipped": 0
+          },
+          {
+            "class": "adminuser.controller.AdminUserControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "adminuser.service.AdminUserServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "auth.controller.AuthControllerTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "auth.controller.UserControllerTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "auth.service.TokenServiceImplTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "auth.service.UserServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "user.controller.UserControllerTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "tests": 12,
+            "failures": 0,
+            "errors": 8,
+            "skipped": 0
+          },
+          {
+            "class": "food_delivery.controller.FoodDeliveryControllerTest",
+            "tests": 9,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "waitorder.WaitOrderApplicationTests",
+            "tests": 1,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "waitorder.service.Impl.WaitListOrderServiceImplTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          }
+        ],
+        "jenkins_reported": 626
+      },
+      "peak_container_mem_gib": 1.468,
+      "raw_dir": "evidence/m3-control/raw/control-1"
+    },
+    {
+      "label": "control-2",
+      "job": "train-ticket",
+      "params": {
+        "REACTOR_THREADS": "2",
+        "INCREMENTAL": "false",
+        "SOURCE_REPO": "/src/train-ticket",
+        "SOURCE_COMMIT": "313886e99befb94be6cd45f085c98e0019f59829",
+        "REFERENCE_COMMIT": "313886e99befb94be6cd45f085c98e0019f59829",
+        "IGNORE_TEST_FAILURES": "true"
+      },
+      "maven_command": "JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -T 2 -fae -Dmaven.repo.local=/m2/repository -Dmaven.test.failure.ignore=true verify",
+      "build_number": 38,
+      "result": "UNSTABLE",
+      "started_at": "2026-11-23T14:32:42Z",
+      "finished_at": "2026-11-23T14:43:36Z",
+      "host_wall_clock_s": 653.4,
+      "jenkins_duration_ms": 641674,
+      "stages": [
+        {
+          "name": "Declarative: Tool Install",
+          "status": "SUCCESS",
+          "duration_ms": 194
+        },
+        {
+          "name": "Checkout pinned source",
+          "status": "SUCCESS",
+          "duration_ms": 6895
+        },
+        {
+          "name": "Select modules",
+          "status": "NOT_EXECUTED",
+          "duration_ms": 1493
+        },
+        {
+          "name": "Verify",
+          "status": "SUCCESS",
+          "duration_ms": 629392
+        },
+        {
+          "name": "Declarative: Post Actions",
+          "status": "UNSTABLE",
+          "duration_ms": 2044
+        }
+      ],
+      "stage_sum_ms": 640018,
+      "post_estimate_ms": 1656,
+      "maven_exit_codes": {
+        "VERIFY": 0
+      },
+      "cache_before_mb": 3290,
+      "cache_after_mb": 3290,
+      "reactors": [
+        {
+          "phase": "verify",
+          "counts": {
+            "SUCCESS": 43
+          },
+          "modules": [
+            {
+              "display_name": "ts-service-cluster 0.1.0",
+              "result": "SUCCESS",
+              "seconds": 2.08
+            },
+            {
+              "display_name": "ts-common 0.1.0",
+              "result": "SUCCESS",
+              "seconds": 18.2
+            },
+            {
+              "display_name": "ts-verification-code-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 22.664
+            },
+            {
+              "display_name": "ts-contacts-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 23.405
+            },
+            {
+              "display_name": "ts-order-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 41.081
+            },
+            {
+              "display_name": "ts-order-other-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 40.936
+            },
+            {
+              "display_name": "ts-config-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 17.278
+            },
+            {
+              "display_name": "ts-station-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 17.579
+            },
+            {
+              "display_name": "ts-train-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 41.812
+            },
+            {
+              "display_name": "ts-travel-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 44.767
+            },
+            {
+              "display_name": "ts-travel2-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 20.886
+            },
+            {
+              "display_name": "ts-preserve-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 17.774
+            },
+            {
+              "display_name": "ts-preserve-other-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 41.797
+            },
+            {
+              "display_name": "ts-basic-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 41.874
+            },
+            {
+              "display_name": "ts-price-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 19.103
+            },
+            {
+              "display_name": "ts-notification-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 19.172
+            },
+            {
+              "display_name": "ts-security-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 35.753
+            },
+            {
+              "display_name": "ts-inside-payment-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 37.236
+            },
+            {
+              "display_name": "ts-execute-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 21.551
+            },
+            {
+              "display_name": "ts-payment-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 21.246
+            },
+            {
+              "display_name": "ts-rebook-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 29.296
+            },
+            {
+              "display_name": "ts-cancel-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 32.856
+            },
+            {
+              "display_name": "ts-route-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 24.403
+            },
+            {
+              "display_name": "ts-assurance-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 20.769
+            },
+            {
+              "display_name": "ts-seat-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 19.23
+            },
+            {
+              "display_name": "ts-travel-plan-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 21.783
+            },
+            {
+              "display_name": "ts-route-plan-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 32.397
+            },
+            {
+              "display_name": "ts-food-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 31.967
+            },
+            {
+              "display_name": "ts-station-food-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 21.78
+            },
+            {
+              "display_name": "ts-consign-price-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 22.984
+            },
+            {
+              "display_name": "ts-consign-price-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 36.448
+            },
+            {
+              "display_name": "ts-admin-order-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 35.709
+            },
+            {
+              "display_name": "ts-admin-basic-info-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 21.46
+            },
+            {
+              "display_name": "ts-admin-route-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 17.619
+            },
+            {
+              "display_name": "ts-admin-travel-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 23.679
+            },
+            {
+              "display_name": "ts-admin-user-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 24.674
+            },
+            {
+              "display_name": "ts-auth-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 27.915
+            },
+            {
+              "display_name": "ts-user-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 26.758
+            },
+            {
+              "display_name": "ts-delivery-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 1.936
+            },
+            {
+              "display_name": "ts-train-food-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 1.981
+            },
+            {
+              "display_name": "ts-gateway-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 15.078
+            },
+            {
+              "display_name": "ts-food-delivery-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 21.352
+            },
+            {
+              "display_name": "ts-wait-order-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 103
+            }
+          ]
+        }
+      ],
+      "tests": {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0,
+        "failed_cases": [
+          {
+            "class": "adminbasic.controller.AdminBasicInfoControllerTest",
+            "test": "testDeletePrice",
+            "status": "FAILED"
+          },
+          {
+            "class": "adminbasic.controller.AdminBasicInfoControllerTest",
+            "test": "testDeleteStation",
+            "status": "FAILED"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testDeletePrice",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testDeleteTrain",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testModifyPrice",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testModifyTrain",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testDeleteContact",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testModifyStation",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testAddStation",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testAddPrice",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testAddTrain",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testGetAllStations",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testGetAllConfigs",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testDeleteStation",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testDeleteConfig",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testAddConfig",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testGetAllPrices",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testGetAllTrains",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testModifyConfig",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testGetAllContacts",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testModifyContact",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testAddContact",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testUpdateOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testUpdateOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testDeleteOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testDeleteOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testAddOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testAddOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testGetAllOrders1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testGetAllOrders2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminroute.controller.AdminRouteControllerTest",
+            "test": "testAddRoute",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminroute.service.AdminRouteServiceImplTest",
+            "test": "testCreateAndModifyRoute",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminroute.service.AdminRouteServiceImplTest",
+            "test": "testDeleteRoute",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminroute.service.AdminRouteServiceImplTest",
+            "test": "testGetAllRoutes",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testUpdateTravel1",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testUpdateTravel2",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testGetAllTravels1",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testGetAllTravels2",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testAddTravel1",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testAddTravel2",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testAddTravel3",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testAddTravel4",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testDeleteTravel1",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testDeleteTravel2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminuser.service.AdminUserServiceImplTest",
+            "test": "testAddUser",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminuser.service.AdminUserServiceImplTest",
+            "test": "testGetAllUsers",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminuser.service.AdminUserServiceImplTest",
+            "test": "testUpdateUser",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminuser.service.AdminUserServiceImplTest",
+            "test": "testDeleteUser",
+            "status": "ERROR"
+          },
+          {
+            "class": "auth.controller.UserControllerTest",
+            "test": "testDeleteUserById",
+            "status": "ERROR"
+          },
+          {
+            "class": "auth.service.TokenServiceImplTest",
+            "test": "testGetToken1",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.BasicServiceImplTest",
+            "test": "testCheckStationExists",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.BasicServiceImplTest",
+            "test": "testQueryTrainType",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.BasicServiceImplTest",
+            "test": "testQueryForTravel",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.BasicServiceImplTest",
+            "test": "testQueryForStationId",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testCancelOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testCancelOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testGetAccount",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testSendEmail",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testCalculateRefund1",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testCalculateRefund2",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testDrawbackMoney",
+            "status": "ERROR"
+          },
+          {
+            "class": "consign.service.ConsignServiceImplTest",
+            "test": "testUpdateConsignRecord1",
+            "status": "ERROR"
+          },
+          {
+            "class": "consign.service.ConsignServiceImplTest",
+            "test": "testInsertConsignRecord",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.controller.ContactsControllerTest",
+            "test": "testGetContactsByContactsId",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.controller.ContactsControllerTest",
+            "test": "testDeleteContacts",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.controller.ContactsControllerTest",
+            "test": "testFindContactsByAccountId",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.controller.ContactsControllerTest",
+            "test": "testGetAllContacts",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testFindContactsById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testFindContactsById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testCreateContacts1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testCreateContacts2",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testModify1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testModify2",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testDelete1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testDelete2",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testFindContactsByAccountId",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testGetAllContacts1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testGetAllContacts2",
+            "status": "ERROR"
+          },
+          {
+            "class": "execute.service.ExecuteServiceImplTest",
+            "test": "testTicketCollect1",
+            "status": "ERROR"
+          },
+          {
+            "class": "execute.service.ExecuteServiceImplTest",
+            "test": "testTicketCollect2",
+            "status": "ERROR"
+          },
+          {
+            "class": "execute.service.ExecuteServiceImplTest",
+            "test": "testTicketExecute1",
+            "status": "ERROR"
+          },
+          {
+            "class": "execute.service.ExecuteServiceImplTest",
+            "test": "testTicketExecute2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testCreateFoodOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testCreateFoodOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testDeleteFoodOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testDeleteFoodOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testUpdateFoodOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testUpdateFoodOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testFindByOrderId1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testFindByOrderId2",
+            "status": "ERROR"
+          },
+          {
+            "class": "inside_payment.service.InsidePaymentServiceImplTest",
+            "test": "testPay",
+            "status": "ERROR"
+          },
+          {
+            "class": "inside_payment.service.InsidePaymentServiceImplTest",
+            "test": "testInitPayment1",
+            "status": "ERROR"
+          },
+          {
+            "class": "inside_payment.service.InsidePaymentServiceImplTest",
+            "test": "testInitPayment2",
+            "status": "ERROR"
+          },
+          {
+            "class": "inside_payment.service.InsidePaymentServiceImplTest",
+            "test": "testCreateAccount2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.controller.OrderOtherControllerTest",
+            "test": "testQueryOrdersForRefresh",
+            "status": "FAILED"
+          },
+          {
+            "class": "other.controller.OrderOtherControllerTest",
+            "test": "testQueryOrders",
+            "status": "FAILED"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testQueryOrders",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testGetOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testGetOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testSaveChanges2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testAlterOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testFindOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testFindOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testCancelOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testCancelOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testInitOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testGetOrderPrice1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testGetOrderPrice2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testPayOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testPayOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testUpdateOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testDeleteOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testDeleteOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testAddNewOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testModifyOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testModifyOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testQueryForStationId",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.controller.OrderControllerTest",
+            "test": "testQueryOrdersForRefresh",
+            "status": "FAILED"
+          },
+          {
+            "class": "order.controller.OrderControllerTest",
+            "test": "testQueryOrders",
+            "status": "FAILED"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testQueryOrders",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testSaveChanges2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testAlterOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testFindOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testFindOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCancelOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCancelOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testInitOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderPrice1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderPrice2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testPayOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testPayOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testUpdateOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testDeleteOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testDeleteOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testAddNewOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testModifyOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testModifyOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testQueryForStationId",
+            "status": "ERROR"
+          },
+          {
+            "class": "com.trainticket.service.PaymentServiceImplTest",
+            "test": "testAddMoney",
+            "status": "ERROR"
+          },
+          {
+            "class": "com.trainticket.service.PaymentServiceImplTest",
+            "test": "testInitPayment1",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserveOther.service.PreserveOtherServiceImplTest",
+            "test": "testGetAccount",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserveOther.service.PreserveOtherServiceImplTest",
+            "test": "testPreserve",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserveOther.service.PreserveOtherServiceImplTest",
+            "test": "testDipatchSeat",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserveOther.service.PreserveOtherServiceImplTest",
+            "test": "testSendEmail",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserve.service.PreserveServiceImplTest",
+            "test": "testGetAccount",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserve.service.PreserveServiceImplTest",
+            "test": "testPreserve",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserve.service.PreserveServiceImplTest",
+            "test": "testDipatchSeat",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserve.service.PreserveServiceImplTest",
+            "test": "testSendEmail",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.controller.PriceControllerTest",
+            "test": "testDelete",
+            "status": "FAILED"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testFindById",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testDeletePriceConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testDeletePriceConfig2",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testUpdatePriceConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testUpdatePriceConfig2",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testCreateNewPriceConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testCreateNewPriceConfig2",
+            "status": "ERROR"
+          },
+          {
+            "class": "rebook.service.RebookServiceImplTest",
+            "test": "testDipatchSeat",
+            "status": "ERROR"
+          },
+          {
+            "class": "plan.service.RoutePlanServiceImplTest",
+            "test": "testSearchMinStopStations",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testGetRouteById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testGetRouteById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testCreateAndModify2",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testCreateAndModify3",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testDeleteRoute1",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testDeleteRoute2",
+            "status": "ERROR"
+          },
+          {
+            "class": "seat.service.SeatServiceImplTest",
+            "test": "testDistributeSeat1",
+            "status": "ERROR"
+          },
+          {
+            "class": "seat.service.SeatServiceImplTest",
+            "test": "testDistributeSeat2",
+            "status": "ERROR"
+          },
+          {
+            "class": "seat.service.SeatServiceImplTest",
+            "test": "testGetLeftTicketOfInterva2",
+            "status": "ERROR"
+          },
+          {
+            "class": "seat.service.SeatServiceImplTest",
+            "test": "testGetLeftTicketOfInterval",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testAddNewSecurityConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testDeleteSecurityConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testDeleteSecurityConfig2",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testCheck",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testModifySecurityConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testModifySecurityConfig2",
+            "status": "ERROR"
+          },
+          {
+            "class": "food.controller.StationFoodControllerTest",
+            "test": "testGetFoodStoresOfStation",
+            "status": "FAILED"
+          },
+          {
+            "class": "food.controller.StationFoodControllerTest",
+            "test": "testHome",
+            "status": "FAILED"
+          },
+          {
+            "class": "food.controller.StationFoodControllerTest",
+            "test": "testGetFoodStoresByStationNames",
+            "status": "FAILED"
+          },
+          {
+            "class": "food.controller.StationFoodControllerTest",
+            "test": "testGetAllFoodStores",
+            "status": "FAILED"
+          },
+          {
+            "class": "food.service.StationFoodServiceImplTest",
+            "test": "testCreateFoodStore1",
+            "status": "FAILED"
+          },
+          {
+            "class": "fdse.microservice.controller.StationControllerTest",
+            "test": "testDelete",
+            "status": "FAILED"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testQueryByIdBatch2",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testQueryById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testQueryById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testUpdate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testDelete1",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testUpdate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testRetrieve1",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testRetrieve2",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testDelete1",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testDelete2",
+            "status": "ERROR"
+          },
+          {
+            "class": "travelplan.controller.TravelPlanControllerTest",
+            "test": "testGetTransferResult",
+            "status": "ERROR"
+          },
+          {
+            "class": "travelplan.service.TravelPlanServiceImplTest",
+            "test": "testGetCheapest",
+            "status": "ERROR"
+          },
+          {
+            "class": "travelplan.service.TravelPlanServiceImplTest",
+            "test": "testGetMinStation",
+            "status": "ERROR"
+          },
+          {
+            "class": "travelplan.service.TravelPlanServiceImplTest",
+            "test": "testGetQuickest",
+            "status": "ERROR"
+          },
+          {
+            "class": "travel.controller.TravelControllerTest",
+            "test": "testQueryInfo2",
+            "status": "FAILED"
+          },
+          {
+            "class": "travel.service.TravelServiceImplTest",
+            "test": "testGetTripAllDetailInfo",
+            "status": "FAILED"
+          },
+          {
+            "class": "travel2.controller.TravelControllerTest",
+            "test": "testQueryInfo2",
+            "status": "FAILED"
+          },
+          {
+            "class": "travel2.service.TravelServiceImplTest",
+            "test": "testGetTripAllDetailInfo",
+            "status": "FAILED"
+          },
+          {
+            "class": "user.controller.UserControllerTest",
+            "test": "testDeleteUserById",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testDeleteUser1",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testDeleteUser2",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testSaveUser",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testFindByUserId1",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testFindByUserId2",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testUpdateUser1",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testUpdateUser2",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testGetAllUsers1",
+            "status": "ERROR"
+          },
+          {
+            "class": "waitorder.WaitOrderApplicationTests",
+            "test": "contextLoads",
+            "status": "ERROR"
+          }
+        ],
+        "per_class": [
+          {
+            "class": "verifycode.controller.VerifyCodeControllerTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "verifycode.service.VerifyCodeServiceImplTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "contacts.controller.ContactsControllerTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "tests": 13,
+            "failures": 0,
+            "errors": 13,
+            "skipped": 0
+          },
+          {
+            "class": "order.controller.OrderControllerTest",
+            "tests": 16,
+            "failures": 2,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "other.controller.OrderOtherControllerTest",
+            "tests": 16,
+            "failures": 2,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "tests": 35,
+            "failures": 1,
+            "errors": 22,
+            "skipped": 0
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "tests": 35,
+            "failures": 1,
+            "errors": 22,
+            "skipped": 0
+          },
+          {
+            "class": "config.controller.ConfigControllerTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "config.service.ConfigServiceImplTest",
+            "tests": 10,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "fdse.microservice.controller.StationControllerTest",
+            "tests": 9,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "tests": 18,
+            "failures": 0,
+            "errors": 7,
+            "skipped": 0
+          },
+          {
+            "class": "train.controller.TrainControllerTest",
+            "tests": 11,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "tests": 9,
+            "failures": 0,
+            "errors": 7,
+            "skipped": 0
+          },
+          {
+            "class": "travel.controller.TravelControllerTest",
+            "tests": 13,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "travel.service.TravelServiceImplTest",
+            "tests": 19,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "travel2.controller.TravelControllerTest",
+            "tests": 13,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "preserve.controller.PreserveControllerTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "travel2.service.TravelServiceImplTest",
+            "tests": 19,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "preserve.service.PreserveServiceImplTest",
+            "tests": 4,
+            "failures": 1,
+            "errors": 3,
+            "skipped": 0
+          },
+          {
+            "class": "preserveOther.controller.PreserveOtherControllerTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "fdse.microservice.controller.BasicControllerTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "preserveOther.service.PreserveOtherServiceImplTest",
+            "tests": 4,
+            "failures": 1,
+            "errors": 3,
+            "skipped": 0
+          },
+          {
+            "class": "fdse.microservice.service.BasicServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "price.controller.PriceControllerTest",
+            "tests": 6,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "tests": 11,
+            "failures": 0,
+            "errors": 7,
+            "skipped": 0
+          },
+          {
+            "class": "notification.controller.NotificationControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "notification.service.NotificationServiceImplTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "security.controller.SecurityControllerTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "tests": 9,
+            "failures": 1,
+            "errors": 5,
+            "skipped": 0
+          },
+          {
+            "class": "inside_payment.controller.InsidePaymentControllerTest",
+            "tests": 9,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "inside_payment.service.InsidePaymentServiceImplTest",
+            "tests": 15,
+            "failures": 2,
+            "errors": 2,
+            "skipped": 0
+          },
+          {
+            "class": "execute.controller.ExecuteControlllerTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "execute.service.ExecuteServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "com.trainticket.controller.PaymentControllerTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "com.trainticket.service.PaymentServiceImplTest",
+            "tests": 7,
+            "failures": 1,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "rebook.controller.RebookControllerTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "rebook.service.RebookServiceImplTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "cancel.controller.CancelControllerTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 7,
+            "skipped": 0
+          },
+          {
+            "class": "route.controller.RouteControllerTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "tests": 11,
+            "failures": 2,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "assurance.controller.AssuranceControllerTest",
+            "tests": 9,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "assurance.service.AssuranceServiceImplTest",
+            "tests": 16,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "seat.controller.SeatControllerTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "seat.service.SeatServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "travelplan.controller.TravelPlanControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "travelplan.service.TravelPlanServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 3,
+            "skipped": 0
+          },
+          {
+            "class": "plan.controller.RoutePlanControllerTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "plan.service.RoutePlanServiceImplTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "adminorder.controller.FoodControllerTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "tests": 11,
+            "failures": 0,
+            "errors": 8,
+            "skipped": 0
+          },
+          {
+            "class": "food.controller.StationFoodControllerTest",
+            "tests": 4,
+            "failures": 4,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "food.service.StationFoodServiceImplTest",
+            "tests": 8,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "consignprice.controller.ConsignPriceControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "consignprice.service.ConsignPriceServiceImplTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "consign.controller.ConsignControllerTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "consign.service.ConsignServiceImplTest",
+            "tests": 9,
+            "failures": 0,
+            "errors": 2,
+            "skipped": 0
+          },
+          {
+            "class": "adminorder.controller.AdminOrderControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 8,
+            "skipped": 0
+          },
+          {
+            "class": "adminbasic.controller.AdminBasicInfoControllerTest",
+            "tests": 21,
+            "failures": 2,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "adminroute.controller.AdminRouteControllerTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "tests": 20,
+            "failures": 0,
+            "errors": 20,
+            "skipped": 0
+          },
+          {
+            "class": "adminroute.service.AdminRouteServiceImplTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 3,
+            "skipped": 0
+          },
+          {
+            "class": "admintravel.controller.AdminTravelControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "tests": 10,
+            "failures": 0,
+            "errors": 10,
+            "skipped": 0
+          },
+          {
+            "class": "adminuser.controller.AdminUserControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "adminuser.service.AdminUserServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "auth.controller.AuthControllerTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "auth.controller.UserControllerTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "user.controller.UserControllerTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "auth.service.TokenServiceImplTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "auth.service.UserServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "tests": 12,
+            "failures": 0,
+            "errors": 8,
+            "skipped": 0
+          },
+          {
+            "class": "food_delivery.controller.FoodDeliveryControllerTest",
+            "tests": 9,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "waitorder.WaitOrderApplicationTests",
+            "tests": 1,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "waitorder.service.Impl.WaitListOrderServiceImplTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          }
+        ],
+        "jenkins_reported": 626
+      },
+      "peak_container_mem_gib": 1.771,
+      "raw_dir": "evidence/m3-control/raw/control-2"
+    },
+    {
+      "label": "control-3",
+      "job": "train-ticket",
+      "params": {
+        "REACTOR_THREADS": "2",
+        "INCREMENTAL": "false",
+        "SOURCE_REPO": "/src/train-ticket",
+        "SOURCE_COMMIT": "313886e99befb94be6cd45f085c98e0019f59829",
+        "REFERENCE_COMMIT": "313886e99befb94be6cd45f085c98e0019f59829",
+        "IGNORE_TEST_FAILURES": "true"
+      },
+      "maven_command": "JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -T 2 -fae -Dmaven.repo.local=/m2/repository -Dmaven.test.failure.ignore=true verify",
+      "build_number": 39,
+      "result": "UNSTABLE",
+      "started_at": "2026-11-23T14:43:36Z",
+      "finished_at": "2026-11-23T14:52:20Z",
+      "host_wall_clock_s": 523.9,
+      "jenkins_duration_ms": 514622,
+      "stages": [
+        {
+          "name": "Declarative: Tool Install",
+          "status": "SUCCESS",
+          "duration_ms": 169
+        },
+        {
+          "name": "Checkout pinned source",
+          "status": "SUCCESS",
+          "duration_ms": 5812
+        },
+        {
+          "name": "Select modules",
+          "status": "NOT_EXECUTED",
+          "duration_ms": 103
+        },
+        {
+          "name": "Verify",
+          "status": "SUCCESS",
+          "duration_ms": 505610
+        },
+        {
+          "name": "Declarative: Post Actions",
+          "status": "UNSTABLE",
+          "duration_ms": 1755
+        }
+      ],
+      "stage_sum_ms": 513449,
+      "post_estimate_ms": 1173,
+      "maven_exit_codes": {
+        "VERIFY": 0
+      },
+      "cache_before_mb": 3290,
+      "cache_after_mb": 3290,
+      "reactors": [
+        {
+          "phase": "verify",
+          "counts": {
+            "SUCCESS": 43
+          },
+          "modules": [
+            {
+              "display_name": "ts-service-cluster 0.1.0",
+              "result": "SUCCESS",
+              "seconds": 1.397
+            },
+            {
+              "display_name": "ts-common 0.1.0",
+              "result": "SUCCESS",
+              "seconds": 4.99
+            },
+            {
+              "display_name": "ts-verification-code-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 36.452
+            },
+            {
+              "display_name": "ts-contacts-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 37.883
+            },
+            {
+              "display_name": "ts-order-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 17.643
+            },
+            {
+              "display_name": "ts-order-other-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 17.178
+            },
+            {
+              "display_name": "ts-config-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 23.534
+            },
+            {
+              "display_name": "ts-station-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 25.44
+            },
+            {
+              "display_name": "ts-train-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 20.282
+            },
+            {
+              "display_name": "ts-travel-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 20.996
+            },
+            {
+              "display_name": "ts-travel2-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 19.682
+            },
+            {
+              "display_name": "ts-preserve-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 18.756
+            },
+            {
+              "display_name": "ts-preserve-other-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 26.517
+            },
+            {
+              "display_name": "ts-basic-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 25.597
+            },
+            {
+              "display_name": "ts-price-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 18.997
+            },
+            {
+              "display_name": "ts-notification-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 18.713
+            },
+            {
+              "display_name": "ts-security-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 23.94
+            },
+            {
+              "display_name": "ts-inside-payment-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 26.12
+            },
+            {
+              "display_name": "ts-execute-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 19.256
+            },
+            {
+              "display_name": "ts-payment-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 18.39
+            },
+            {
+              "display_name": "ts-rebook-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 20.311
+            },
+            {
+              "display_name": "ts-cancel-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 21.042
+            },
+            {
+              "display_name": "ts-route-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 28.104
+            },
+            {
+              "display_name": "ts-assurance-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 29.908
+            },
+            {
+              "display_name": "ts-seat-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 23.227
+            },
+            {
+              "display_name": "ts-travel-plan-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 21.535
+            },
+            {
+              "display_name": "ts-route-plan-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 18.835
+            },
+            {
+              "display_name": "ts-food-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 19.684
+            },
+            {
+              "display_name": "ts-station-food-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 19.1
+            },
+            {
+              "display_name": "ts-consign-price-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 20.782
+            },
+            {
+              "display_name": "ts-consign-price-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 21.081
+            },
+            {
+              "display_name": "ts-admin-order-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 19.182
+            },
+            {
+              "display_name": "ts-admin-basic-info-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 20.145
+            },
+            {
+              "display_name": "ts-admin-route-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 18.452
+            },
+            {
+              "display_name": "ts-admin-travel-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 24.941
+            },
+            {
+              "display_name": "ts-admin-user-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 25.82
+            },
+            {
+              "display_name": "ts-auth-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 20.149
+            },
+            {
+              "display_name": "ts-user-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 18.391
+            },
+            {
+              "display_name": "ts-delivery-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 1.61
+            },
+            {
+              "display_name": "ts-train-food-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 1.689
+            },
+            {
+              "display_name": "ts-gateway-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 4.702
+            },
+            {
+              "display_name": "ts-food-delivery-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 16.378
+            },
+            {
+              "display_name": "ts-wait-order-service 1.0",
+              "result": "SUCCESS",
+              "seconds": 89
+            }
+          ]
+        }
+      ],
+      "tests": {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0,
+        "failed_cases": [
+          {
+            "class": "adminbasic.controller.AdminBasicInfoControllerTest",
+            "test": "testDeletePrice",
+            "status": "FAILED"
+          },
+          {
+            "class": "adminbasic.controller.AdminBasicInfoControllerTest",
+            "test": "testDeleteStation",
+            "status": "FAILED"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testDeletePrice",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testDeleteTrain",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testModifyPrice",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testModifyTrain",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testDeleteContact",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testModifyStation",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testAddStation",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testAddPrice",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testAddTrain",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testGetAllStations",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testGetAllConfigs",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testDeleteStation",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testDeleteConfig",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testAddConfig",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testGetAllPrices",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testGetAllTrains",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testModifyConfig",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testGetAllContacts",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testModifyContact",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "test": "testAddContact",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testUpdateOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testUpdateOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testDeleteOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testDeleteOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testAddOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testAddOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testGetAllOrders1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "test": "testGetAllOrders2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminroute.controller.AdminRouteControllerTest",
+            "test": "testAddRoute",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminroute.service.AdminRouteServiceImplTest",
+            "test": "testCreateAndModifyRoute",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminroute.service.AdminRouteServiceImplTest",
+            "test": "testDeleteRoute",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminroute.service.AdminRouteServiceImplTest",
+            "test": "testGetAllRoutes",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testUpdateTravel1",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testUpdateTravel2",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testGetAllTravels1",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testGetAllTravels2",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testAddTravel1",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testAddTravel2",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testAddTravel3",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testAddTravel4",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testDeleteTravel1",
+            "status": "ERROR"
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "test": "testDeleteTravel2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminuser.service.AdminUserServiceImplTest",
+            "test": "testAddUser",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminuser.service.AdminUserServiceImplTest",
+            "test": "testGetAllUsers",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminuser.service.AdminUserServiceImplTest",
+            "test": "testUpdateUser",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminuser.service.AdminUserServiceImplTest",
+            "test": "testDeleteUser",
+            "status": "ERROR"
+          },
+          {
+            "class": "auth.controller.UserControllerTest",
+            "test": "testDeleteUserById",
+            "status": "ERROR"
+          },
+          {
+            "class": "auth.service.TokenServiceImplTest",
+            "test": "testGetToken1",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.BasicServiceImplTest",
+            "test": "testCheckStationExists",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.BasicServiceImplTest",
+            "test": "testQueryTrainType",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.BasicServiceImplTest",
+            "test": "testQueryForTravel",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.BasicServiceImplTest",
+            "test": "testQueryForStationId",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testCancelOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testCancelOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testGetAccount",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testSendEmail",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testCalculateRefund1",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testCalculateRefund2",
+            "status": "ERROR"
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "test": "testDrawbackMoney",
+            "status": "ERROR"
+          },
+          {
+            "class": "consign.service.ConsignServiceImplTest",
+            "test": "testUpdateConsignRecord1",
+            "status": "ERROR"
+          },
+          {
+            "class": "consign.service.ConsignServiceImplTest",
+            "test": "testInsertConsignRecord",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.controller.ContactsControllerTest",
+            "test": "testGetContactsByContactsId",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.controller.ContactsControllerTest",
+            "test": "testDeleteContacts",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.controller.ContactsControllerTest",
+            "test": "testFindContactsByAccountId",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.controller.ContactsControllerTest",
+            "test": "testGetAllContacts",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testFindContactsById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testFindContactsById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testCreateContacts1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testCreateContacts2",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testModify1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testModify2",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testDelete1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testDelete2",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testFindContactsByAccountId",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testGetAllContacts1",
+            "status": "ERROR"
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "test": "testGetAllContacts2",
+            "status": "ERROR"
+          },
+          {
+            "class": "execute.service.ExecuteServiceImplTest",
+            "test": "testTicketCollect1",
+            "status": "ERROR"
+          },
+          {
+            "class": "execute.service.ExecuteServiceImplTest",
+            "test": "testTicketCollect2",
+            "status": "ERROR"
+          },
+          {
+            "class": "execute.service.ExecuteServiceImplTest",
+            "test": "testTicketExecute1",
+            "status": "ERROR"
+          },
+          {
+            "class": "execute.service.ExecuteServiceImplTest",
+            "test": "testTicketExecute2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testCreateFoodOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testCreateFoodOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testDeleteFoodOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testDeleteFoodOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testUpdateFoodOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testUpdateFoodOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testFindByOrderId1",
+            "status": "ERROR"
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "test": "testFindByOrderId2",
+            "status": "ERROR"
+          },
+          {
+            "class": "inside_payment.service.InsidePaymentServiceImplTest",
+            "test": "testPay",
+            "status": "ERROR"
+          },
+          {
+            "class": "inside_payment.service.InsidePaymentServiceImplTest",
+            "test": "testInitPayment1",
+            "status": "ERROR"
+          },
+          {
+            "class": "inside_payment.service.InsidePaymentServiceImplTest",
+            "test": "testInitPayment2",
+            "status": "ERROR"
+          },
+          {
+            "class": "inside_payment.service.InsidePaymentServiceImplTest",
+            "test": "testCreateAccount2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.controller.OrderOtherControllerTest",
+            "test": "testQueryOrdersForRefresh",
+            "status": "FAILED"
+          },
+          {
+            "class": "other.controller.OrderOtherControllerTest",
+            "test": "testQueryOrders",
+            "status": "FAILED"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testQueryOrders",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testGetOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testGetOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testSaveChanges2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testAlterOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testFindOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testFindOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testCancelOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testCancelOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testInitOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testGetOrderPrice1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testGetOrderPrice2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testPayOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testPayOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testUpdateOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testDeleteOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testDeleteOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testAddNewOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testModifyOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testModifyOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "test": "testQueryForStationId",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.controller.OrderControllerTest",
+            "test": "testQueryOrdersForRefresh",
+            "status": "FAILED"
+          },
+          {
+            "class": "order.controller.OrderControllerTest",
+            "test": "testQueryOrders",
+            "status": "FAILED"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testQueryOrders",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testSaveChanges2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testAlterOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testFindOrderById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testFindOrderById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCancelOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCancelOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testInitOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderPrice1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testGetOrderPrice2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testPayOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testPayOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testUpdateOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testDeleteOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testDeleteOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testAddNewOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testModifyOrder1",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testModifyOrder2",
+            "status": "ERROR"
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "test": "testQueryForStationId",
+            "status": "ERROR"
+          },
+          {
+            "class": "com.trainticket.service.PaymentServiceImplTest",
+            "test": "testAddMoney",
+            "status": "ERROR"
+          },
+          {
+            "class": "com.trainticket.service.PaymentServiceImplTest",
+            "test": "testInitPayment1",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserveOther.service.PreserveOtherServiceImplTest",
+            "test": "testGetAccount",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserveOther.service.PreserveOtherServiceImplTest",
+            "test": "testPreserve",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserveOther.service.PreserveOtherServiceImplTest",
+            "test": "testDipatchSeat",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserveOther.service.PreserveOtherServiceImplTest",
+            "test": "testSendEmail",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserve.service.PreserveServiceImplTest",
+            "test": "testGetAccount",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserve.service.PreserveServiceImplTest",
+            "test": "testPreserve",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserve.service.PreserveServiceImplTest",
+            "test": "testDipatchSeat",
+            "status": "ERROR"
+          },
+          {
+            "class": "preserve.service.PreserveServiceImplTest",
+            "test": "testSendEmail",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.controller.PriceControllerTest",
+            "test": "testDelete",
+            "status": "FAILED"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testFindById",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testDeletePriceConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testDeletePriceConfig2",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testUpdatePriceConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testUpdatePriceConfig2",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testCreateNewPriceConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "test": "testCreateNewPriceConfig2",
+            "status": "ERROR"
+          },
+          {
+            "class": "rebook.service.RebookServiceImplTest",
+            "test": "testDipatchSeat",
+            "status": "ERROR"
+          },
+          {
+            "class": "plan.service.RoutePlanServiceImplTest",
+            "test": "testSearchMinStopStations",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testGetRouteById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testGetRouteById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testCreateAndModify2",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testCreateAndModify3",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testDeleteRoute1",
+            "status": "ERROR"
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "test": "testDeleteRoute2",
+            "status": "ERROR"
+          },
+          {
+            "class": "seat.service.SeatServiceImplTest",
+            "test": "testDistributeSeat1",
+            "status": "ERROR"
+          },
+          {
+            "class": "seat.service.SeatServiceImplTest",
+            "test": "testDistributeSeat2",
+            "status": "ERROR"
+          },
+          {
+            "class": "seat.service.SeatServiceImplTest",
+            "test": "testGetLeftTicketOfInterva2",
+            "status": "ERROR"
+          },
+          {
+            "class": "seat.service.SeatServiceImplTest",
+            "test": "testGetLeftTicketOfInterval",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testAddNewSecurityConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testDeleteSecurityConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testDeleteSecurityConfig2",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testCheck",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testModifySecurityConfig1",
+            "status": "ERROR"
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "test": "testModifySecurityConfig2",
+            "status": "ERROR"
+          },
+          {
+            "class": "food.controller.StationFoodControllerTest",
+            "test": "testGetFoodStoresOfStation",
+            "status": "FAILED"
+          },
+          {
+            "class": "food.controller.StationFoodControllerTest",
+            "test": "testHome",
+            "status": "FAILED"
+          },
+          {
+            "class": "food.controller.StationFoodControllerTest",
+            "test": "testGetFoodStoresByStationNames",
+            "status": "FAILED"
+          },
+          {
+            "class": "food.controller.StationFoodControllerTest",
+            "test": "testGetAllFoodStores",
+            "status": "FAILED"
+          },
+          {
+            "class": "food.service.StationFoodServiceImplTest",
+            "test": "testCreateFoodStore1",
+            "status": "FAILED"
+          },
+          {
+            "class": "fdse.microservice.controller.StationControllerTest",
+            "test": "testDelete",
+            "status": "FAILED"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testQueryByIdBatch2",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testQueryById1",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testQueryById2",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testUpdate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "test": "testDelete1",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testUpdate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testRetrieve1",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testRetrieve2",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testCreate1",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testCreate2",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testDelete1",
+            "status": "ERROR"
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "test": "testDelete2",
+            "status": "ERROR"
+          },
+          {
+            "class": "travelplan.controller.TravelPlanControllerTest",
+            "test": "testGetTransferResult",
+            "status": "ERROR"
+          },
+          {
+            "class": "travelplan.service.TravelPlanServiceImplTest",
+            "test": "testGetCheapest",
+            "status": "ERROR"
+          },
+          {
+            "class": "travelplan.service.TravelPlanServiceImplTest",
+            "test": "testGetMinStation",
+            "status": "ERROR"
+          },
+          {
+            "class": "travelplan.service.TravelPlanServiceImplTest",
+            "test": "testGetQuickest",
+            "status": "ERROR"
+          },
+          {
+            "class": "travel.controller.TravelControllerTest",
+            "test": "testQueryInfo2",
+            "status": "FAILED"
+          },
+          {
+            "class": "travel.service.TravelServiceImplTest",
+            "test": "testGetTripAllDetailInfo",
+            "status": "FAILED"
+          },
+          {
+            "class": "travel2.controller.TravelControllerTest",
+            "test": "testQueryInfo2",
+            "status": "FAILED"
+          },
+          {
+            "class": "travel2.service.TravelServiceImplTest",
+            "test": "testGetTripAllDetailInfo",
+            "status": "FAILED"
+          },
+          {
+            "class": "user.controller.UserControllerTest",
+            "test": "testDeleteUserById",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testDeleteUser1",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testDeleteUser2",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testSaveUser",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testFindByUserId1",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testFindByUserId2",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testUpdateUser1",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testUpdateUser2",
+            "status": "ERROR"
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "test": "testGetAllUsers1",
+            "status": "ERROR"
+          },
+          {
+            "class": "waitorder.WaitOrderApplicationTests",
+            "test": "contextLoads",
+            "status": "ERROR"
+          }
+        ],
+        "per_class": [
+          {
+            "class": "verifycode.controller.VerifyCodeControllerTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "verifycode.service.VerifyCodeServiceImplTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "contacts.controller.ContactsControllerTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "contacts.service.ContactsServiceImplTest",
+            "tests": 13,
+            "failures": 0,
+            "errors": 13,
+            "skipped": 0
+          },
+          {
+            "class": "order.controller.OrderControllerTest",
+            "tests": 16,
+            "failures": 2,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "other.controller.OrderOtherControllerTest",
+            "tests": 16,
+            "failures": 2,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "order.service.OrderServiceImplTest",
+            "tests": 35,
+            "failures": 1,
+            "errors": 22,
+            "skipped": 0
+          },
+          {
+            "class": "other.service.OrderOtherServiceImplTest",
+            "tests": 35,
+            "failures": 1,
+            "errors": 22,
+            "skipped": 0
+          },
+          {
+            "class": "config.controller.ConfigControllerTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "config.service.ConfigServiceImplTest",
+            "tests": 10,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "fdse.microservice.controller.StationControllerTest",
+            "tests": 9,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "fdse.microservice.service.StationServiceImplTest",
+            "tests": 18,
+            "failures": 0,
+            "errors": 7,
+            "skipped": 0
+          },
+          {
+            "class": "train.controller.TrainControllerTest",
+            "tests": 11,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "train.service.TrainServiceImplTest",
+            "tests": 9,
+            "failures": 0,
+            "errors": 7,
+            "skipped": 0
+          },
+          {
+            "class": "travel.controller.TravelControllerTest",
+            "tests": 13,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "travel.service.TravelServiceImplTest",
+            "tests": 19,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "travel2.controller.TravelControllerTest",
+            "tests": 13,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "travel2.service.TravelServiceImplTest",
+            "tests": 19,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "preserve.controller.PreserveControllerTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "preserve.service.PreserveServiceImplTest",
+            "tests": 4,
+            "failures": 1,
+            "errors": 3,
+            "skipped": 0
+          },
+          {
+            "class": "preserveOther.controller.PreserveOtherControllerTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "preserveOther.service.PreserveOtherServiceImplTest",
+            "tests": 4,
+            "failures": 1,
+            "errors": 3,
+            "skipped": 0
+          },
+          {
+            "class": "fdse.microservice.controller.BasicControllerTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "fdse.microservice.service.BasicServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "price.controller.PriceControllerTest",
+            "tests": 6,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "price.service.PriceServiceImplTest",
+            "tests": 11,
+            "failures": 0,
+            "errors": 7,
+            "skipped": 0
+          },
+          {
+            "class": "notification.controller.NotificationControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "notification.service.NotificationServiceImplTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "security.controller.SecurityControllerTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "security.service.SecurityServiceImplTest",
+            "tests": 9,
+            "failures": 1,
+            "errors": 5,
+            "skipped": 0
+          },
+          {
+            "class": "inside_payment.controller.InsidePaymentControllerTest",
+            "tests": 9,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "inside_payment.service.InsidePaymentServiceImplTest",
+            "tests": 15,
+            "failures": 2,
+            "errors": 2,
+            "skipped": 0
+          },
+          {
+            "class": "execute.controller.ExecuteControlllerTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "execute.service.ExecuteServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "com.trainticket.controller.PaymentControllerTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "com.trainticket.service.PaymentServiceImplTest",
+            "tests": 7,
+            "failures": 1,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "rebook.controller.RebookControllerTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "rebook.service.RebookServiceImplTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "cancel.controller.CancelControllerTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "cancel.service.CancelServiceImplTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 7,
+            "skipped": 0
+          },
+          {
+            "class": "route.controller.RouteControllerTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "route.service.RouteServiceImplTest",
+            "tests": 11,
+            "failures": 2,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "assurance.controller.AssuranceControllerTest",
+            "tests": 9,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "assurance.service.AssuranceServiceImplTest",
+            "tests": 16,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "seat.controller.SeatControllerTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "seat.service.SeatServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "travelplan.controller.TravelPlanControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "travelplan.service.TravelPlanServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 3,
+            "skipped": 0
+          },
+          {
+            "class": "plan.controller.RoutePlanControllerTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "plan.service.RoutePlanServiceImplTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "adminorder.controller.FoodControllerTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "adminorder.service.FoodServiceImplTest",
+            "tests": 11,
+            "failures": 0,
+            "errors": 8,
+            "skipped": 0
+          },
+          {
+            "class": "food.controller.StationFoodControllerTest",
+            "tests": 4,
+            "failures": 4,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "food.service.StationFoodServiceImplTest",
+            "tests": 8,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "consignprice.controller.ConsignPriceControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "consignprice.service.ConsignPriceServiceImplTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "consign.controller.ConsignControllerTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "consign.service.ConsignServiceImplTest",
+            "tests": 9,
+            "failures": 0,
+            "errors": 2,
+            "skipped": 0
+          },
+          {
+            "class": "adminorder.controller.AdminOrderControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "adminorder.service.AdminOrderServiceImplTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 8,
+            "skipped": 0
+          },
+          {
+            "class": "adminbasic.controller.AdminBasicInfoControllerTest",
+            "tests": 21,
+            "failures": 2,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "adminbasic.service.AdminBasicInfoServiceImplTest",
+            "tests": 20,
+            "failures": 0,
+            "errors": 20,
+            "skipped": 0
+          },
+          {
+            "class": "adminroute.controller.AdminRouteControllerTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "adminroute.service.AdminRouteServiceImplTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 3,
+            "skipped": 0
+          },
+          {
+            "class": "admintravel.controller.AdminTravelControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "admintravel.service.AdminTravelServiceImplTest",
+            "tests": 10,
+            "failures": 0,
+            "errors": 10,
+            "skipped": 0
+          },
+          {
+            "class": "adminuser.controller.AdminUserControllerTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "adminuser.service.AdminUserServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 4,
+            "skipped": 0
+          },
+          {
+            "class": "auth.controller.AuthControllerTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "auth.controller.UserControllerTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "auth.service.TokenServiceImplTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "auth.service.UserServiceImplTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "user.controller.UserControllerTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "user.service.UserServiceImplTest",
+            "tests": 12,
+            "failures": 0,
+            "errors": 8,
+            "skipped": 0
+          },
+          {
+            "class": "food_delivery.controller.FoodDeliveryControllerTest",
+            "tests": 9,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "waitorder.WaitOrderApplicationTests",
+            "tests": 1,
+            "failures": 0,
+            "errors": 1,
+            "skipped": 0
+          },
+          {
+            "class": "waitorder.service.Impl.WaitListOrderServiceImplTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          }
+        ],
+        "jenkins_reported": 626
+      },
+      "peak_container_mem_gib": 1.622,
+      "raw_dir": "evidence/m3-control/raw/control-3"
+    }
+  ],
+  "historical_baseline": [
+    {
+      "label": "baseline-1",
+      "build_number": 8,
+      "result": "FAILURE",
+      "jenkins_duration_ms": 577134,
+      "host_wall_clock_s": 586.9,
+      "tests": {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0
+      },
+      "maven_exit_codes": {
+        "BUILD": 0,
+        "TEST": 1
+      },
+      "reactors": [
+        {
+          "phase": "build",
+          "counts": {
+            "SUCCESS": 43
+          }
+        },
+        {
+          "phase": "test",
+          "counts": {
+            "SUCCESS": 11,
+            "FAILURE": 32
+          }
+        }
+      ]
+    },
+    {
+      "label": "baseline-2",
+      "build_number": 9,
+      "result": "FAILURE",
+      "jenkins_duration_ms": 589017,
+      "host_wall_clock_s": 599.8,
+      "tests": {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0
+      },
+      "maven_exit_codes": {
+        "BUILD": 0,
+        "TEST": 1
+      },
+      "reactors": [
+        {
+          "phase": "build",
+          "counts": {
+            "SUCCESS": 43
+          }
+        },
+        {
+          "phase": "test",
+          "counts": {
+            "SUCCESS": 11,
+            "FAILURE": 32
+          }
+        }
+      ]
+    },
+    {
+      "label": "baseline-3",
+      "build_number": 10,
+      "result": "FAILURE",
+      "jenkins_duration_ms": 736197,
+      "host_wall_clock_s": 747.4,
+      "tests": {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0
+      },
+      "maven_exit_codes": {
+        "BUILD": 0,
+        "TEST": 1
+      },
+      "reactors": [
+        {
+          "phase": "build",
+          "counts": {
+            "SUCCESS": 43
+          }
+        },
+        {
+          "phase": "test",
+          "counts": {
+            "SUCCESS": 11,
+            "FAILURE": 32
+          }
+        }
+      ]
+    }
+  ],
+  "historical_rescued": [
+    {
+      "label": "rescue-1",
+      "build_number": 8,
+      "result": "FAILURE",
+      "jenkins_duration_ms": 359698,
+      "host_wall_clock_s": 368.2,
+      "tests": {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0
+      },
+      "maven_exit_codes": {
+        "VERIFY": 1
+      },
+      "reactors": [
+        {
+          "phase": "verify",
+          "counts": {
+            "SUCCESS": 11,
+            "FAILURE": 32
+          }
+        }
+      ]
+    },
+    {
+      "label": "rescue-2",
+      "build_number": 9,
+      "result": "FAILURE",
+      "jenkins_duration_ms": 311178,
+      "host_wall_clock_s": 323.6,
+      "tests": {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0
+      },
+      "maven_exit_codes": {
+        "VERIFY": 1
+      },
+      "reactors": [
+        {
+          "phase": "verify",
+          "counts": {
+            "SUCCESS": 11,
+            "FAILURE": 32
+          }
+        }
+      ]
+    },
+    {
+      "label": "rescue-3",
+      "build_number": 10,
+      "result": "FAILURE",
+      "jenkins_duration_ms": 388784,
+      "host_wall_clock_s": 397.1,
+      "tests": {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0
+      },
+      "maven_exit_codes": {
+        "VERIFY": 1
+      },
+      "reactors": [
+        {
+          "phase": "verify",
+          "counts": {
+            "SUCCESS": 11,
+            "FAILURE": 32
+          }
+        }
+      ]
+    }
+  ],
+  "timing": {
+    "baseline_full": {
+      "jenkins_duration_ms": {
+        "runs": 3,
+        "median": 589017,
+        "min": 577134,
+        "max": 736197
+      },
+      "host_wall_clock_s": {
+        "runs": 3,
+        "median": 599.8,
+        "min": 586.9,
+        "max": 747.4
+      },
+      "stage_ms": {
+        "runs": 3,
+        "median": 468683,
+        "min": 466264,
+        "max": 622792
+      },
+      "stage_name": "Test"
+    },
+    "rescued": {
+      "jenkins_duration_ms": {
+        "runs": 3,
+        "median": 359698,
+        "min": 311178,
+        "max": 388784
+      },
+      "host_wall_clock_s": {
+        "runs": 3,
+        "median": 368.2,
+        "min": 323.6,
+        "max": 397.1
+      },
+      "stage_ms": {
+        "runs": 3,
+        "median": 337178,
+        "min": 301632,
+        "max": 379083
+      },
+      "stage_name": "Verify"
+    },
+    "control": {
+      "jenkins_duration_ms": {
+        "runs": 3,
+        "median": 514622,
+        "min": 421555,
+        "max": 641674
+      },
+      "host_wall_clock_s": {
+        "runs": 3,
+        "median": 523.9,
+        "min": 432.1,
+        "max": 653.4
+      },
+      "stage_ms": {
+        "runs": 3,
+        "median": 505610,
+        "min": 402602,
+        "max": 629392
+      },
+      "stage_name": "Verify"
+    },
+    "baseline_build_plus_test_ms": {
+      "runs": 3,
+      "median": 579000,
+      "min": 565387,
+      "max": 725898
+    }
+  },
+  "test_inventory": {
+    "baseline_full": [
+      {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0
+      },
+      {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0
+      },
+      {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0
+      }
+    ],
+    "rescued": [
+      {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0
+      },
+      {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0
+      },
+      {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0
+      }
+    ],
+    "control": [
+      {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0
+      },
+      {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0
+      },
+      {
+        "reported": 626,
+        "passed": 406,
+        "failures": 27,
+        "errors": 193,
+        "skipped": 0
+      }
+    ]
+  },
+  "packaging": {
+    "baseline_install_counts": {
+      "SUCCESS": 43
+    },
+    "baseline_test_counts": {
+      "SUCCESS": 11,
+      "FAILURE": 32
+    },
+    "rescued_verify_counts": {
+      "SUCCESS": 11,
+      "FAILURE": 32
+    },
+    "control_verify_counts": [
+      {
+        "SUCCESS": 43
+      },
+      {
+        "SUCCESS": 43
+      },
+      {
+        "SUCCESS": 43
+      }
+    ],
+    "control_success_counts": [
+      43,
+      43,
+      43
+    ],
+    "control_failure_counts": [
+      0,
+      0,
+      0
+    ],
+    "control_skipped_counts": [
+      0,
+      0,
+      0
+    ],
+    "assessment": "All three control runs report all 43 reactor entries as SUCCESS in the verify reactor, so modules whose tests fail still reach packaging. This is a verify lifecycle, not install. The baseline also ran clean install; the packaging phase is reached, but the full workload is not completely equal.",
+    "failing_module_example": {
+      "module": "ts-contacts-service",
+      "control_result": "SUCCESS",
+      "control_seconds": 12.279,
+      "historical_rescued_result": "FAILURE",
+      "historical_rescued_seconds": 13.496,
+      "note": "ContactsControllerTest failures are visible in the control test report; the module still reaches package in the control verify reactor."
+    }
+  },
+  "maven_and_jenkins": {
+    "maven_exit_codes": [
+      {
+        "VERIFY": 0
+      },
+      {
+        "VERIFY": 0
+      },
+      {
+        "VERIFY": 0
+      }
+    ],
+    "jenkins_results": [
+      "UNSTABLE",
+      "UNSTABLE",
+      "UNSTABLE"
+    ],
+    "maven_commands": [
+      "JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -T 2 -fae -Dmaven.repo.local=/m2/repository -Dmaven.test.failure.ignore=true verify",
+      "JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -T 2 -fae -Dmaven.repo.local=/m2/repository -Dmaven.test.failure.ignore=true verify",
+      "JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -T 2 -fae -Dmaven.repo.local=/m2/repository -Dmaven.test.failure.ignore=true verify"
+    ],
+    "maven_success_despite_test_failures": [
+      true,
+      true,
+      true
+    ]
+  },
+  "limitations": [
+    "Control uses verify, not install. The baseline clean install pass also installs artifacts.",
+    "Control is single-sided; the historical baseline and rescued runs are comparison data, not rerun.",
+    "Warm Maven cache only.",
+    "The three -T 1 attribution runs are not included."
+  ]
+}

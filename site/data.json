@@ -1,0 +1,1657 @@
+{
+  "schema_version": 1,
+  "project": "Pipeline Rescue Kit",
+  "provenance": {
+    "rule": "every measurement comes from evidence/**/*.json",
+    "sources": [
+      "evidence/M3/results.json",
+      "evidence/M3/test-inventory.json",
+      "evidence/M4/results.json",
+      "evidence/M4/scenarios.json",
+      "evidence/M5/runs.json",
+      "evidence/M6/results.json",
+      "evidence/fresh-clone/rerun/verify/verification.json",
+      "evidence/m3-control/results.json",
+      "evidence/pr-flow/task-2.5/verify-local/verification.json",
+      "evidence/pr-flow/task-3.1/pr-scenarios.json",
+      "evidence/review-fixes/jenkins-runs.json",
+      "evidence/site/catalog.json",
+      "evidence/site/images.json",
+      "evidence/site/library-releases.json",
+      "evidence/task-1.3a/immutable-tag.json",
+      "evidence/v4/task-1.2/selector-regression/selector-regression.json",
+      "evidence/v4/task-1.3/jenkins-runs.json"
+    ]
+  },
+  "problems": [
+    {
+      "id": "repeated-reactor",
+      "source_file": "harness/pipelines/train-ticket/Jenkinsfile.baseline",
+      "source_line": 76,
+      "text": "JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -Dmaven.repo.local=/m2/repository clean install -Dmaven.test.skip=true",
+      "explanation": "A full clean install with tests skipped runs first, then a second Maven lifecycle invocation runs the tests. The same reactor is built twice.",
+      "evidence_reference": "harness/pipelines/train-ticket/Jenkinsfile.baseline#L76 and #L133",
+      "source": "evidence/site/catalog.json"
+    },
+    {
+      "id": "second-test-pass",
+      "source_file": "harness/pipelines/train-ticket/Jenkinsfile.baseline",
+      "source_line": 133,
+      "text": "JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -Dmaven.repo.local=/m2/repository test $PRK_TEST_ARGS",
+      "explanation": "Tests run in a separate reactor pass after the install pass, which repeats dependency resolution and module traversal.",
+      "evidence_reference": "harness/pipelines/train-ticket/Jenkinsfile.baseline#L133",
+      "source": "evidence/site/catalog.json"
+    },
+    {
+      "id": "report-only-pmd",
+      "source_file": "harness/pipelines/train-ticket/Jenkinsfile.baseline",
+      "source_line": 117,
+      "text": "JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -Dmaven.repo.local=/m2/repository pmd:pmd",
+      "explanation": "PMD is invoked as a report-only goal. No quality gate fails the build for new findings.",
+      "evidence_reference": "harness/pipelines/train-ticket/Jenkinsfile.baseline#L117",
+      "source": "evidence/site/catalog.json"
+    },
+    {
+      "id": "report-only-jacoco",
+      "source_file": "harness/pipelines/train-ticket/Jenkinsfile.baseline",
+      "source_line": 142,
+      "text": "jacoco(",
+      "explanation": "JaCoCo records coverage but no threshold is enforced, so a coverage regression cannot block a merge.",
+      "evidence_reference": "harness/pipelines/train-ticket/Jenkinsfile.baseline#L142",
+      "source": "evidence/site/catalog.json"
+    },
+    {
+      "id": "false-docker-success",
+      "source_file": "harness/pipelines/train-ticket/Jenkinsfile.baseline",
+      "source_line": 85,
+      "text": "echo \"Docker Building...\"",
+      "explanation": "The Docker build and push steps are commented out while the success echos still print, so the console shows success for work that never ran.",
+      "evidence_reference": "harness/pipelines/train-ticket/Jenkinsfile.baseline#L85 and #L97",
+      "source": "evidence/site/catalog.json"
+    },
+    {
+      "id": "unsafe-docker-login",
+      "source_file": "harness/pipelines/train-ticket/Jenkinsfile.baseline",
+      "source_line": 12,
+      "text": "//   1. sudo docker login with credentials (password on the command line).",
+      "explanation": "The upstream pipeline used a sudo docker login with the password on the command line. The baseline removes it and records why.",
+      "evidence_reference": "harness/pipelines/train-ticket/Jenkinsfile.baseline#L12",
+      "source": "evidence/site/catalog.json"
+    },
+    {
+      "id": "no-timeout-and-cache",
+      "source_file": "harness/pipelines/train-ticket/Jenkinsfile.baseline",
+      "source_line": 28,
+      "text": "disableConcurrentBuilds()",
+      "explanation": "Upstream had no stage bound and no dependency cache. The baseline adds a timeout for the local demonstration but still does not add a cache.",
+      "evidence_reference": "harness/pipelines/train-ticket/Jenkinsfile.baseline#L28",
+      "source": "evidence/site/catalog.json"
+    }
+  ],
+  "full_reactor": {
+    "conditions": {
+      "pinned_commit": "313886e99befb94be6cd45f085c98e0019f59829",
+      "reactor_entries": 43,
+      "tests": 626,
+      "failed_or_errored": 220,
+      "upstream_failed_or_errored": 221,
+      "threads": 2,
+      "maven_command": "JAVA_HOME=/opt/java/jdk8 /opt/maven/bin/mvn -B -T 2 -fae -Dmaven.repo.local=/m2/repository -Dmaven.test.failure.ignore=true verify",
+      "cache": "Warm /m2 cache, no cold-cache M3 claim.",
+      "workload_note": "Both sides run the same 43 reactor entries, the same 626 tests and 220 failed/errored tests in this environment. M0C recorded 221; auth.controller.AuthControllerTest.testCreateDefaultUser appears order-sensitive and passes here; the cause is not proven. The one-test delta is recorded, not fixed.",
+      "sources": [
+        "evidence/M3/results.json",
+        "evidence/m3-control/results.json",
+        "evidence/M3/test-inventory.json"
+      ]
+    },
+    "runs": [
+      {
+        "variant": "baseline",
+        "classification": "historical measurement",
+        "label": "baseline-1",
+        "job": "train-ticket-baseline",
+        "build": 8,
+        "result": "FAILURE",
+        "jenkins_duration_ms": 577134,
+        "host_wall_clock_s": 586.9,
+        "source": "evidence/M3/results.json"
+      },
+      {
+        "variant": "baseline",
+        "classification": "historical measurement",
+        "label": "baseline-2",
+        "job": "train-ticket-baseline",
+        "build": 9,
+        "result": "FAILURE",
+        "jenkins_duration_ms": 589017,
+        "host_wall_clock_s": 599.8,
+        "source": "evidence/M3/results.json"
+      },
+      {
+        "variant": "baseline",
+        "classification": "historical measurement",
+        "label": "baseline-3",
+        "job": "train-ticket-baseline",
+        "build": 10,
+        "result": "FAILURE",
+        "jenkins_duration_ms": 736197,
+        "host_wall_clock_s": 747.4,
+        "source": "evidence/M3/results.json"
+      },
+      {
+        "variant": "rescued",
+        "classification": "historical measurement",
+        "label": "rescue-1",
+        "job": "train-ticket",
+        "build": 8,
+        "result": "FAILURE",
+        "jenkins_duration_ms": 359698,
+        "host_wall_clock_s": 368.2,
+        "source": "evidence/M3/results.json"
+      },
+      {
+        "variant": "rescued",
+        "classification": "historical measurement",
+        "label": "rescue-2",
+        "job": "train-ticket",
+        "build": 9,
+        "result": "FAILURE",
+        "jenkins_duration_ms": 311178,
+        "host_wall_clock_s": 323.6,
+        "source": "evidence/M3/results.json"
+      },
+      {
+        "variant": "rescued",
+        "classification": "historical measurement",
+        "label": "rescue-3",
+        "job": "train-ticket",
+        "build": 10,
+        "result": "FAILURE",
+        "jenkins_duration_ms": 388784,
+        "host_wall_clock_s": 397.1,
+        "source": "evidence/M3/results.json"
+      },
+      {
+        "variant": "control",
+        "classification": "historical measurement",
+        "label": "control-1",
+        "job": "train-ticket",
+        "build": 37,
+        "result": "UNSTABLE",
+        "jenkins_duration_ms": 421555,
+        "host_wall_clock_s": 432.1,
+        "source": "evidence/m3-control/results.json"
+      },
+      {
+        "variant": "control",
+        "classification": "historical measurement",
+        "label": "control-2",
+        "job": "train-ticket",
+        "build": 38,
+        "result": "UNSTABLE",
+        "jenkins_duration_ms": 641674,
+        "host_wall_clock_s": 653.4,
+        "source": "evidence/m3-control/results.json"
+      },
+      {
+        "variant": "control",
+        "classification": "historical measurement",
+        "label": "control-3",
+        "job": "train-ticket",
+        "build": 39,
+        "result": "UNSTABLE",
+        "jenkins_duration_ms": 514622,
+        "host_wall_clock_s": 523.9,
+        "source": "evidence/m3-control/results.json"
+      }
+    ],
+    "medians": {
+      "baseline": {
+        "runs": 3,
+        "median_ms": 589017,
+        "min_ms": 577134,
+        "max_ms": 736197,
+        "host_median_s": 599.8
+      },
+      "rescued": {
+        "runs": 3,
+        "median_ms": 359698,
+        "min_ms": 311178,
+        "max_ms": 388784,
+        "host_median_s": 368.2
+      },
+      "control": {
+        "runs": 3,
+        "median_ms": 514622,
+        "min_ms": 421555,
+        "max_ms": 641674,
+        "host_median_s": 523.9
+      }
+    },
+    "control_comparison": {
+      "median_difference_ms": 74395,
+      "median_difference_pct_of_baseline": 12.63,
+      "baseline_range_ms": [
+        577134,
+        736197
+      ],
+      "control_range_ms": [
+        421555,
+        641674
+      ],
+      "ranges_overlap": true,
+      "overlap_range_ms": [
+        577134,
+        641674
+      ],
+      "packaging": {
+        "baseline_install_counts": {
+          "SUCCESS": 43
+        },
+        "baseline_test_counts": {
+          "SUCCESS": 11,
+          "FAILURE": 32
+        },
+        "rescued_verify_counts": {
+          "SUCCESS": 11,
+          "FAILURE": 32
+        },
+        "control_verify_counts": [
+          {
+            "SUCCESS": 43
+          },
+          {
+            "SUCCESS": 43
+          },
+          {
+            "SUCCESS": 43
+          }
+        ],
+        "assessment": "All three control runs report all 43 reactor entries as SUCCESS in the verify reactor, so modules whose tests fail still reach packaging. This is a verify lifecycle, not install. The baseline also ran clean install; the packaging phase is reached, but the full workload is not completely equal.",
+        "failing_module_example": {
+          "module": "ts-contacts-service",
+          "control_result": "SUCCESS",
+          "control_seconds": 12.279,
+          "historical_rescued_result": "FAILURE",
+          "historical_rescued_seconds": 13.496,
+          "note": "ContactsControllerTest failures are visible in the control test report; the module still reaches package in the control verify reactor."
+        }
+      },
+      "correction": "The packaging workload is only partially equal: the baseline installs all 43 entries in a separate pass, the control uses verify without install, and the observed ranges overlap. The same-workload time saving could not be isolated with confidence on this codebase; no same-workload speed-up is claimed.",
+      "source": "evidence/m3-control/results.json"
+    },
+    "limitations": [
+      {
+        "text": "Control uses verify, not install. The baseline clean install pass also installs artifacts.",
+        "source": "evidence/m3-control/results.json"
+      },
+      {
+        "text": "Control is single-sided; the historical baseline and rescued runs are comparison data, not rerun.",
+        "source": "evidence/m3-control/results.json"
+      },
+      {
+        "text": "Warm Maven cache only.",
+        "source": "evidence/m3-control/results.json"
+      },
+      {
+        "text": "The three -T 1 attribution runs are not included.",
+        "source": "evidence/m3-control/results.json"
+      },
+      {
+        "text": "M2 baseline remains the 25-test early-failing run and is not used for the speed comparison.",
+        "source": "evidence/M3/results.json"
+      },
+      {
+        "text": "Full-scope baseline is a controlled supplemental mode: M2 job, FULL_SCOPE=true, PMD skipped, mvn test -fae.",
+        "source": "evidence/M3/results.json"
+      },
+      {
+        "text": "The M3 full reactor reaches 626 tests and 220 failed/errored. M0C recorded 221; one auth test passes here and its cause is not proven. The delta is recorded, not fixed.",
+        "source": "evidence/M3/results.json"
+      },
+      {
+        "text": "Rescued pipeline skips the report-only PMD goal; both comparison sides omit PMD.",
+        "source": "evidence/M3/results.json"
+      },
+      {
+        "text": "Warm Maven cache only; no cold-cache M3 claim.",
+        "source": "evidence/M3/results.json"
+      },
+      {
+        "text": "No M4 incremental scope reduction is included.",
+        "source": "evidence/M3/results.json"
+      }
+    ],
+    "sources": [
+      "evidence/M3/results.json",
+      "evidence/m3-control/results.json"
+    ]
+  },
+  "selective_builds": {
+    "full_reactor": {
+      "reactor_entries": 43,
+      "tests": 626,
+      "median_ms": 359698,
+      "source": "evidence/M4/results.json"
+    },
+    "service_change": {
+      "reactor_entries": 3,
+      "selected_modules": [
+        "ts-service-cluster 0.1.0",
+        "ts-common 0.1.0",
+        "ts-order-service 1.0"
+      ],
+      "tests": 51,
+      "median_ms": 38220,
+      "runs": [
+        {
+          "classification": "historical measurement",
+          "label": "incremental-1",
+          "build": 11,
+          "result": "FAILURE",
+          "jenkins_duration_ms": 59191,
+          "host_wall_clock_s": 73.1,
+          "selection": {
+            "mode": "modules",
+            "pl": "ts-order-service",
+            "reason": "changed module:ts-order-service/m4-scenario-change.txt -> ts-order-service",
+            "changed": "ts-order-service/m4-scenario-change.txt",
+            "reference": "313886e99befb94be6cd45f085c98e0019f59829",
+            "head": "dbb9af89eaee3969307153681084e2ad281687bc",
+            "command": "mvn -pl ts-order-service -am -amd verify"
+          },
+          "source": "evidence/M4/results.json"
+        },
+        {
+          "classification": "historical measurement",
+          "label": "incremental-2",
+          "build": 12,
+          "result": "FAILURE",
+          "jenkins_duration_ms": 35335,
+          "host_wall_clock_s": 47.7,
+          "selection": {
+            "mode": "modules",
+            "pl": "ts-order-service",
+            "reason": "changed module:ts-order-service/m4-scenario-change.txt -> ts-order-service",
+            "changed": "ts-order-service/m4-scenario-change.txt",
+            "reference": "313886e99befb94be6cd45f085c98e0019f59829",
+            "head": "dbb9af89eaee3969307153681084e2ad281687bc",
+            "command": "mvn -pl ts-order-service -am -amd verify"
+          },
+          "source": "evidence/M4/results.json"
+        },
+        {
+          "classification": "historical measurement",
+          "label": "incremental-3",
+          "build": 13,
+          "result": "FAILURE",
+          "jenkins_duration_ms": 38220,
+          "host_wall_clock_s": 45.0,
+          "selection": {
+            "mode": "modules",
+            "pl": "ts-order-service",
+            "reason": "changed module:ts-order-service/m4-scenario-change.txt -> ts-order-service",
+            "changed": "ts-order-service/m4-scenario-change.txt",
+            "reference": "313886e99befb94be6cd45f085c98e0019f59829",
+            "head": "dbb9af89eaee3969307153681084e2ad281687bc",
+            "command": "mvn -pl ts-order-service -am -amd verify"
+          },
+          "source": "evidence/M4/results.json"
+        }
+      ],
+      "source": "evidence/M4/results.json"
+    },
+    "selector_cases": [
+      {
+        "name": "one-service",
+        "changed_path": "ts-order-service/m4-scenario-change.txt",
+        "mode": "modules",
+        "reason": "changed module:ts-order-service/m4-scenario-change.txt -> ts-order-service",
+        "modules_flag": "ts-order-service",
+        "upstream": true,
+        "downstream": true,
+        "reactor_count": 3,
+        "exit_code": 0,
+        "selected_modules": [
+          "ts-service-cluster 0.1.0",
+          "ts-common 0.1.0",
+          "ts-order-service 1.0"
+        ],
+        "source": "evidence/M4/scenarios.json"
+      },
+      {
+        "name": "ts-common",
+        "changed_path": "ts-common/m4-scenario-change.txt",
+        "mode": "modules",
+        "reason": "changed module:ts-common/m4-scenario-change.txt -> ts-common",
+        "modules_flag": "ts-common",
+        "upstream": true,
+        "downstream": true,
+        "reactor_count": 42,
+        "exit_code": 0,
+        "selected_modules": [
+          "ts-service-cluster 0.1.0",
+          "ts-common 0.1.0",
+          "ts-verification-code-service 1.0",
+          "ts-contacts-service 1.0",
+          "ts-order-service 1.0",
+          "ts-order-other-service 1.0",
+          "ts-config-service 1.0",
+          "ts-station-service 1.0",
+          "ts-train-service 1.0",
+          "ts-travel-service 1.0",
+          "ts-travel2-service 1.0",
+          "ts-preserve-service 1.0",
+          "ts-preserve-other-service 1.0",
+          "ts-basic-service 1.0",
+          "ts-price-service 1.0",
+          "ts-notification-service 1.0",
+          "ts-security-service 1.0",
+          "ts-inside-payment-service 1.0",
+          "ts-execute-service 1.0",
+          "ts-payment-service 1.0",
+          "ts-rebook-service 1.0",
+          "ts-cancel-service 1.0",
+          "ts-route-service 1.0",
+          "ts-assurance-service 1.0",
+          "ts-seat-service 1.0",
+          "ts-travel-plan-service 1.0",
+          "ts-route-plan-service 1.0",
+          "ts-food-service 1.0",
+          "ts-station-food-service 1.0",
+          "ts-consign-price-service 1.0",
+          "ts-consign-price-service 1.0",
+          "ts-admin-order-service 1.0",
+          "ts-admin-basic-info-service 1.0",
+          "ts-admin-route-service 1.0",
+          "ts-admin-travel-service 1.0",
+          "ts-admin-user-service 1.0",
+          "ts-auth-service 1.0",
+          "ts-user-service 1.0",
+          "ts-delivery-service 1.0",
+          "ts-train-food-service 1.0",
+          "ts-food-delivery-service 1.0",
+          "ts-wait-order-service 1.0"
+        ],
+        "source": "evidence/M4/scenarios.json"
+      },
+      {
+        "name": "root-pom",
+        "changed_path": "pom.xml",
+        "mode": "full",
+        "reason": "full reactor required:root pom.xml changed",
+        "modules_flag": "",
+        "upstream": true,
+        "downstream": true,
+        "reactor_count": 43,
+        "exit_code": 0,
+        "selected_modules": [
+          "ts-service-cluster 0.1.0",
+          "ts-common 0.1.0",
+          "ts-verification-code-service 1.0",
+          "ts-contacts-service 1.0",
+          "ts-order-service 1.0",
+          "ts-order-other-service 1.0",
+          "ts-config-service 1.0",
+          "ts-station-service 1.0",
+          "ts-train-service 1.0",
+          "ts-travel-service 1.0",
+          "ts-travel2-service 1.0",
+          "ts-preserve-service 1.0",
+          "ts-preserve-other-service 1.0",
+          "ts-basic-service 1.0",
+          "ts-price-service 1.0",
+          "ts-notification-service 1.0",
+          "ts-security-service 1.0",
+          "ts-inside-payment-service 1.0",
+          "ts-execute-service 1.0",
+          "ts-payment-service 1.0",
+          "ts-rebook-service 1.0",
+          "ts-cancel-service 1.0",
+          "ts-route-service 1.0",
+          "ts-assurance-service 1.0",
+          "ts-seat-service 1.0",
+          "ts-travel-plan-service 1.0",
+          "ts-route-plan-service 1.0",
+          "ts-food-service 1.0",
+          "ts-station-food-service 1.0",
+          "ts-consign-price-service 1.0",
+          "ts-consign-price-service 1.0",
+          "ts-admin-order-service 1.0",
+          "ts-admin-basic-info-service 1.0",
+          "ts-admin-route-service 1.0",
+          "ts-admin-travel-service 1.0",
+          "ts-admin-user-service 1.0",
+          "ts-auth-service 1.0",
+          "ts-user-service 1.0",
+          "ts-delivery-service 1.0",
+          "ts-train-food-service 1.0",
+          "ts-gateway-service 1.0",
+          "ts-food-delivery-service 1.0",
+          "ts-wait-order-service 1.0"
+        ],
+        "source": "evidence/M4/scenarios.json"
+      },
+      {
+        "name": "non-maven-directory",
+        "changed_path": "image/m4-scenario-change.txt",
+        "mode": "none",
+        "reason": "no Maven module or build-affecting file changed",
+        "modules_flag": "",
+        "upstream": false,
+        "downstream": false,
+        "reactor_count": 0,
+        "exit_code": null,
+        "selected_modules": [],
+        "source": "evidence/M4/scenarios.json"
+      },
+      {
+        "name": "documentation-only",
+        "changed_path": "docs/m4-scenario-change.md",
+        "mode": "none",
+        "reason": "no Maven module or build-affecting file changed",
+        "modules_flag": "",
+        "upstream": false,
+        "downstream": false,
+        "reactor_count": 0,
+        "exit_code": null,
+        "selected_modules": [],
+        "source": "evidence/M4/scenarios.json"
+      }
+    ],
+    "fail_closed": {
+      "policy": "full scope on root build files, unknown POMs or selector failure",
+      "method": "git diff plus Maven -pl/-am/-amd",
+      "source": "evidence/M4/results.json"
+    },
+    "comparison": {
+      "incremental_median_ms": 38220,
+      "full_scope_median_ms": 359698,
+      "difference_ms": 321478,
+      "difference_pct_of_full_scope": 89.4,
+      "same_workload": false,
+      "note": "M4 incremental runs execute only ts-order-service and its required upstream modules. M3 executed 626 tests across 43 modules. This is a scope saving, not a same-workload speed comparison.",
+      "source": "evidence/M4/results.json"
+    },
+    "limitations": [
+      {
+        "text": "The selector is path-based and delegates dependency expansion to Maven -am and -amd; it is not a general dependency-analysis engine.",
+        "source": "evidence/M4/results.json"
+      },
+      {
+        "text": "The ts-common scenario selects 42 dependent module entries; the aggregator root is not in that reactor.",
+        "source": "evidence/M4/results.json"
+      },
+      {
+        "text": "Incremental timing covers only the changed service and required upstream modules, so it is scope savings, not a same-workload comparison with M3.",
+        "source": "evidence/M4/results.json"
+      },
+      {
+        "text": "Warm cache only.",
+        "source": "evidence/M4/results.json"
+      },
+      {
+        "text": "The M4 source branches are disposable test branches in a clone, not changes to the pinned upstream checkout.",
+        "source": "evidence/M4/results.json"
+      },
+      {
+        "text": "No application test was excluded, repaired or suppressed.",
+        "source": "evidence/M4/results.json"
+      },
+      {
+        "text": "M5, quality gates and the shared library are not started.",
+        "source": "evidence/M4/results.json"
+      }
+    ],
+    "sources": [
+      "evidence/M4/results.json",
+      "evidence/M4/scenarios.json"
+    ]
+  },
+  "quality_gates": {
+    "train_ticket": [
+      {
+        "stage": "M5",
+        "classification": "historical milestone evidence",
+        "scenario": "seed",
+        "job": null,
+        "branch": "m5-green",
+        "build": 16,
+        "result": "SUCCESS",
+        "coverage_state": "PUBLISHED",
+        "coverage_value": "78.09%",
+        "static_state": "PUBLISHED",
+        "static_value": "37 total, 0 new",
+        "decision": "PASS",
+        "source": "evidence/M5/runs.json"
+      },
+      {
+        "stage": "M5",
+        "classification": "historical milestone evidence",
+        "scenario": "green",
+        "job": null,
+        "branch": "m5-green",
+        "build": 17,
+        "result": "SUCCESS",
+        "coverage_state": "PASS",
+        "coverage_value": "78.09%",
+        "static_state": "PASS",
+        "static_value": "37 total, 0 new",
+        "decision": "PASS",
+        "source": "evidence/M5/runs.json"
+      },
+      {
+        "stage": "M5",
+        "classification": "historical milestone evidence",
+        "scenario": "coverage-red",
+        "job": null,
+        "branch": "m5-coverage-red",
+        "build": 18,
+        "result": "FAILURE",
+        "coverage_state": "FAIL",
+        "coverage_value": "60.17%",
+        "static_state": "PASS",
+        "static_value": "37 total, 0 new",
+        "decision": "BLOCK",
+        "source": "evidence/M5/runs.json"
+      },
+      {
+        "stage": "M5",
+        "classification": "historical milestone evidence",
+        "scenario": "static-red",
+        "job": null,
+        "branch": "m5-static-red",
+        "build": 19,
+        "result": "FAILURE",
+        "coverage_state": "PASS",
+        "coverage_value": "76.80%",
+        "static_state": "FAIL",
+        "static_value": "38 total, 1 new",
+        "decision": "BLOCK",
+        "source": "evidence/M5/runs.json"
+      },
+      {
+        "stage": "M5",
+        "classification": "historical milestone evidence",
+        "scenario": "test-red",
+        "job": null,
+        "branch": "m5-test-red",
+        "build": 20,
+        "result": "FAILURE",
+        "coverage_state": "NOT EVALUATED",
+        "coverage_value": "not parsed",
+        "static_state": "NOT EVALUATED",
+        "static_value": "not parsed",
+        "decision": "BLOCK",
+        "source": "evidence/M5/runs.json"
+      },
+      {
+        "stage": "M5",
+        "classification": "historical milestone evidence",
+        "scenario": "fixed",
+        "job": null,
+        "branch": "m5-fixed",
+        "build": 21,
+        "result": "SUCCESS",
+        "coverage_state": "PASS",
+        "coverage_value": "83.12%",
+        "static_state": "PASS",
+        "static_value": "37 total, 0 new",
+        "decision": "PASS",
+        "source": "evidence/M5/runs.json"
+      },
+      {
+        "stage": "review M5",
+        "classification": "review revalidation",
+        "scenario": "baseline",
+        "job": "train-ticket-prgate-baseline",
+        "build": 1,
+        "result": "SUCCESS",
+        "coverage_state": "PUBLISHED",
+        "coverage_value": "78.09%",
+        "static_state": "PUBLISHED",
+        "static_value": "37 total, 0 new",
+        "decision": "PASS",
+        "guard": false,
+        "reference_build": "none",
+        "reference_job": "not configured",
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M5",
+        "classification": "review revalidation",
+        "scenario": "green",
+        "job": "train-ticket-prgate",
+        "build": 35,
+        "result": "SUCCESS",
+        "coverage_state": "PASS",
+        "coverage_value": "78.09%",
+        "static_state": "PASS",
+        "static_value": "37 total, 0 new",
+        "decision": "PASS",
+        "guard": false,
+        "reference_build": "#1",
+        "reference_job": "train-ticket-prgate-baseline",
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M5",
+        "classification": "review revalidation",
+        "scenario": "static-bad-seed",
+        "job": "train-ticket-prgate",
+        "build": 28,
+        "result": "SUCCESS",
+        "coverage_state": "PUBLISHED",
+        "coverage_value": "76.80%",
+        "static_state": "PUBLISHED",
+        "static_value": "38 total, 0 new",
+        "decision": "PASS",
+        "guard": false,
+        "reference_build": "none",
+        "reference_job": "train-ticket-prgate-baseline",
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M5",
+        "classification": "review revalidation",
+        "scenario": "static-bad-enforced-1",
+        "job": "train-ticket-prgate",
+        "build": 29,
+        "result": "FAILURE",
+        "coverage_state": "PASS",
+        "coverage_value": "76.80%",
+        "static_state": "FAIL",
+        "static_value": "38 total, 1 new",
+        "decision": "BLOCK",
+        "guard": false,
+        "reference_build": "#1",
+        "reference_job": "train-ticket-prgate-baseline",
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M5",
+        "classification": "review revalidation",
+        "scenario": "static-bad-enforced-2",
+        "job": "train-ticket-prgate",
+        "build": 30,
+        "result": "FAILURE",
+        "coverage_state": "PASS",
+        "coverage_value": "76.80%",
+        "static_state": "FAIL",
+        "static_value": "38 total, 1 new",
+        "decision": "BLOCK",
+        "guard": false,
+        "reference_build": "#1",
+        "reference_job": "train-ticket-prgate-baseline",
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M5",
+        "classification": "review revalidation",
+        "scenario": "coverage-red",
+        "job": "train-ticket-prgate",
+        "build": 38,
+        "result": "FAILURE",
+        "coverage_state": "FAIL",
+        "coverage_value": "60.17%",
+        "static_state": "PASS",
+        "static_value": "37 total, 0 new",
+        "decision": "BLOCK",
+        "guard": false,
+        "reference_build": "#1",
+        "reference_job": "train-ticket-prgate-baseline",
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M5",
+        "classification": "review revalidation",
+        "scenario": "static-red",
+        "job": "train-ticket-prgate",
+        "build": 39,
+        "result": "FAILURE",
+        "coverage_state": "PASS",
+        "coverage_value": "76.80%",
+        "static_state": "FAIL",
+        "static_value": "38 total, 1 new",
+        "decision": "BLOCK",
+        "guard": false,
+        "reference_build": "#1",
+        "reference_job": "train-ticket-prgate-baseline",
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M5",
+        "classification": "review revalidation",
+        "scenario": "test-red",
+        "job": "train-ticket-prgate",
+        "build": 40,
+        "result": "FAILURE",
+        "coverage_state": "NOT EVALUATED",
+        "coverage_value": "not parsed",
+        "static_state": "NOT EVALUATED",
+        "static_value": "not parsed",
+        "decision": "BLOCK",
+        "guard": false,
+        "reference_build": "none",
+        "reference_job": "train-ticket-prgate-baseline",
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M5",
+        "classification": "review revalidation",
+        "scenario": "fixed",
+        "job": "train-ticket-prgate",
+        "build": 36,
+        "result": "SUCCESS",
+        "coverage_state": "PASS",
+        "coverage_value": "83.12%",
+        "static_state": "PASS",
+        "static_value": "37 total, 0 new",
+        "decision": "PASS",
+        "guard": false,
+        "reference_build": "#1",
+        "reference_job": "train-ticket-prgate-baseline",
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M5",
+        "classification": "review revalidation",
+        "scenario": "baseline-bad-source",
+        "job": "train-ticket-prgate-baseline",
+        "build": 2,
+        "result": "FAILURE",
+        "coverage_state": null,
+        "coverage_value": null,
+        "static_state": null,
+        "static_value": null,
+        "decision": "BLOCKED_BY_GUARD",
+        "guard": true,
+        "reference_build": null,
+        "reference_job": null,
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M5",
+        "classification": "review revalidation",
+        "scenario": "baseline-both-bad",
+        "job": "train-ticket-prgate-baseline",
+        "build": 3,
+        "result": "FAILURE",
+        "coverage_state": null,
+        "coverage_value": null,
+        "static_state": null,
+        "static_value": null,
+        "decision": "BLOCKED_BY_GUARD",
+        "guard": true,
+        "reference_build": null,
+        "reference_job": null,
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M5",
+        "classification": "review revalidation",
+        "scenario": "baseline-bad-reference",
+        "job": "train-ticket-prgate-baseline",
+        "build": 4,
+        "result": "FAILURE",
+        "coverage_state": null,
+        "coverage_value": null,
+        "static_state": null,
+        "static_value": null,
+        "decision": "BLOCKED_BY_GUARD",
+        "guard": true,
+        "reference_build": null,
+        "reference_job": null,
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M5",
+        "classification": "review revalidation",
+        "scenario": "missing-baseline",
+        "job": "train-ticket-prgate",
+        "build": 37,
+        "result": "FAILURE",
+        "coverage_state": "PASS",
+        "coverage_value": "78.09%",
+        "static_state": "FAIL",
+        "static_value": "37 total, 0 new",
+        "decision": "BLOCK",
+        "guard": false,
+        "reference_build": "#36",
+        "reference_job": "train-ticket-prgate-baseline-missing",
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M6",
+        "classification": "review revalidation",
+        "scenario": "baseline",
+        "job": "petclinic-baseline",
+        "build": 1,
+        "result": "SUCCESS",
+        "coverage_state": "PUBLISHED",
+        "coverage_value": "93.99%",
+        "static_state": "PUBLISHED",
+        "static_value": "1 total, 0 new",
+        "decision": "PASS",
+        "guard": false,
+        "reference_build": "none",
+        "reference_job": "not configured",
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M6",
+        "classification": "review revalidation",
+        "scenario": "green",
+        "job": "petclinic",
+        "build": 11,
+        "result": "SUCCESS",
+        "coverage_state": "PASS",
+        "coverage_value": "93.99%",
+        "static_state": "PASS",
+        "static_value": "1 total, 0 new",
+        "decision": "PASS",
+        "guard": false,
+        "reference_build": "#1",
+        "reference_job": "petclinic-baseline",
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M6",
+        "classification": "review revalidation",
+        "scenario": "coverage-red",
+        "job": "petclinic",
+        "build": 13,
+        "result": "FAILURE",
+        "coverage_state": "FAIL",
+        "coverage_value": "81.09%",
+        "static_state": "PASS",
+        "static_value": "1 total, 0 new",
+        "decision": "BLOCK",
+        "guard": false,
+        "reference_build": "#1",
+        "reference_job": "petclinic-baseline",
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M6",
+        "classification": "review revalidation",
+        "scenario": "static-red",
+        "job": "petclinic",
+        "build": 14,
+        "result": "FAILURE",
+        "coverage_state": "PASS",
+        "coverage_value": "92.60%",
+        "static_state": "FAIL",
+        "static_value": "2 total, 1 new",
+        "decision": "BLOCK",
+        "guard": false,
+        "reference_build": "#1",
+        "reference_job": "petclinic-baseline",
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M6",
+        "classification": "review revalidation",
+        "scenario": "fixed",
+        "job": "petclinic",
+        "build": 12,
+        "result": "SUCCESS",
+        "coverage_state": "PASS",
+        "coverage_value": "93.85%",
+        "static_state": "PASS",
+        "static_value": "1 total, 0 new",
+        "decision": "PASS",
+        "guard": false,
+        "reference_build": "#1",
+        "reference_job": "petclinic-baseline",
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M6",
+        "classification": "review revalidation",
+        "scenario": "baseline-bad-source",
+        "job": "petclinic-baseline",
+        "build": 2,
+        "result": "FAILURE",
+        "coverage_state": null,
+        "coverage_value": null,
+        "static_state": null,
+        "static_value": null,
+        "decision": "BLOCKED_BY_GUARD",
+        "guard": true,
+        "reference_build": null,
+        "reference_job": null,
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M6",
+        "classification": "review revalidation",
+        "scenario": "baseline-both-bad",
+        "job": "petclinic-baseline",
+        "build": 3,
+        "result": "FAILURE",
+        "coverage_state": null,
+        "coverage_value": null,
+        "static_state": null,
+        "static_value": null,
+        "decision": "BLOCKED_BY_GUARD",
+        "guard": true,
+        "reference_build": null,
+        "reference_job": null,
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "review M6",
+        "classification": "review revalidation",
+        "scenario": "baseline-bad-reference",
+        "job": "petclinic-baseline",
+        "build": 4,
+        "result": "FAILURE",
+        "coverage_state": null,
+        "coverage_value": null,
+        "static_state": null,
+        "static_value": null,
+        "decision": "BLOCKED_BY_GUARD",
+        "guard": true,
+        "reference_build": null,
+        "reference_job": null,
+        "source": "evidence/review-fixes/jenkins-runs.json"
+      },
+      {
+        "stage": "current verification",
+        "classification": "current verification",
+        "scenario": "train-ticket-prgate",
+        "job": "train-ticket-prgate",
+        "build": 41,
+        "result": "SUCCESS",
+        "duration_ms": 95963,
+        "coverage_state": "PASS",
+        "coverage_value": "78.09%",
+        "static_state": "PASS",
+        "static_value": "37 total, 0 new",
+        "decision": "PASS",
+        "source": "evidence/v4/task-1.3/jenkins-runs.json"
+      },
+      {
+        "stage": "current verification",
+        "classification": "current verification",
+        "scenario": "petclinic",
+        "job": "petclinic",
+        "build": 15,
+        "result": "SUCCESS",
+        "duration_ms": 104206,
+        "coverage_state": "PASS",
+        "coverage_value": "93.99%",
+        "static_state": "PASS",
+        "static_value": "1 total, 0 new",
+        "decision": "PASS",
+        "source": "evidence/v4/task-1.3/jenkins-runs.json"
+      }
+    ],
+    "petclinic": {
+      "m6": [
+        {
+          "stage": "M6",
+          "classification": "historical milestone evidence",
+          "scenario": "seed",
+          "job": "petclinic",
+          "branch": "m6-green",
+          "build": 1,
+          "result": "SUCCESS",
+          "coverage_state": "PUBLISHED",
+          "coverage_value": "93.99%",
+          "static_state": "PUBLISHED",
+          "static_value": "1 total, 0 new",
+          "decision": "PASS",
+          "coverage_threshold": 90.0,
+          "static_new_issue_threshold": 1,
+          "source": "evidence/M6/results.json"
+        },
+        {
+          "stage": "M6",
+          "classification": "historical milestone evidence",
+          "scenario": "green",
+          "job": "petclinic",
+          "branch": "m6-green",
+          "build": 2,
+          "result": "SUCCESS",
+          "coverage_state": "PASS",
+          "coverage_value": "93.99%",
+          "static_state": "PASS",
+          "static_value": "1 total, 0 new",
+          "decision": "PASS",
+          "coverage_threshold": 90.0,
+          "static_new_issue_threshold": 1,
+          "source": "evidence/M6/results.json"
+        },
+        {
+          "stage": "M6",
+          "classification": "historical milestone evidence",
+          "scenario": "coverage-red",
+          "job": "petclinic",
+          "branch": "m6-coverage-red",
+          "build": 3,
+          "result": "FAILURE",
+          "coverage_state": "FAIL",
+          "coverage_value": "81.09%",
+          "static_state": "PASS",
+          "static_value": "1 total, 0 new",
+          "decision": "BLOCK",
+          "coverage_threshold": 90.0,
+          "static_new_issue_threshold": 1,
+          "source": "evidence/M6/results.json"
+        },
+        {
+          "stage": "M6",
+          "classification": "historical milestone evidence",
+          "scenario": "static-red",
+          "job": "petclinic",
+          "branch": "m6-static-red",
+          "build": 4,
+          "result": "FAILURE",
+          "coverage_state": "PASS",
+          "coverage_value": "92.60%",
+          "static_state": "FAIL",
+          "static_value": "2 total, 1 new",
+          "decision": "BLOCK",
+          "coverage_threshold": 90.0,
+          "static_new_issue_threshold": 1,
+          "source": "evidence/M6/results.json"
+        },
+        {
+          "stage": "M6",
+          "classification": "historical milestone evidence",
+          "scenario": "fixed",
+          "job": "petclinic",
+          "branch": "m6-fixed",
+          "build": 6,
+          "result": "SUCCESS",
+          "coverage_state": "PASS",
+          "coverage_value": "93.85%",
+          "static_state": "PASS",
+          "static_value": "1 total, 0 new",
+          "decision": "PASS",
+          "coverage_threshold": 90.0,
+          "static_new_issue_threshold": 1,
+          "source": "evidence/M6/results.json"
+        }
+      ],
+      "pr": [
+        {
+          "scenario": "main",
+          "job": "petclinic-pr/main",
+          "build": 14,
+          "result": "SUCCESS",
+          "duration_ms": 65142,
+          "timestamp_ms": 1795505465603,
+          "revision": "60418d1b28887e98a18d75fa3a3a2c36e2a3e62c",
+          "library": "prk@lib-v1.1.1",
+          "reference_build": null,
+          "project": {
+            "value": "93.99%",
+            "gate": "INACTIVE"
+          },
+          "modified_lines": {
+            "value": null,
+            "gate": "INACTIVE",
+            "no_modified_lines": false
+          },
+          "pmd": {
+            "total": 1,
+            "new": 0,
+            "gate": "INACTIVE"
+          },
+          "decision": "PASS",
+          "failing_gates": [],
+          "classification": "current acceptance",
+          "source": "evidence/pr-flow/task-3.1/pr-scenarios.json"
+        },
+        {
+          "scenario": "small-untested-change-1",
+          "job": "petclinic-pr/feature/small-untested-change",
+          "build": 11,
+          "result": "FAILURE",
+          "duration_ms": 65731,
+          "timestamp_ms": 1795505540626,
+          "revision": "261eab0961357cab0a694e3121d24c8ca15ca53e",
+          "library": "prk@lib-v1.1.1",
+          "reference_build": 14,
+          "project": {
+            "value": "92.33%",
+            "gate": "SUCCESS"
+          },
+          "modified_lines": {
+            "value": "0.00%",
+            "gate": "FAILURE",
+            "no_modified_lines": false
+          },
+          "pmd": {
+            "total": 1,
+            "new": 0,
+            "gate": "SUCCESS"
+          },
+          "decision": "BLOCK",
+          "failing_gates": [
+            "modified lines"
+          ],
+          "classification": "current acceptance",
+          "source": "evidence/pr-flow/task-3.1/pr-scenarios.json"
+        },
+        {
+          "scenario": "small-untested-change-2",
+          "job": "petclinic-pr/feature/small-untested-change",
+          "build": 12,
+          "result": "FAILURE",
+          "duration_ms": 64413,
+          "timestamp_ms": 1795505615645,
+          "revision": "261eab0961357cab0a694e3121d24c8ca15ca53e",
+          "library": "prk@lib-v1.1.1",
+          "reference_build": 14,
+          "project": {
+            "value": "92.33%",
+            "gate": "SUCCESS"
+          },
+          "modified_lines": {
+            "value": "0.00%",
+            "gate": "FAILURE",
+            "no_modified_lines": false
+          },
+          "pmd": {
+            "total": 1,
+            "new": 0,
+            "gate": "SUCCESS"
+          },
+          "decision": "BLOCK",
+          "failing_gates": [
+            "modified lines"
+          ],
+          "classification": "current acceptance",
+          "source": "evidence/pr-flow/task-3.1/pr-scenarios.json"
+        },
+        {
+          "scenario": "pmd-violation-1",
+          "job": "petclinic-pr/feature/pmd-violation",
+          "build": 13,
+          "result": "FAILURE",
+          "duration_ms": 65893,
+          "timestamp_ms": 1795505690665,
+          "revision": "4e9aaa9a22dff3918476a143aefc906d0c16c7b6",
+          "library": "prk@lib-v1.1.1",
+          "reference_build": 14,
+          "project": {
+            "value": "94.08%",
+            "gate": "SUCCESS"
+          },
+          "modified_lines": {
+            "value": "100.00%",
+            "gate": "SUCCESS",
+            "no_modified_lines": false
+          },
+          "pmd": {
+            "total": 2,
+            "new": 1,
+            "gate": "FAILURE"
+          },
+          "decision": "BLOCK",
+          "failing_gates": [
+            "pmd"
+          ],
+          "classification": "current acceptance",
+          "source": "evidence/pr-flow/task-3.1/pr-scenarios.json"
+        },
+        {
+          "scenario": "pmd-violation-2",
+          "job": "petclinic-pr/feature/pmd-violation",
+          "build": 14,
+          "result": "FAILURE",
+          "duration_ms": 64266,
+          "timestamp_ms": 1795505765684,
+          "revision": "4e9aaa9a22dff3918476a143aefc906d0c16c7b6",
+          "library": "prk@lib-v1.1.1",
+          "reference_build": 14,
+          "project": {
+            "value": "94.08%",
+            "gate": "SUCCESS"
+          },
+          "modified_lines": {
+            "value": "100.00%",
+            "gate": "SUCCESS",
+            "no_modified_lines": false
+          },
+          "pmd": {
+            "total": 2,
+            "new": 1,
+            "gate": "FAILURE"
+          },
+          "decision": "BLOCK",
+          "failing_gates": [
+            "pmd"
+          ],
+          "classification": "current acceptance",
+          "source": "evidence/pr-flow/task-3.1/pr-scenarios.json"
+        },
+        {
+          "scenario": "fixed",
+          "job": "petclinic-pr/feature/fixed",
+          "build": 8,
+          "result": "SUCCESS",
+          "duration_ms": 65912,
+          "timestamp_ms": 1795505840676,
+          "revision": "235882eb57c3dbda1eaa09cc02c033a534201c33",
+          "library": "prk@lib-v1.1.1",
+          "reference_build": 14,
+          "project": {
+            "value": "94.17%",
+            "gate": "SUCCESS"
+          },
+          "modified_lines": {
+            "value": "100.00%",
+            "gate": "SUCCESS",
+            "no_modified_lines": false
+          },
+          "pmd": {
+            "total": 1,
+            "new": 0,
+            "gate": "SUCCESS"
+          },
+          "decision": "PASS",
+          "failing_gates": [],
+          "classification": "current acceptance",
+          "source": "evidence/pr-flow/task-3.1/pr-scenarios.json"
+        },
+        {
+          "scenario": "docs-only",
+          "job": "petclinic-pr/feature/docs-only",
+          "build": 3,
+          "result": "SUCCESS",
+          "duration_ms": 63831,
+          "timestamp_ms": 1795505915689,
+          "revision": "5a2ef11f1f6bb9ab6ecf0d1263f651feb9c6292d",
+          "library": "prk@lib-v1.1.1",
+          "reference_build": 14,
+          "project": {
+            "value": "93.99%",
+            "gate": "SUCCESS"
+          },
+          "modified_lines": {
+            "value": null,
+            "gate": "NOT_BUILT",
+            "no_modified_lines": true
+          },
+          "pmd": {
+            "total": 1,
+            "new": 0,
+            "gate": "SUCCESS"
+          },
+          "decision": "PASS",
+          "failing_gates": [],
+          "classification": "current acceptance",
+          "source": "evidence/pr-flow/task-3.1/pr-scenarios.json"
+        }
+      ],
+      "pr_export": {
+        "method": "Jenkins REST API export of accepted builds",
+        "exported_at": "2026-11-24T08:30:30Z",
+        "endpoints": [
+          "/api/json",
+          "/consoleText",
+          "/coverage/api/json",
+          "/pmd/api/json"
+        ]
+      }
+    }
+  },
+  "images": {
+    "catalog": "Recorded Jenkins UI screenshots for the public case study",
+    "capture_environment": "Local Jenkins 2.580.2 at the loopback harness, Google Chrome headless",
+    "entries": [
+      {
+        "id": "multibranch-branches",
+        "section": "gates",
+        "job": "petclinic-pr",
+        "scenario": "main",
+        "build": 14,
+        "capture_date": "2026-11-24",
+        "alt": "Jenkins multibranch branch list for petclinic-pr. Main, fixed and docs-only show green success; the PMD and small-untested feature branches show red failure.",
+        "caption": "Branch discovery and recorded outcomes. The two red branches are the controlled negative scenarios.",
+        "width": 800,
+        "height": 404,
+        "widths": {
+          "800": "assets/multibranch-branches-800.webp",
+          "1600": "assets/multibranch-branches-1600.webp"
+        },
+        "source": "evidence/pr-flow/task-3.1/pr-scenarios.json",
+        "metadata_source": "evidence/site/images.json"
+      },
+      {
+        "id": "coverage-overview",
+        "section": "gates",
+        "job": "petclinic-pr/feature/small-untested-change",
+        "scenario": "small-untested-change-1",
+        "build": 11,
+        "capture_date": "2026-11-24",
+        "alt": "Jenkins coverage overview for the small untested change build 11, showing project line coverage of 92.33 percent with the line bar in green.",
+        "caption": "Project line coverage passes at 92.33 percent on the untested-change build.",
+        "width": 800,
+        "height": 443,
+        "widths": {
+          "800": "assets/coverage-overview-800.webp",
+          "1600": "assets/coverage-overview-1600.webp"
+        },
+        "source": "evidence/pr-flow/task-3.1/pr-scenarios.json",
+        "metadata_source": "evidence/site/images.json"
+      },
+      {
+        "id": "coverage-modified-lines",
+        "section": "gates",
+        "job": "petclinic-pr/feature/small-untested-change",
+        "scenario": "small-untested-change-1",
+        "build": 11,
+        "capture_date": "2026-11-24",
+        "alt": "Jenkins modified-lines coverage tab for the same build, showing CoverageGap.java at 0.00 percent line coverage.",
+        "caption": "The same build fails modified-lines coverage at 0.00 percent on the new production lines.",
+        "width": 800,
+        "height": 277,
+        "widths": {
+          "800": "assets/coverage-modified-lines-800.webp",
+          "1600": "assets/coverage-modified-lines-1600.webp"
+        },
+        "source": "evidence/pr-flow/task-3.1/pr-scenarios.json",
+        "metadata_source": "evidence/site/images.json"
+      },
+      {
+        "id": "pmd-new-issue",
+        "section": "gates",
+        "job": "petclinic-pr/feature/pmd-violation",
+        "scenario": "pmd-violation-1",
+        "build": 13,
+        "capture_date": "2026-11-24",
+        "alt": "Jenkins PMD package summary for the PMD violation build 13, showing two total findings and exactly one new finding in the petclinic package.",
+        "caption": "Exactly one new PMD finding in the application package, against the clean main reference.",
+        "width": 800,
+        "height": 352,
+        "widths": {
+          "800": "assets/pmd-new-issue-800.webp",
+          "1600": "assets/pmd-new-issue-1600.webp"
+        },
+        "source": "evidence/pr-flow/task-3.1/pr-scenarios.json",
+        "metadata_source": "evidence/site/images.json"
+      },
+      {
+        "id": "selector-decision",
+        "section": "selective",
+        "job": "train-ticket",
+        "scenario": "incremental-1",
+        "build": 11,
+        "capture_date": "2026-11-24",
+        "alt": "Train-Ticket console for incremental build 11 showing the selector decision: modules mode, ts-order-service, upstream and downstream expansion enabled, and the changed path.",
+        "caption": "Selector decision for the incremental Train-Ticket run: modules mode for a single service change.",
+        "width": 800,
+        "height": 100,
+        "widths": {
+          "800": "assets/selector-decision-800.webp",
+          "1600": "assets/selector-decision-1600.webp"
+        },
+        "source": "evidence/M4/results.json",
+        "metadata_source": "evidence/site/images.json"
+      }
+    ]
+  },
+  "reviews": [
+    {
+      "id": "packaging-control",
+      "classification": "review correction",
+      "finding": "The original M3 headline compared unequal packaging work, because the baseline installed all 43 reactor entries while the rescued verify stopped failing modules before package.",
+      "correction": "A packaging control was measured and the same-workload speed-up claim was withdrawn. The current material reports the control, overlapping ranges and no established same-workload saving.",
+      "regression_evidence": [
+        "evidence/m3-control/results.json"
+      ],
+      "source": "evidence/site/catalog.json"
+    },
+    {
+      "id": "selector-safeguards",
+      "classification": "review correction",
+      "finding": "A path-based selector can build the wrong scope when a change is unknown or touches build files.",
+      "correction": "Unknown paths, unknown POMs and root build files fall back to the full reactor. The five selector scenarios and the isolated regression suite prove the fail-closed behaviour.",
+      "regression_evidence": [
+        "evidence/M4/scenarios.json",
+        "evidence/v4/task-1.2/selector-regression/selector-regression.json"
+      ],
+      "source": "evidence/site/catalog.json"
+    },
+    {
+      "id": "reference-contamination",
+      "classification": "review correction",
+      "finding": "A gate job that seeds its static reference from its own history can compare a feature against a contaminated baseline.",
+      "correction": "Dedicated clean baseline jobs publish the Warnings NG reference and refuse any commit other than the pinned reference commit.",
+      "regression_evidence": [
+        "evidence/review-fixes/jenkins-runs.json"
+      ],
+      "source": "evidence/site/catalog.json"
+    },
+    {
+      "id": "immutable-library-releases",
+      "classification": "review correction",
+      "finding": "Library versions were generated in a disposable snapshot repository, so a fresh clone could not resolve the same immutable release.",
+      "correction": "Releases are annotated project tags lib-v1.0.0, lib-v1.1.0 and lib-v1.1.1. Preparation verifies tags and never creates or moves them.",
+      "regression_evidence": [
+        "evidence/task-1.3a/immutable-tag.json",
+        "evidence/site/library-releases.json"
+      ],
+      "source": "evidence/site/catalog.json"
+    },
+    {
+      "id": "git-forensics-attribution",
+      "classification": "review correction",
+      "finding": "With a pipeline library checked out next to the application, Warnings NG and the Coverage plugin selected the library revision for code deltas.",
+      "correction": "The library is excluded from change sets and prGate passes the application SCM selector to both the coverage and issue steps. The corrected PMD scenario fails on PMD only with the application delta.",
+      "regression_evidence": [
+        "evidence/pr-flow/task-3.1/pr-scenarios.json"
+      ],
+      "source": "evidence/site/catalog.json"
+    }
+  ],
+  "reproducibility": {
+    "environment": {
+      "jenkins_version": "2.580.2",
+      "controller_image": "prk-m1-controller:local",
+      "agent_image": "prk-m1-agent:local",
+      "agent_labels": [
+        "amd64",
+        "java17",
+        "java8",
+        "linux",
+        "linux-agent",
+        "maven"
+      ],
+      "host_port": "18080",
+      "source": "evidence/fresh-clone/rerun/verify/verification.json"
+    },
+    "fresh_clone": {
+      "passed": 67,
+      "failed": 0,
+      "checks": 67,
+      "timestamp": "2026-11-24T03:47:27Z",
+      "source": "evidence/fresh-clone/rerun/verify/verification.json"
+    },
+    "verification": [
+      {
+        "name": "fresh clone rerun",
+        "passed": 67,
+        "failed": 0,
+        "checks": 67,
+        "source": "evidence/fresh-clone/rerun/verify/verification.json"
+      },
+      {
+        "name": "phase 2 demo local",
+        "passed": 73,
+        "failed": 0,
+        "checks": 73,
+        "source": "evidence/pr-flow/task-2.5/verify-local/verification.json"
+      }
+    ],
+    "library_releases": [
+      {
+        "tag": "lib-v1.0.0",
+        "tag_object": "accd4033b8187be23c4a18fa77406be95242f053",
+        "commit": "845a9063ecb4a2e4528ecc270f1738ebdf9264e0",
+        "vars_tree": "fd6be673861bc2dc7a72bc417802024d4cc6c54e",
+        "jenkins_lib_tree": "0b9c43152339f2299a0b5c8ec5397a952eda73bd",
+        "immutable": true,
+        "source": "evidence/site/library-releases.json"
+      },
+      {
+        "tag": "lib-v1.1.0",
+        "tag_object": "e7a8e39c36d76e19181b475ac3d19dc1cd6ff417",
+        "commit": "0e4a7db838cc74ce9964add183a092a031056096",
+        "vars_tree": "39403d5c9a1551dbdf203599fab84be8d8ede44f",
+        "jenkins_lib_tree": "b9481f51feec8a27697cdf8e28929ef02babe823",
+        "immutable": true,
+        "source": "evidence/site/library-releases.json"
+      },
+      {
+        "tag": "lib-v1.1.1",
+        "tag_object": "4c718fcc013cdb9e5468d3da0014269b84031555",
+        "commit": "a6e033c12651e5a09e13ec75e6f4eee006cc0e2d",
+        "vars_tree": "3e4930c580eb742b90a4785139e2ed2e92d41e1c",
+        "jenkins_lib_tree": "aa01b22fc442793e8eee1f8edbf4e3605df17681",
+        "immutable": true,
+        "source": "evidence/site/library-releases.json"
+      }
+    ],
+    "immutable_tag_check": {
+      "tag": "v1.0.0",
+      "commit": "802d69bda71b8abe687ed06056940a30a107a7ce",
+      "tree": "07df720bf8d9811513087fc15c10ddea644f5ca7",
+      "repeat_preparation_no_op": true,
+      "source": "evidence/task-1.3a/immutable-tag.json"
+    },
+    "pinned_sources": {
+      "train_ticket": "313886e99befb94be6cd45f085c98e0019f59829",
+      "petclinic": "500158f732419217507c7656904b8e6aa1bcc0d6"
+    },
+    "limitations": [
+      {
+        "text": "The full Train-Ticket reactor is not green. The M3 runs record 626 tests with 220 failed or errored, and the M5 green reference is deliberately narrow.",
+        "source": "evidence/site/catalog.json"
+      },
+      {
+        "text": "The coverage gate is project line coverage. Task 3.1 does not claim modified-lines coverage for the standalone Train-Ticket jobs.",
+        "source": "evidence/site/catalog.json"
+      },
+      {
+        "text": "JCasC build links show port 8080 when Jenkins runs on an alternate loopback port.",
+        "source": "evidence/site/catalog.json"
+      },
+      {
+        "text": "Automatic discovery builds vary in count. The PetClinic acceptance records use the explicitly orchestrated builds.",
+        "source": "evidence/site/catalog.json"
+      },
+      {
+        "text": "A fresh Jenkins instance needs a successful petclinic-baseline build before the standalone PetClinic gate can resolve its clean reference.",
+        "source": "evidence/site/catalog.json"
+      }
+    ]
+  }
+}

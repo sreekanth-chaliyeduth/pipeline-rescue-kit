@@ -1,0 +1,91 @@
+{
+  "catalog": "Recorded Jenkins UI screenshots for the public case study",
+  "capture_environment": "Local Jenkins 2.580.2 at the loopback harness, Google Chrome headless",
+  "images": [
+    {
+      "id": "multibranch-branches",
+      "section": "gates",
+      "job": "petclinic-pr",
+      "scenario": "main",
+      "build": 14,
+      "capture_date": "2026-11-24",
+      "alt": "Jenkins multibranch branch list for petclinic-pr. Main, fixed and docs-only show green success; the PMD and small-untested feature branches show red failure.",
+      "caption": "Branch discovery and recorded outcomes. The two red branches are the controlled negative scenarios.",
+      "width": 800,
+      "height": 404,
+      "widths": {
+        "800": "assets/multibranch-branches-800.webp",
+        "1600": "assets/multibranch-branches-1600.webp"
+      },
+      "source": "evidence/pr-flow/task-3.1/pr-scenarios.json"
+    },
+    {
+      "id": "coverage-overview",
+      "section": "gates",
+      "job": "petclinic-pr/feature/small-untested-change",
+      "scenario": "small-untested-change-1",
+      "build": 11,
+      "capture_date": "2026-11-24",
+      "alt": "Jenkins coverage overview for the small untested change build 11, showing project line coverage of 92.33 percent with the line bar in green.",
+      "caption": "Project line coverage passes at 92.33 percent on the untested-change build.",
+      "width": 800,
+      "height": 443,
+      "widths": {
+        "800": "assets/coverage-overview-800.webp",
+        "1600": "assets/coverage-overview-1600.webp"
+      },
+      "source": "evidence/pr-flow/task-3.1/pr-scenarios.json"
+    },
+    {
+      "id": "coverage-modified-lines",
+      "section": "gates",
+      "job": "petclinic-pr/feature/small-untested-change",
+      "scenario": "small-untested-change-1",
+      "build": 11,
+      "capture_date": "2026-11-24",
+      "alt": "Jenkins modified-lines coverage tab for the same build, showing CoverageGap.java at 0.00 percent line coverage.",
+      "caption": "The same build fails modified-lines coverage at 0.00 percent on the new production lines.",
+      "width": 800,
+      "height": 277,
+      "widths": {
+        "800": "assets/coverage-modified-lines-800.webp",
+        "1600": "assets/coverage-modified-lines-1600.webp"
+      },
+      "source": "evidence/pr-flow/task-3.1/pr-scenarios.json"
+    },
+    {
+      "id": "pmd-new-issue",
+      "section": "gates",
+      "job": "petclinic-pr/feature/pmd-violation",
+      "scenario": "pmd-violation-1",
+      "build": 13,
+      "capture_date": "2026-11-24",
+      "alt": "Jenkins PMD package summary for the PMD violation build 13, showing two total findings and exactly one new finding in the petclinic package.",
+      "caption": "Exactly one new PMD finding in the application package, against the clean main reference.",
+      "width": 800,
+      "height": 352,
+      "widths": {
+        "800": "assets/pmd-new-issue-800.webp",
+        "1600": "assets/pmd-new-issue-1600.webp"
+      },
+      "source": "evidence/pr-flow/task-3.1/pr-scenarios.json"
+    },
+    {
+      "id": "selector-decision",
+      "section": "selective",
+      "job": "train-ticket",
+      "scenario": "incremental-1",
+      "build": 11,
+      "capture_date": "2026-11-24",
+      "alt": "Train-Ticket console for incremental build 11 showing the selector decision: modules mode, ts-order-service, upstream and downstream expansion enabled, and the changed path.",
+      "caption": "Selector decision for the incremental Train-Ticket run: modules mode for a single service change.",
+      "width": 800,
+      "height": 100,
+      "widths": {
+        "800": "assets/selector-decision-800.webp",
+        "1600": "assets/selector-decision-1600.webp"
+      },
+      "source": "evidence/M4/results.json"
+    }
+  ]
+}

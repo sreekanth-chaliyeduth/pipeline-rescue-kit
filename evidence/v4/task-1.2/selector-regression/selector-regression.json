@@ -1,0 +1,228 @@
+{
+  "reference": "313886e99befb94be6cd45f085c98e0019f59829",
+  "scenarios": [
+    {
+      "name": "known-module",
+      "path": "ts-order-service/review-fix.txt",
+      "expected_mode": "modules",
+      "expected_module": "ts-order-service",
+      "actual_mode": "modules",
+      "actual_module": "ts-order-service",
+      "reason": "changed module:ts-order-service/review-fix.txt -> ts-order-service",
+      "pass": true
+    },
+    {
+      "name": "docs",
+      "path": "docs/review-fix.md",
+      "expected_mode": "none",
+      "expected_module": null,
+      "actual_mode": "none",
+      "actual_module": "",
+      "reason": "no Maven module or build-affecting file changed",
+      "pass": true
+    },
+    {
+      "name": "old-docs",
+      "path": "old-docs/review-fix.md",
+      "expected_mode": "none",
+      "expected_module": null,
+      "actual_mode": "none",
+      "actual_module": "",
+      "reason": "no Maven module or build-affecting file changed",
+      "pass": true
+    },
+    {
+      "name": "image",
+      "path": "image/review-fix.txt",
+      "expected_mode": "none",
+      "expected_module": null,
+      "actual_mode": "none",
+      "actual_module": "",
+      "reason": "no Maven module or build-affecting file changed",
+      "pass": true
+    },
+    {
+      "name": "deployment",
+      "path": "deployment/review-fix.yml",
+      "expected_mode": "none",
+      "expected_module": null,
+      "actual_mode": "none",
+      "actual_module": "",
+      "reason": "no Maven module or build-affecting file changed",
+      "pass": true
+    },
+    {
+      "name": "readme",
+      "path": "README.md",
+      "expected_mode": "none",
+      "expected_module": null,
+      "actual_mode": "none",
+      "actual_module": "",
+      "reason": "no Maven module or build-affecting file changed",
+      "pass": true
+    },
+    {
+      "name": "license",
+      "path": "LICENSE",
+      "expected_mode": "none",
+      "expected_module": null,
+      "actual_mode": "none",
+      "actual_module": "",
+      "reason": "no Maven module or build-affecting file changed",
+      "pass": true
+    },
+    {
+      "name": "root-pom",
+      "path": "pom.xml",
+      "expected_mode": "full",
+      "expected_module": null,
+      "actual_mode": "full",
+      "actual_module": "",
+      "reason": "full reactor required:root pom.xml changed",
+      "pass": true
+    },
+    {
+      "name": "unknown-root",
+      "path": "config/review-fix.yml",
+      "expected_mode": "full",
+      "expected_module": null,
+      "actual_mode": "full",
+      "actual_module": "",
+      "reason": "full reactor required:unrecognised path changed: config/review-fix.yml",
+      "pass": true
+    },
+    {
+      "name": "shared-resource",
+      "path": "src/main/resources/shared-review.yml",
+      "expected_mode": "full",
+      "expected_module": null,
+      "actual_mode": "full",
+      "actual_module": "",
+      "reason": "full reactor required:unrecognised path changed: src/main/resources/shared-review.yml",
+      "pass": true
+    },
+    {
+      "name": "unknown-module-pom",
+      "path": "custom-service/pom.xml",
+      "expected_mode": "full",
+      "expected_module": null,
+      "actual_mode": "full",
+      "actual_module": "",
+      "reason": "full reactor required:unknown Maven POM changed: custom-service/pom.xml",
+      "pass": true
+    },
+    {
+      "name": "gradle",
+      "path": "build.gradle",
+      "expected_mode": "full",
+      "expected_module": null,
+      "actual_mode": "full",
+      "actual_module": "",
+      "reason": "full reactor required:uncertain build file changed: build.gradle",
+      "pass": true
+    },
+    {
+      "name": "makefile",
+      "path": "Makefile",
+      "expected_mode": "full",
+      "expected_module": null,
+      "actual_mode": "full",
+      "actual_module": "",
+      "reason": "full reactor required:root build file changed: Makefile",
+      "pass": true
+    },
+    {
+      "name": "jenkinsfile",
+      "path": "Jenkinsfile",
+      "expected_mode": "full",
+      "expected_module": null,
+      "actual_mode": "full",
+      "actual_module": "",
+      "reason": "full reactor required:uncertain build file changed: Jenkinsfile",
+      "pass": true
+    },
+    {
+      "name": "github-workflow",
+      "path": ".github/workflows/review-fix.yml",
+      "expected_mode": "full",
+      "expected_module": null,
+      "actual_mode": "full",
+      "actual_module": "",
+      "reason": "full reactor required:unrecognised path changed: .github/workflows/review-fix.yml",
+      "pass": true
+    },
+    {
+      "name": "non-maven-avatar",
+      "path": "ts-avatar-service/review-fix.txt",
+      "expected_mode": "none",
+      "expected_module": null,
+      "actual_mode": "none",
+      "actual_module": "",
+      "reason": "no Maven module or build-affecting file changed",
+      "pass": true
+    },
+    {
+      "name": "non-maven-news",
+      "path": "ts-news-service/review-fix.txt",
+      "expected_mode": "none",
+      "expected_module": null,
+      "actual_mode": "none",
+      "actual_module": "",
+      "reason": "no Maven module or build-affecting file changed",
+      "pass": true
+    },
+    {
+      "name": "non-maven-ticket-office",
+      "path": "ts-ticket-office-service/review-fix.txt",
+      "expected_mode": "none",
+      "expected_module": null,
+      "actual_mode": "none",
+      "actual_module": "",
+      "reason": "no Maven module or build-affecting file changed",
+      "pass": true
+    },
+    {
+      "name": "non-maven-ui-dashboard",
+      "path": "ts-ui-dashboard/review-fix.txt",
+      "expected_mode": "none",
+      "expected_module": null,
+      "actual_mode": "none",
+      "actual_module": "",
+      "reason": "no Maven module or build-affecting file changed",
+      "pass": true
+    },
+    {
+      "name": "non-maven-voucher",
+      "path": "ts-voucher-service/review-fix.txt",
+      "expected_mode": "none",
+      "expected_module": null,
+      "actual_mode": "none",
+      "actual_module": "",
+      "reason": "no Maven module or build-affecting file changed",
+      "pass": true
+    },
+    {
+      "name": "module-markdown",
+      "path": "ts-order-service/src/main/resources/x.md",
+      "expected_mode": "modules",
+      "expected_module": "ts-order-service",
+      "actual_mode": "modules",
+      "actual_module": "ts-order-service",
+      "reason": "changed module:ts-order-service/src/main/resources/x.md -> ts-order-service",
+      "pass": true
+    },
+    {
+      "name": "module-docs-markdown",
+      "path": "ts-order-service/docs/x.md",
+      "expected_mode": "modules",
+      "expected_module": "ts-order-service",
+      "actual_mode": "modules",
+      "actual_module": "ts-order-service",
+      "reason": "changed module:ts-order-service/docs/x.md -> ts-order-service",
+      "pass": true
+    }
+  ],
+  "passed": 22,
+  "failed": 0,
+  "selector": "tools/select-modules.sh"
+}
