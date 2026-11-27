@@ -41,6 +41,11 @@ EVIDENCE = [
     "evidence/pr-flow/task-2.5/verify-local/verification.json",
     "evidence/task-1.3a/immutable-tag.json",
     "evidence/v4/task-1.2/selector-regression/selector-regression.json",
+    "evidence/findings/F1-java-migration/summary.json",
+    "evidence/findings/F2-jdk17-assessment/summary.json",
+    "evidence/findings/F3-build-selection/summary.json",
+    "evidence/findings/F4-build-cache/summary.json",
+    "evidence/findings/F5-build-profiling/summary.json",
 ]
 
 CHECKS = 0
@@ -231,11 +236,11 @@ def test_provenance():
                 walk(value, f"{path}[{index}]")
 
     walk(data)
-    check(len(sources) == 110, "record-level source inventory is 110")
-    check(len(set(sources)) == 14, "record-level distinct sources is 14")
+    check(len(sources) == 115, "record-level source inventory is 115")
+    check(len(set(sources)) == 19, "record-level distinct sources is 19")
 
     loaded = set(data["provenance"]["sources"])
-    check(len(loaded) == 17, "generator loaded 17 evidence JSON files")
+    check(len(loaded) == 22, "generator loaded 22 evidence JSON files")
     check(loaded - set(sources)
           == {"evidence/v4/task-1.2/selector-regression/selector-regression.json",
               "evidence/site/images.json",
@@ -281,8 +286,8 @@ def test_determinism():
     second = run_generator()
     check(second.returncode == 0, "generator runs a second time")
     check(sha256(DATA) == before, "second regeneration is byte-identical")
-    check(before == "5bc6e56d5e2c085e19a98905462ba35ebeeda8332810a02007f14ed27ef0d59e",
-          "output hash matches the corrected Phase 4 hash")
+    check(before == "70fa229815a4ed23f8a5761cae1407e0a143753ae3beb878e0971d2bb835f477",
+          "output hash matches the generated findings build")
 
     tree = ast.parse(open(GEN, encoding="utf-8").read())
     imported = set()
@@ -552,6 +557,39 @@ def test_images():
           "the original Task 3.1 data hash is preserved in the decision record")
 
 
+def test_findings():
+    data = load("site/data.json")
+    findings = data["findings"]
+    items = findings["items"]
+    check(len(items) == 5, "five curated findings are published")
+    check([item["id"] for item in items] == ["F1", "F2", "F3", "F4", "F5"],
+          "findings are ordered F1 to F5")
+    for item in items:
+        summary = load(item["source"])
+        check(item["facts"] == summary["facts"], f"{item['id']} facts match its summary")
+        check(item["display"] == summary["display"], f"{item['id']} display values match")
+        check(item["title"] == summary["title"], f"{item['id']} title matches")
+        check(item["limitations"] == summary["limitations"],
+              f"{item['id']} limitations match")
+    hero = findings["hero"]
+    check(hero["reactor_entries"] == 43, "hero shows 43 reactor entries")
+    check(hero["test_identities"] == 626, "hero shows 626 test identities")
+    check(hero["matched_identities"] == 626, "hero shows all 626 identities matched")
+    check(hero["gib_selected"] == 1, "hero shows one GIB-selected entry")
+    check(hero["gib_reactor_entries"] == 43, "hero shows the 43-entry denominator")
+    by_id = {item["id"]: item for item in items}
+    check(by_id["F3"]["facts"]["leaf_matched_identities"] == 51,
+          "GIB finding records 51 matched leaf identities")
+    check(by_id["F4"]["facts"]["strict_saved_entries"] == 11,
+          "cache finding records 11 strict-cache entries")
+    check(by_id["F4"]["facts"]["default_exit_code"] == 0
+          and by_id["F4"]["facts"]["reconciled_exit_code"] == 1,
+          "cache finding records both exit codes")
+    check(len(findings["sources"]) == 5 and
+          all(source.startswith("evidence/findings/") for source in findings["sources"]),
+          "findings provenance names the five curated summaries")
+
+
 def main():
     print("== source-to-output consistency ==")
     test_source_consistency()
@@ -565,6 +603,8 @@ def main():
     test_reactor_identity()
     print("== screenshot metadata ==")
     test_images()
+    print("== curated findings ==")
+    test_findings()
     print("== presentation integrity ==")
     test_static_copy()
     test_presentation()

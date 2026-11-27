@@ -10,6 +10,11 @@
       "evidence/M4/scenarios.json",
       "evidence/M5/runs.json",
       "evidence/M6/results.json",
+      "evidence/findings/F1-java-migration/summary.json",
+      "evidence/findings/F2-jdk17-assessment/summary.json",
+      "evidence/findings/F3-build-selection/summary.json",
+      "evidence/findings/F4-build-cache/summary.json",
+      "evidence/findings/F5-build-profiling/summary.json",
       "evidence/fresh-clone/rerun/verify/verification.json",
       "evidence/m3-control/results.json",
       "evidence/pr-flow/task-2.5/verify-local/verification.json",
@@ -1652,6 +1657,171 @@
         "text": "A fresh Jenkins instance needs a successful petclinic-baseline build before the standalone PetClinic gate can resolve its clean reference.",
         "source": "evidence/site/catalog.json"
       }
+    ]
+  },
+  "findings": {
+    "hero": {
+      "reactor_entries": 43,
+      "test_identities": 626,
+      "matched_identities": 626,
+      "gib_selected": 1,
+      "gib_reactor_entries": 43
+    },
+    "items": [
+      {
+        "id": "F1",
+        "title": "Java migration verification",
+        "subtitle": "JDK 8 versus JDK 11, test by test",
+        "facts": {
+          "source_commit": "313886e99befb94be6cd45f085c98e0019f59829",
+          "maven": "3.9.16",
+          "jdk_baseline": "Temurin 1.8.0_512",
+          "jdk_candidate": "Temurin 11.0.32.1",
+          "test_identities": 626,
+          "matched_identities": 626,
+          "outcome_differences": 0,
+          "passed": 405,
+          "failed": 27,
+          "errors": 194,
+          "skipped": 0,
+          "verification_exit_code": 0,
+          "verification_verdict": "PASS",
+          "parity": true
+        },
+        "display": {
+          "reactor_entries": 43,
+          "test_identities": 626,
+          "matched_identities": 626,
+          "gib_selected": 1
+        },
+        "limitations": [
+          "Train-Ticket already has 221 failing or erroring tests; parity is not application health.",
+          "One host and one application; the result is not a general JDK certification."
+        ],
+        "source": "evidence/findings/F1-java-migration/summary.json"
+      },
+      {
+        "id": "F2",
+        "title": "JDK 17 compatibility assessment",
+        "subtitle": "A legacy JaCoCo and failure-policy interaction",
+        "facts": {
+          "jdk": "Temurin 17.0.21.1",
+          "maven": "3.9.16",
+          "jacoco": "0.8.2",
+          "modules_built": 43,
+          "tests_executed": 0,
+          "test_failures_ignored": true,
+          "maven_exit_code": 0,
+          "build_result": "SUCCESS",
+          "observed_error": "FATAL ERROR in native method: processing of -javaagent failed, processJavaStart failed"
+        },
+        "display": {
+          "jdk17_tests_executed": 0
+        },
+        "limitations": [
+          "The zero-test result is specific to the tested legacy JaCoCo and failure-ignore configuration.",
+          "It is not evidence of a general Java 17 defect."
+        ],
+        "source": "evidence/findings/F2-jdk17-assessment/summary.json"
+      },
+      {
+        "id": "F3",
+        "title": "Established build-selection alternative",
+        "subtitle": "GIB 4.8.1 on the Train-Ticket reactor",
+        "facts": {
+          "tool": "Gitflow Incremental Builder",
+          "version": "4.8.1",
+          "jdk": "Temurin 11",
+          "maven": "3.9.16",
+          "reactor_entries": 43,
+          "leaf_selected": 1,
+          "leaf_tests": 51,
+          "leaf_failures": 3,
+          "leaf_errors": 22,
+          "shared_selected": 43,
+          "root_selected": 43,
+          "isolated_repository_base": "46ca4217ea77af6fc3ddb5f2449a4285226baed8",
+          "integrated_in_product": false,
+          "leaf_matched_identities": 51
+        },
+        "display": {
+          "gib_selected": 1,
+          "reactor_entries": 43
+        },
+        "limitations": [
+          "GIB was evaluated as an alternative and was not integrated into the v1.0 selector.",
+          "Shared-module and root POM changes selected the full reactor in the tested configuration.",
+          "Selection scope is not a measured build-time improvement."
+        ],
+        "source": "evidence/findings/F3-build-selection/summary.json"
+      },
+      {
+        "id": "F4",
+        "title": "Build-cache safety assessment",
+        "subtitle": "Configuration determines whether quality signals survive",
+        "facts": {
+          "tool": "Apache Maven Build Cache Extension",
+          "version": "1.2.3",
+          "jdk": "Temurin 11",
+          "maven": "3.9.16",
+          "default_restored": 43,
+          "default_tests_executed": 0,
+          "default_exit_code": 0,
+          "uncached_tests": 626,
+          "uncached_failures": 27,
+          "uncached_errors": 194,
+          "uncached_exit_code": 1,
+          "reconciled_tests": 626,
+          "reconciled_exit_code": 1,
+          "strict_saved_entries": 11,
+          "selected_for_core": false
+        },
+        "display": {
+          "bce_restored": 43,
+          "bce_tests": 0,
+          "strict_tests": 626
+        },
+        "limitations": [
+          "The default result is configuration-dependent, not a security vulnerability.",
+          "The strict cache stored 11 of 43 entries for this application; this is not a universal cacheability limit.",
+          "BCE was evaluated and not selected for future core integration."
+        ],
+        "source": "evidence/findings/F4-build-cache/summary.json"
+      },
+      {
+        "id": "F5",
+        "title": "Build profiling assessment",
+        "subtitle": "Maven Profiler 3.3 with a shaded artifact",
+        "facts": {
+          "tool": "Maven Profiler",
+          "version": "3.3",
+          "classifier": "shaded",
+          "sha256": "d235bc3f1d75d3eefde5627f33e7255c3d2f4476bad7f3c60fed6056a54f6f87",
+          "jdk": "Temurin 11",
+          "maven": "3.9.16",
+          "projects": 43,
+          "recorded_time_ms": 650762,
+          "valid_json": true,
+          "thin_extension_report": false,
+          "classloader_conflict": true
+        },
+        "display": {
+          "profiled_projects": 43
+        },
+        "limitations": [
+          "Profiling success does not imply test success.",
+          "The thin core extension did not produce a report because of a classloader conflict; the shaded artifact was used.",
+          "No universal performance bottleneck is claimed."
+        ],
+        "source": "evidence/findings/F5-build-profiling/summary.json"
+      }
+    ],
+    "sources": [
+      "evidence/findings/F1-java-migration/summary.json",
+      "evidence/findings/F2-jdk17-assessment/summary.json",
+      "evidence/findings/F3-build-selection/summary.json",
+      "evidence/findings/F4-build-cache/summary.json",
+      "evidence/findings/F5-build-profiling/summary.json"
     ]
   }
 }

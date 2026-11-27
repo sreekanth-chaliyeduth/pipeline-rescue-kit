@@ -1,0 +1,31 @@
+{
+  "id": "F1",
+  "title": "Java migration verification",
+  "subtitle": "JDK 8 versus JDK 11, test by test",
+  "facts": {
+    "source_commit": "313886e99befb94be6cd45f085c98e0019f59829",
+    "maven": "3.9.16",
+    "jdk_baseline": "Temurin 1.8.0_512",
+    "jdk_candidate": "Temurin 11.0.32.1",
+    "test_identities": 626,
+    "matched_identities": 626,
+    "outcome_differences": 0,
+    "passed": 405,
+    "failed": 27,
+    "errors": 194,
+    "skipped": 0,
+    "verification_exit_code": 0,
+    "verification_verdict": "PASS",
+    "parity": true
+  },
+  "display": {
+    "reactor_entries": 43,
+    "test_identities": 626,
+    "matched_identities": 626,
+    "gib_selected": 1
+  },
+  "limitations": [
+    "Train-Ticket already has 221 failing or erroring tests; parity is not application health.",
+    "One host and one application; the result is not a general JDK certification."
+  ]
+}

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pipeline Rescue Kit: stopping untested code from being merged</title>
-<meta name="description" content="A case study in Jenkins: a shared check that blocks a code change when its new code is untested or adds code-quality warnings, and a script that rebuilds only the parts of a large project a change touches. Tested on two open-source Java projects; every number comes from a recorded build.">
+<title>Pipeline Rescue Kit: build efficiency and reliable quality gates</title>
+<meta name="description" content="An applied engineering project on Maven build selection, Jenkins quality gates and Java modernization. Evidence-backed results from two open-source Java projects.">
 <link rel="stylesheet" href="styles.css">
 <script src="app.js" defer></script>
 </head>
@@ -12,120 +12,79 @@
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header class="masthead">
-  <p class="kicker">Case study · Jenkins CI</p>
+  <p class="kicker">Applied engineering · Jenkins and Maven</p>
   <h1>Pipeline Rescue Kit</h1>
-  <p class="subhead">Stopping untested code from being merged, and rebuilding only what a
-    change touches.</p>
+  <p class="subhead">Build efficiency. Reliable quality gates. Evidence-driven engineering.</p>
+  <p class="hero-lede">An applied engineering project exploring Maven build selection, Jenkins
+    pipeline validation and Java modernization.</p>
   <p class="byline">By <a class="author-link" href="https://www.linkedin.com/in/sreekanth-chaliyeduth/" rel="noopener" aria-label="Sreekanth C on LinkedIn">Sreekanth C</a></p>
 
-  <section class="what-is" aria-labelledby="what-is-title">
-    <h2 id="what-is-title">What this is</h2>
-    <div class="what-is-grid">
-      <div>
-        <h3>What I built</h3>
-        <ul>
-          <li><strong>prGate</strong>: a Jenkins Shared Library step, written in Groovy, that turns test, coverage and code-quality reports into a clear pass or block decision for each pull request. <code>jenkins-lib/vars/prGate.groovy</code></li>
-          <li><strong>Module selector</strong>: a shell script that reads which files a change touched and tells Maven which modules to build. Maven adds the modules that depend on them. When the script cannot be sure, it builds everything. <code>tools/select-modules.sh</code></li>
-          <li><strong>Reproducible Jenkins lab</strong>: Jenkins in Docker, configured entirely as code, with a Python harness that runs and checks every scenario. This site is generated from the recorded results.</li>
-        </ul>
+  <div class="hero-band">
+    <div class="hero-metrics" id="hero-metrics" aria-label="Headline evidence">
+      <div class="hero-metric">
+        <p class="hero-value"><span data-n="findReactor">43</span></p>
+        <p class="hero-label">Maven reactor entries investigated</p>
       </div>
-      <div>
-        <h3>Existing tools it uses</h3>
-        <ul>
-          <li>Jenkins, with the JUnit, Coverage, Warnings NG and Git Forensics plugins</li>
-          <li>Maven, JaCoCo for test coverage, PMD for code-quality warnings</li>
-          <li>Docker and Docker Compose</li>
-          <li>Two open-source test projects: Train-Ticket and Spring PetClinic</li>
-        </ul>
-        <h3>How you would use it</h3>
-        <ul>
-          <li>Add <code>@Library('prk@lib-v1.1.1') _</code> and a <code>prGate(…)</code> step to a Jenkinsfile (full example in section 7).</li>
-          <li>Run <code>select-modules.sh</code> before Maven and pass its result to <code>mvn -pl … -am -amd</code>, as the Train-Ticket pipeline does.</li>
-        </ul>
+      <div class="hero-metric">
+        <p class="hero-value"><span data-n="findMatched">626</span><span class="hero-denom">/<span data-n="findTests">626</span></span></p>
+        <p class="hero-label">test identities matched across JDK 8 and JDK 11</p>
+      </div>
+      <div class="hero-metric">
+        <p class="hero-value"><span data-n="findGib">1</span><span class="hero-denom">/<span data-n="findGibFull">43</span></span></p>
+        <p class="hero-label">reactor entries selected for the GIB leaf-change fixture</p>
       </div>
     </div>
-    <p class="what-is-note">Where it fits: if your team already uses SonarQube, its pull-request quality gate can enforce new-code coverage and code-quality requirements. Unit-test execution and failure handling remain the responsibility of the CI pipeline. Established Maven tools such as Gitflow Incremental Builder provide change-based module selection, while the Maven Build Cache Extension avoids repeating eligible build work. The selector here is a small, transparent demonstration of change-based build selection.</p>
-  </section>
 
-  <div class="masthead-grid">
-    <div class="summary" id="summary">
-      <h2 class="summary-title">The short version</h2>
-      <p><strong>The problem.</strong> Most software teams pass every code change through an
-        automated build before it is merged into the main code. In Jenkins, a common build
-        server, these builds often measure useful things, such as how much of the code is
-        tested, but only <em>report</em> the result. A change that adds untested code or new
-        code-quality problems can still be merged. Large projects also rebuild everything for
-        every small change, so builds are slow.</p>
-      <p><strong>What I built.</strong> A small shared add-on for Jenkins that turns those
-        reports into a clear pass or block decision for every change, and a script that works
-        out which parts of a large project a change affects, so only those parts are
-        rebuilt.</p>
-      <p><strong>How I tested it.</strong> On two public open-source Java projects, built on my
-        own Jenkins. One is a large project made of <span data-n="full">43</span> parts, whose
-        own build had the problems above. The other is a small web application, where I made
-        test changes, each designed to trip one specific check.</p>
-      <p><strong>What I found.</strong> Every test change received the decision it should
-        have. For a change to one service in the large project, only
-        <span data-n="sel">3</span> of its <span data-n="full">43</span> parts needed
-        rebuilding. My first timing comparison overstated the speed gain; a fairer re-run
-        showed a much smaller difference, within the normal spread between runs, so I
-        withdrew that claim.</p>
-      <p class="summary-note">If you only have a minute, stop here. Each section below shows
-        the build records behind these statements.</p>
-    </div>
-
-    <div class="strip-wrap">
-      <p class="strip-intro"><strong>Try it.</strong> Three test changes I made to the web
-        application, and what the merge check decided for each. Select one.</p>
-      <figure id="pr-strip" class="pr-strip" aria-label="Recorded merge decisions for three test changes"></figure>
+    <div class="parity-panel" aria-label="JDK 8 and JDK 11 test parity">
+      <p class="parity-title">JDK 8 and JDK 11, test by test</p>
+      <div class="parity-row">
+        <span class="parity-jdk">JDK 8</span>
+        <span class="parity-bar"><span class="parity-pass" data-bar="parityPass"></span><span class="parity-failed" data-bar="parityFailed"></span><span class="parity-error" data-bar="parityErrors"></span></span>
+        <span class="parity-count"><span data-n="findPassed">405</span> pass · <span data-n="findFailed">27</span> fail · <span data-n="findErrors">194</span> error</span>
+      </div>
+      <div class="parity-row">
+        <span class="parity-jdk">JDK 11</span>
+        <span class="parity-bar"><span class="parity-pass" data-bar="parityPass"></span><span class="parity-failed" data-bar="parityFailed"></span><span class="parity-error" data-bar="parityErrors"></span></span>
+        <span class="parity-count"><span data-n="findPassed">405</span> pass · <span data-n="findFailed">27</span> fail · <span data-n="findErrors">194</span> error</span>
+      </div>
+      <ul class="parity-legend">
+        <li><span class="legend-swatch legend-pass" aria-hidden="true"></span>Passed</li>
+        <li><span class="legend-swatch legend-failed" aria-hidden="true"></span>Failed</li>
+        <li><span class="legend-swatch legend-error" aria-hidden="true"></span>Errors</li>
+        <li class="legend-zero"><span data-n="findDiff">0</span> outcome differences</li>
+      </ul>
+      <p class="parity-note">All <span data-n="findTests">626</span> test identities and outcomes matched across both Java versions, including <span data-n="failingUpstream">221</span> existing failures and errors.</p>
     </div>
   </div>
 
-  <div class="why-notes" id="why-notes">
-    <div>
-      <h3>Why 92% and 0% at once?</h3>
-      <p>The application's existing code is well tested. The few lines the untested change
-        adds have no test at all. A check on the whole-application figure alone would let that
-        change through; the second check exists for exactly that.</p>
-    </div>
-    <div>
-      <h3>Why "already on main"?</h3>
-      <p>The main code already had <span data-n="mainWarnings">1</span> code-quality warning
-        before any of my changes. The check counts only warnings a change <em>adds</em>, so an
-        old problem never blocks unrelated work.</p>
-    </div>
-    <div>
-      <h3>Why is the warning change 100% tested?</h3>
-      <p>Each test change trips one check only. Its new lines are tested, so the only thing
-        blocking it is the one warning it adds.</p>
-    </div>
-  </div>
-
-  <nav class="section-nav" aria-label="Sections">
-    <a href="#projects">1. Projects</a>
-    <a href="#problem">2. Problem</a>
-    <a href="#gates">3. Merge check</a>
-    <a href="#selective">4. Selection</a>
-    <a href="#benchmark">5. Timings</a>
-    <a href="#review">6. Corrections</a>
-    <a href="#implementation">7. Trying it</a>
-    <a href="#method">8. Evidence</a>
-  </nav>
+  <p class="hero-links"><a href="#case-studies">Engineering findings</a>
+    <span aria-hidden="true">·</span>
+    <a href="https://github.com/sreekanth-chaliyeduth/pipeline-rescue-kit" rel="noopener">Public repository</a></p>
 </header>
 
 <main id="main">
 
 <section id="projects" aria-labelledby="projects-title">
-  <p class="section-number">Section 1</p>
-  <h2 id="projects-title">The two test projects, and how they were run</h2>
-  <p class="lead">I needed one project with a genuinely poor build to fix, and one with a
-    real pull-request workflow to test the merge check on. No single public project had
-    both.</p>
+  <h2 id="projects-title">Engineering scope</h2>
+  <p class="lead">The work combines four areas: quality engineering, build optimization,
+    Java modernization and pipeline reliability. Two open-source Java projects provide the
+    execution evidence.</p>
+
+  <div class="scope-grid">
+    <div class="scope-card"><h3>Quality engineering</h3><p>Report-based merge checks for
+      tests, coverage and new code-quality warnings.</p></div>
+    <div class="scope-card"><h3>Build optimization</h3><p>Change-based module selection and a
+      conservative full-build fallback.</p></div>
+    <div class="scope-card"><h3>Java modernization</h3><p>Test-identity comparison across JDK
+      8 and JDK 11, with a standalone verifier.</p></div>
+    <div class="scope-card"><h3>Pipeline reliability</h3><p>A reproducible Jenkins lab and
+      evidence that distinguishes executed, restored and skipped work.</p></div>
+  </div>
 
   <div class="two-apps">
     <article class="app-card">
       <h3>Train-Ticket</h3>
-      <p class="app-meta">The large project · <span data-n="full">43</span> parts</p>
+      <p class="app-meta">The large project · <span data-n="full">43</span> reactor entries</p>
       <p>An open-source train-booking system from Fudan University researchers, built with
         Maven, the standard Java build tool. Its own Jenkins build had the problems in
         section 2. Fixed to commit <code>313886e</code>, so every run builds the same code.</p>
@@ -151,9 +110,154 @@
     build file shown in section 7. Each figure names the build and the file it came from.</p>
 </section>
 
+
+<div id="case-studies" class="case-studies" aria-labelledby="case-studies-title">
+  <p class="kicker">Engineering case studies</p>
+  <h2 id="case-studies-title">Three experiments, three engineering decisions</h2>
+  <p class="section-intro">Each case follows the same shape: the engineering question, the
+    experiment, the recorded result and the decision. Commands and full reproduction details
+    are in the technical reference below.</p>
+
+  <div class="case-study-grid">
+    <article class="case-study">
+      <p class="case-number">Case study 1</p>
+      <h3>Change-based build selection</h3>
+      <p class="case-tools">GIB 4.8.1 · Maven 3.9.16 · Temurin 11</p>
+      <p class="case-question"><strong>Question.</strong> Can a change select only the Maven
+        modules it affects without omitting a dependant?</p>
+      <div class="scope-compare">
+        <div class="scope-row">
+          <span class="scope-label">Leaf change</span>
+          <span class="scope-bar"><span class="scope-fill" data-bar="gibScope"></span></span>
+          <span class="scope-value"><span data-n="findGib">1</span> / <span data-n="findGibFull">43</span></span>
+        </div>
+        <div class="scope-row">
+          <span class="scope-label">Shared module</span>
+          <span class="scope-bar"><span class="scope-fill scope-fill-wide" data-bar="sharedScope"></span></span>
+          <span class="scope-value"><span data-n="f3Shared">43</span> / <span data-n="findGibFull">43</span></span>
+        </div>
+      </div>
+      <p class="case-result">The leaf fixture selected one reactor entry and matched
+        <span data-n="f3Matched">51</span> of <span data-n="f3Tests">51</span> reference test identities. Shared-module and root changes selected the full reactor, which is
+        conservative and appropriate for broad changes.</p>
+      <p class="case-decision"><strong>Decision.</strong> Evaluate GIB as an established
+        alternative. It is not integrated into the v1.0 selector.</p>
+      <p class="case-link"><a href="#selective">See the v1.0 selector demonstration</a></p>
+    </article>
+
+    <article class="case-study">
+      <p class="case-number">Case study 2</p>
+      <h3>Java modernization</h3>
+      <p class="case-tools">JDK 8 and JDK 11 · Maven 3.9.16 · prk-verify</p>
+      <p class="case-question"><strong>Question.</strong> Does JDK 11 preserve the test
+        behaviour of the same Train-Ticket commit?</p>
+      <div class="parity-mini">
+        <div class="parity-mini-row"><span>JDK 8</span><span><span data-n="findPassed">405</span> pass,
+          <span data-n="findFailed">27</span> fail, <span data-n="findErrors">194</span> error</span></div>
+        <div class="parity-mini-row"><span>JDK 11</span><span><span data-n="findPassed">405</span> pass,
+          <span data-n="findFailed">27</span> fail, <span data-n="findErrors">194</span> error</span></div>
+      </div>
+      <p class="case-result"><span data-n="findMatched">626</span> of <span data-n="findTests">626</span>
+        test identities matched, with <span data-n="findDiff">0</span> outcome differences.
+        JDK 17 was not adopted: the tested legacy JaCoCo and failure-ignore setup produced a
+        successful build with no tests executed.</p>
+      <p class="case-decision"><strong>Decision.</strong> Use JDK 11 for the modern toolchain
+        and verify migration with a standalone report comparison.</p>
+      <p class="case-link"><a href="#method">Verification method and evidence</a></p>
+    </article>
+
+    <article class="case-study">
+      <p class="case-number">Case study 3</p>
+      <h3>Build-cache reliability</h3>
+      <p class="case-tools">BCE 1.2.3 · Maven 3.9.16 · Temurin 11</p>
+      <p class="case-question"><strong>Question.</strong> Can a build cache be used in a quality
+        gate without hiding tests that were failing when the cache was seeded?</p>
+      <div class="cache-compare">
+        <div class="cache-card cache-card-risk">
+          <p class="cache-label">Default cache</p>
+          <p class="cache-value"><span data-n="f4Restored">43</span> reactor entries restored</p>
+          <p class="cache-detail"><span data-n="f4Tests">0</span> tests executed · Maven exit <span data-n="f4DefaultExit">0</span></p>
+        </div>
+        <div class="cache-card cache-card-strict">
+          <p class="cache-label">Strict reconciled</p>
+          <p class="cache-value"><span data-n="f4Strict">626</span> tests executed</p>
+          <p class="cache-detail"><span data-n="f4Fail">27</span> failures · <span data-n="f4Err">194</span> errors · Maven exit <span data-n="f4StrictExit">1</span></p>
+        </div>
+      </div>
+      <p class="case-result">The default cache produced a successful build without running
+        tests. The documented reconciliation configuration and a strict cache restored correct
+        failure behaviour. The strict cache held <span data-n="f4Saved">11</span> of
+        <span data-n="findGibFull">43</span> reactor entries for this application.</p>
+      <p class="case-decision"><strong>Decision.</strong> Evaluate BCE, document the
+        configuration dependency and do not select it for future core integration.</p>
+      <p class="case-link"><a href="#review">Findings and mitigation</a></p>
+    </article>
+  </div>
+</div>
+
+<div id="execution-evidence" class="execution-evidence" aria-labelledby="execution-title">
+  <p class="kicker">Execution evidence</p>
+  <h2 id="execution-title">Recorded execution evidence</h2>
+  <p class="section-intro">The panels below separate verbatim execution fragments from
+    curated summaries. The v1.0 merge-check screenshots remain in
+    <a href="#gates">Merge quality validation</a>. Private source logs are named but are not
+    part of the publication bundle.</p>
+
+  <div class="console-grid">
+    <article class="console-panel">
+      <p class="console-label">Verbatim excerpt · GIB 4.8.1</p>
+      <pre class="console-pre">Changed artifactIds (1):
+- ts-order-service
+
+gib-impacted.txt:
+ts-order-service</pre>
+      <p class="console-note"><span data-n="f3Matched">51</span> of <span data-n="f3Tests">51</span>
+        reference test identities matched. Private source: Gate 3A build
+        <code>gib-a-2</code>.</p>
+      <p class="console-link"><a href="https://github.com/sreekanth-chaliyeduth/pipeline-rescue-kit/blob/v1.2.0/evidence/findings/F3-build-selection/README.md" rel="noopener">Public curated evidence: F3</a></p>
+    </article>
+
+    <article class="console-panel">
+      <p class="console-label">Verbatim output · prk-verify</p>
+      <pre class="console-pre">baseline cases: 626  candidate cases: 626
+parity: yes
+verdict: PASS (exact identity and outcome parity)</pre>
+      <p class="console-note">The same 626 identities were compared on JDK 8 and JDK 11.
+        Existing failures and errors remained unchanged.</p>
+      <p class="console-link"><a href="https://github.com/sreekanth-chaliyeduth/pipeline-rescue-kit/blob/v1.2.0/tools/prk-verify.py" rel="noopener">Standalone verification script</a>
+        · <a href="https://github.com/sreekanth-chaliyeduth/pipeline-rescue-kit/blob/v1.2.0/evidence/findings/F1-java-migration/README.md" rel="noopener">F1 evidence</a></p>
+    </article>
+
+    <article class="console-panel">
+      <p class="console-label">Curated summary, not verbatim</p>
+      <pre class="console-pre">default cache:   <span data-n="f4Restored">43</span> reactor entries restored
+                 <span data-n="f4Tests">0</span> tests executed · exit <span data-n="f4DefaultExit">0</span>
+strict reconciled: <span data-n="f4Strict">626</span> tests executed
+                 <span data-n="f4Fail">27</span> failures · <span data-n="f4Err">194</span> errors
+                 exit <span data-n="f4StrictExit">1</span></pre>
+      <p class="console-note">The strict-only cache saved <span data-n="f4Saved">11</span> of
+        <span data-n="findGibFull">43</span> reactor entries. The fresh strict Jenkins run had no
+        prior strict cache to restore; the earlier reconciled-cache experiment used a copied
+        exploratory cache.</p>
+      <p class="console-link"><a href="https://github.com/sreekanth-chaliyeduth/pipeline-rescue-kit/blob/v1.2.0/evidence/findings/F4-build-cache/README.md" rel="noopener">Public curated evidence: F4</a></p>
+    </article>
+
+    <article class="console-panel">
+      <p class="console-label">Curated summary, not verbatim</p>
+      <pre class="console-pre">shaded artifact checksum: OK
+profiling projects: <span data-n="f5Projects">43</span>
+recorded time: <span data-n="f5Time">650.8</span> s
+format: valid JSON</pre>
+      <p class="console-note">The thin extension produced no report. The shaded artifact was
+        supplied through <code>-Dmaven.ext.class.path</code>. Profiling is diagnostic, not a
+        quality gate.</p>
+      <p class="console-link"><a href="https://github.com/sreekanth-chaliyeduth/pipeline-rescue-kit/blob/v1.2.0/evidence/findings/F5-build-profiling/README.md" rel="noopener">Public curated evidence: F5</a></p>
+    </article>
+  </div>
+</div>
 <section id="problem" aria-labelledby="problem-title">
-  <p class="section-number">Section 2</p>
-  <h2 id="problem-title">What was wrong with the original build</h2>
+  <p class="v10-label">v1.0 historical assessment</p>
+  <h2 id="problem-title">Initial pipeline assessment</h2>
   <p class="lead">Train-Ticket's own Jenkins build, run unchanged, had four problems this kit
     fixes and three more worth knowing about. Each card quotes the line of the build file
     that shows it.</p>
@@ -167,10 +271,16 @@
 </section>
 
 <section id="gates" aria-labelledby="gates-title">
-  <p class="section-number">Section 3</p>
-  <h2 id="gates-title">How the merge check decides</h2>
+  <p class="v10-label">v1.0 implementation</p>
+  <h2 id="gates-title">Merge quality validation</h2>
   <p class="lead">Every pull request (a proposed change waiting to be merged) runs through
     three checks in order. If any one fails, the change is blocked.</p>
+
+  <div class="strip-wrap" id="v1-demo">
+    <p class="v10-label">v1.0 interactive demonstration</p>
+    <p class="strip-intro">Three recorded pull-request scenarios and the decision the merge check made for each. Select one.</p>
+    <figure id="pr-strip" class="pr-strip" aria-label="Recorded merge decisions for three test changes"></figure>
+  </div>
 
   <ol class="check-list">
     <li><strong>Is the whole application still tested?</strong> The share of all code lines
@@ -213,22 +323,21 @@
 </section>
 
 <section id="selective" aria-labelledby="selective-title">
-  <p class="section-number">Section 4</p>
-  <h2 id="selective-title">Rebuilding only what a change touches</h2>
-  <p class="lead">Train-Ticket is made of <span data-n="full">43</span> parts that Maven
+  <h2 id="selective-title">Change-based build selection</h2>
+  <p class="lead">Train-Ticket is made of <span data-n="full">43</span> reactor entries that Maven
     builds together. Normally every change rebuilds all of them. My script reads which files
-    a change touched, picks the parts that contain them plus the parts connected to those,
+    a change touched, picks the reactor entries that contain them plus the entries connected to those,
     and builds only that set. When it cannot be sure, it builds everything.</p>
 
-  <p class="look">What you are looking at: each square is one part of Train-Ticket. Pick a
-    kind of change to see which parts the script would build.</p>
+  <p class="look">What you are looking at: each square is one reactor entry of Train-Ticket. Pick a
+    kind of change to see which reactor entries the script would build.</p>
   <div class="selector-showcase reactor-showcase">
     <div class="reactor-panel">
       <div id="selector-chips" class="chip-row" role="group" aria-label="Kind of change"></div>
       <p class="reactor-count"><span id="reactor-count">--</span><span class="reactor-of" id="reactor-of">of --</span></p>
       <div id="reactor-illustration" class="reactor" role="img" aria-label="Parts of Train-Ticket"></div>
       <p id="reactor-label" class="small"></p>
-      <p class="small reactor-note">Diagram only: highlighted squares show how many parts are
+      <p class="small reactor-note">Diagram only: highlighted squares show how many reactor entries are
         built, not which ones.</p>
     </div>
     <div class="selector-copy">
@@ -239,9 +348,9 @@
     </div>
   </div>
 
-  <p class="result-line">For a change to one service, <span data-n="sel">3</span> parts and
+  <p class="result-line">For a change to one service, <span data-n="sel">3</span> reactor entries and
     <span data-n="selTests">51</span> tests ran in <span data-n="selTime">38.2</span>
-    seconds, against all <span data-n="full">43</span> parts for a full build. This shows the
+    seconds, against all <span data-n="full">43</span> reactor entries for a full build. This shows the
     scope one known change needs. It is not an average build time.</p>
 
   <details class="extra">
@@ -256,12 +365,12 @@
 </section>
 
 <section id="benchmark" aria-labelledby="benchmark-title">
-  <p class="section-number">Section 5</p>
-  <h2 id="benchmark-title">Build timings, and the claim I withdrew</h2>
+  <p class="v10-label">v1.0 historical measurement</p>
+  <h2 id="benchmark-title">Performance measurements and methodology</h2>
   <p class="lead">I built the whole of Train-Ticket <span data-n="runsWord">nine</span> times
     on my Jenkins: three times with the original build, three with my new build, and three
-    with my new build made to package every part, as the original does.</p>
-  <p>My first comparison showed the new build <span data-n="firstClaim">38.9</span>% faster. That was not a fair test. Many of Train-Ticket's own tests fail before I change anything: <span data-n="failing">220</span> of <span data-n="tests">626</span> failed or errored in my baseline builds. A separate run of the untouched project recorded <span data-n="failingUpstream">221</span>; one login test behaves differently between runs, and I have not proven why. My new build stops at any part whose tests fail, so only <span data-n="packagedNew">11</span> of the <span data-n="full">43</span> parts were packaged, while the original packaged all of them. When I made the new build package every part, it was <span data-n="controlPct">12.6</span>% faster at the median, and its three runs overlapped with the original's. Even then the work is not identical: the original also installs every part in a separate step. So I do not claim a speed-up.</p>
+    with my new build made to package every reactor entry, as the original does.</p>
+  <p>My first comparison showed the new build <span data-n="firstClaim">38.9</span>% faster. That was not a fair test. Many of Train-Ticket's own tests fail before I change anything: <span data-n="failing">220</span> of <span data-n="tests">626</span> failed or errored in my baseline builds. A separate run of the untouched project recorded <span data-n="failingUpstream">221</span>; one login test behaves differently between runs, and I have not proven why. My new build stops at any reactor entry whose tests fail, so only <span data-n="packagedNew">11</span> of the <span data-n="full">43</span> reactor entries were packaged, while the original packaged all of them. When I made the new build package every reactor entry, it was <span data-n="controlPct">12.6</span>% faster at the median, and its three runs overlapped with the original's. Even then the work is not identical: the original also installs every reactor entry in a separate step. So I do not claim a speed-up.</p>
 
   <div class="chart-block">
     <p class="look">What you are looking at: each dot is one full build. The dashed line is
@@ -274,7 +383,7 @@
     </div>
     <div id="benchmark-chart"></div>
     <p class="chart-legend small">Original: Train-Ticket's own build. New: my build. New +
-      packaging: my build forced to package every part, like the original.</p>
+      packaging: my build forced to package every reactor entry, like the original.</p>
     <div class="run-picker">
       <p class="run-picker-title" id="run-picker-title">Open a build record</p>
       <div id="benchmark-runs" class="run-picker-grid" role="group"
@@ -293,17 +402,34 @@
 </section>
 
 <section id="review" aria-labelledby="review-title">
-  <p class="section-number">Section 6</p>
-  <h2 id="review-title">Mistakes I found and fixed</h2>
+  <h2 id="review-title">Engineering findings and improvements</h2>
   <p class="lead">After the first results, I re-checked my own work. These things were wrong
     or overstated. Each card says what was wrong, why it mattered, and what I changed. The
     original records are kept, not edited.</p>
   <div id="reviews" class="review-grid"></div>
 </section>
 
+<div id="adoption" class="adoption" aria-labelledby="adoption-title">
+  <p class="kicker">Practical adoption</p>
+  <h2 id="adoption-title">How these findings transfer</h2>
+  <div class="adoption-grid">
+    <div><h3>Maven build selection</h3><p>Start with a path-to-module map, keep a full-build
+      fallback and verify the selected set against the dependency graph for every change class.</p></div>
+    <div><h3>Jenkins quality checks</h3><p>Treat report-based gates as code. Publish the
+      evidence, keep the thresholds explicit and make failure the default when a report is missing.</p></div>
+    <div><h3>Java version migrations</h3><p>Compare test identities, not only totals. A build
+      that reports success with zero tests is a configuration signal, not a migration pass.</p></div>
+    <div><h3>Build caches</h3><p>Keep strict and exploratory caches separate, include test
+      policy in the cache key and verify that a seeded failure is still detected.</p></div>
+    <div><h3>Test evidence</h3><p>Distinguish executed, restored, skipped and omitted modules.
+      Preserve reports per module and record the exact command and tool versions.</p></div>
+  </div>
+  <p class="adoption-note">These are conditions for evaluating the approach in another
+    codebase, not a claim of enterprise production readiness.</p>
+</div>
+
 <section id="implementation" aria-labelledby="implementation-title">
-  <p class="section-number">Section 7</p>
-  <h2 id="implementation-title">Trying this on a real team's pipeline</h2>
+  <h2 id="implementation-title">Technical reference: implementation and adoption</h2>
   <p class="lead">This is a tested proof of concept, not a production rollout. A team trying
     it would start small:</p>
 
@@ -378,13 +504,12 @@ make demo        # build main first, then every test change</code></pre>
 </section>
 
 <section id="method" aria-labelledby="method-title">
-  <p class="section-number">Section 8</p>
-  <h2 id="method-title">Evidence and limits</h2>
-  <p class="lead">For readers who want to check the work.</p>
+  <h2 id="method-title">Technical reference: methods and reproduction</h2>
+  <p class="lead">Experiment methodology and supporting evidence.</p>
 
   <div class="proves">
     <div>
-      <h3>What I do not claim</h3>
+      <h3>Scope and limitations</h3>
       <ul>
         <li>No speed-up for the same amount of work.</li>
         <li>Not production-ready, not proven on every kind of project, and no guaranteed

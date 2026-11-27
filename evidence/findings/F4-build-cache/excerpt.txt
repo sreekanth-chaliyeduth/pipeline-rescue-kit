@@ -1,0 +1,15 @@
+Default BCE cache, strict build, cache seeded with failure-ignore=true:
+restored=43
+Tests run: 0
+Maven RC 0
+BUILD SUCCESS
+
+Strict uncached reference:
+Tests run: 626, failures: 27, errors: 194
+Maven RC 1
+BUILD FAILURE
+
+Strict reconciled cache:
+Tests run: 626, failures: 27, errors: 194
+Maven RC 1
+BUILD FAILURE

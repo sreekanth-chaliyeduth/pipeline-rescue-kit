@@ -38,6 +38,7 @@
      v1.0.0 tag. The local tree is checked against the same paths before
      publication. */
   var EVIDENCE_BASE = "https://github.com/sreekanth-chaliyeduth/pipeline-rescue-kit/blob/v1.0.0/";
+  var FINDINGS_BASE = "https://github.com/sreekanth-chaliyeduth/pipeline-rescue-kit/blob/v1.2.0/";
 
   function safeRepoPath(path) {
     if (!path || /^[a-z]+:/i.test(path) || path.indexOf("..") !== -1) return null;
@@ -47,7 +48,9 @@
 
   function repoHref(path) {
     var safe = safeRepoPath(path);
-    return safe ? EVIDENCE_BASE + safe : null;
+    if (!safe) return null;
+    var base = /^evidence\/findings\//.test(safe) ? FINDINGS_BASE : EVIDENCE_BASE;
+    return base + safe;
   }
 
   function repoLink(path, text) {
@@ -122,10 +125,10 @@
   var VARIANT_NAME = { baseline: "Original", rescued: "New", control: "New + packaging" };
 
   var PROBLEM_COPY = {
-    "repeated-reactor": ["Every part was built twice",
-      "The build compiled and packaged every part with the tests switched off, then started over to run the tests."],
+    "repeated-reactor": ["Every reactor entry was built twice",
+      "The build compiled and packaged every reactor entry with the tests switched off, then started over to run the tests."],
     "second-test-pass": ["Tests ran in a second, separate pass",
-      "Running the tests separately repeats the setup work for every part. It adds time without adding any check."],
+      "Running the tests separately repeats the setup work for every reactor entry. It adds time without adding any check."],
     "report-only-pmd": ["Code-quality warnings could never stop a merge",
       "The code-quality checker ran, but only wrote a report. Nothing failed when new warnings appeared."],
     "report-only-jacoco": ["Test coverage could fall without anything failing",
@@ -142,10 +145,10 @@
   var REVIEW_COPY = {
     "packaging-control": ["Speed claim",
       "I reported my new build as much faster than the original.",
-      "The two builds did different amounts of work: the original packaged every part, mine packaged only the parts whose tests passed. The number overstated the gain.",
+      "The two builds did different amounts of work: the original packaged every reactor entry, mine packaged only the entries whose tests passed. The number overstated the gain.",
       "I re-ran my build with the packaging work restored. The gap shrank and the runs overlapped, so I withdrew the claim."],
     "selector-safeguards": ["Building too little",
-      "The first version of the selection script chose parts from file paths alone.",
+      "The first version of the selection script chose reactor entries from file paths alone.",
       "A change it did not recognise, or a change to a shared build file, could have been built too narrowly, so a broken change might look fine.",
       "Anything unknown, and any change to the top-level build files, now triggers a full build. Five test cases and a separate test suite check this."],
     "reference-contamination": ["What new warnings are compared against",
@@ -167,7 +170,7 @@
     "coverage-overview": "Untested change: Jenkins's coverage page. The whole application stays above its 90% limit.",
     "coverage-modified-lines": "The same build: none of the lines this change added are tested, so the second check blocks it.",
     "pmd-new-issue": "Code-quality warning change: Jenkins lists exactly one warning that is new compared with the main code.",
-    "selector-decision": "The script's own output for a one-service change: the file that changed and the parts it chose."
+    "selector-decision": "The script's own output for a one-service change: the file that changed and the reactor entries it chose."
   };
 
   var SUPERSEDED_LIMITS = [
@@ -177,7 +180,7 @@
 
   var CORRECTED_LIMITS = {
     "The ts-common scenario selects 42 dependent module entries; the aggregator root is not in that reactor.":
-      "Correction: this line is wrong. The recorded 42-part list starts with the top-level project (ts-service-cluster). See evidence/M4/scenarios.json and evidence/M4/raw/scenarios/ts-common.log."
+      "Correction: this line is wrong. The recorded 42-entry list starts with the top-level project (ts-service-cluster). See evidence/M4/scenarios.json and evidence/M4/raw/scenarios/ts-common.log."
   };
 
   var GATE_REASON = {
@@ -214,6 +217,15 @@
     var main = data.quality_gates.petclinic.pr.filter(function (e) { return e.scenario === "main"; })[0];
     var packaged = fr.control_comparison.packaging &&
       fr.control_comparison.packaging.rescued_verify_counts;
+    var byId = {};
+    ((data.findings && data.findings.items) || []).forEach(function (item) {
+      byId[item.id] = item;
+    });
+    var f1 = (byId.F1 && byId.F1.facts) || {};
+    var f3 = (byId.F3 && byId.F3.facts) || {};
+    var f4 = (byId.F4 && byId.F4.facts) || {};
+    var f5 = (byId.F5 && byId.F5.facts) || {};
+    var hero = (data.findings && data.findings.hero) || {};
     var values = {
       full: sel.full_reactor.reactor_entries,
       sel: sel.service_change.reactor_entries,
@@ -226,12 +238,53 @@
       firstClaim: ((med.baseline.median_ms - med.rescued.median_ms) / med.baseline.median_ms * 100).toFixed(1),
       controlPct: Number(fr.control_comparison.median_difference_pct_of_baseline).toFixed(1),
       runsWord: countWord(fr.runs.length).toLowerCase(),
-      mainWarnings: main && main.pmd ? main.pmd.total : null
+      mainWarnings: main && main.pmd ? main.pmd.total : null,
+      findReactor: hero.reactor_entries,
+      findTests: f1.test_identities,
+      findMatched: f1.matched_identities,
+      findDiff: f1.outcome_differences,
+      findPassed: f1.passed,
+      findFailed: f1.failed,
+      findErrors: f1.errors,
+      findGib: hero.gib_selected,
+      findGibFull: hero.gib_reactor_entries,
+      f3Shared: f3.shared_selected,
+      f3Root: f3.root_selected,
+      f4Restored: f4.default_restored,
+      f4Tests: f4.default_tests_executed,
+      f4Strict: f4.reconciled_tests,
+      f4Fail: f4.uncached_failures,
+      f4Err: f4.uncached_errors,
+      f5Projects: f5.projects,
+      f5Time: f5.recorded_time_ms ? (f5.recorded_time_ms / 1000).toFixed(1) : null,
+      f3Matched: f3.leaf_matched_identities,
+      f3Tests: f3.leaf_tests,
+      f4Saved: f4.strict_saved_entries,
+      f4DefaultExit: f4.default_exit_code,
+      f4StrictExit: f4.reconciled_exit_code,
+      f4UncachedExit: f4.uncached_exit_code,
+      f3Version: f3.version,
+      f4Version: f4.version,
+      f5Version: f5.version
     };
     document.querySelectorAll("[data-n]").forEach(function (el) {
       var v = values[el.getAttribute("data-n")];
       if (v != null && v !== "") el.textContent = String(v);
     });
+    var total = (f1.passed || 0) + (f1.failed || 0) + (f1.errors || 0) +
+      (f1.skipped || 0);
+    var parityPass = total ? (f1.passed / total * 100).toFixed(1) : null;
+    var parityFailed = total ? (f1.failed / total * 100).toFixed(1) : null;
+    var parityErrors = total ? (f1.errors / total * 100).toFixed(1) : null;
+    var gibScope = hero.reactor_entries
+      ? (hero.gib_selected / hero.reactor_entries * 100).toFixed(1) : null;
+    [["parityPass", parityPass], ["parityFailed", parityFailed], ["parityErrors", parityErrors], ["gibScope", gibScope], ["sharedScope", "100.0"]]
+      .forEach(function (pair) {
+        if (pair[1] == null) return;
+        document.querySelectorAll('[data-bar="' + pair[0] + '"]').forEach(function (el) {
+          el.style.width = pair[1] + "%";
+        });
+      });
   }
 
   function gateMetric(label, state, value, noLines) {
@@ -487,7 +540,7 @@
       root.appendChild(h("span", { class: "module-pill", text: name }));
     });
     if (labels.filter(function (name) { return name === "ts-consign-price-service"; }).length > 1) {
-      root.appendChild(h("p", { class: "small", text: "Two parts show as ts-consign-price-service because Train-Ticket's own build files give ts-consign-service the same display name. They are different parts." }));
+      root.appendChild(h("p", { class: "small", text: "Two reactor entries show as ts-consign-price-service because Train-Ticket's own build files give ts-consign-service the same display name. They are different entries." }));
     }
   }
 
@@ -500,19 +553,19 @@
   };
   var CASE_COPY = {
     "one-service": function (e, total) {
-      return "A file in one service (ts-order-service) changed. The script builds it plus the parts it needs: the shared library and the top-level project definition.";
+      return "A file in one service (ts-order-service) changed. The script builds it plus the reactor entries it needs: the shared library and the top-level project definition.";
     },
     "ts-common": function (e, total) {
       return "The shared library (ts-common) changed. Almost every service uses it, so everything that depends on it is rebuilt.";
     },
     "root-pom": function (e, total) {
-      return "The top-level build file (pom.xml) changed. That can affect every part, so the script does not guess: all " + total + " are built.";
+      return "The top-level build file (pom.xml) changed. That can affect every reactor entry, so the script does not guess: all " + total + " reactor entries are built.";
     },
     "non-maven-directory": function () {
-      return "A file outside the Java build changed (the image folder). No part of the build is affected, so nothing is rebuilt.";
+      return "A file outside the Java build changed (the image folder). No reactor entry is affected, so nothing is rebuilt.";
     },
     "documentation-only": function () {
-      return "Only documentation changed. No part of the build is affected, so nothing is rebuilt.";
+      return "Only documentation changed. No reactor entry is affected, so nothing is rebuilt.";
     }
   };
 
@@ -542,9 +595,9 @@
       }
       detail.appendChild(sourceLine(entry.source));
       renderReactor(entry.reactor_count,
-        entry.mode === "full" ? "All " + total + " parts built"
-          : entry.mode === "none" ? "No parts built"
-            : entry.reactor_count + " of " + total + " parts built", total);
+        entry.mode === "full" ? "All " + total + " reactor entries built"
+          : entry.mode === "none" ? "No reactor entries built"
+            : entry.reactor_count + " of " + total + " reactor entries built", total);
       renderModules(entry.mode === "full" ? [] : entry.selected_modules);
       if (summary) {
         var explain = CASE_COPY[entry.name];
@@ -556,7 +609,7 @@
       var b = h("button", { class: "case-button", type: "button", "aria-pressed": "false",
         "data-name": entry.name },
         CASE_NAME[entry.name] || entry.name,
-        h("span", { text: entry.reactor_count + " of " + total + " parts" }));
+        h("span", { text: entry.reactor_count + " of " + total + " reactor entries" }));
       b.addEventListener("click", function () { show(entry); });
       list.appendChild(b);
     });
@@ -577,9 +630,9 @@
     }
     show(sel.selector_cases[0]);
     var policy = document.getElementById("selector-policy");
-    if (policy) policy.textContent = "When unsure, it builds all " + total + " parts: after a top-level build file change, an unknown build file, or any script error.";
+    if (policy) policy.textContent = "When unsure, it builds all " + total + " reactor entries: after a top-level build file change, an unknown build file, or any script error.";
     var method = document.getElementById("selector-method");
-    if (method) method.textContent = "Maven itself adds the parts each chosen part needs and the parts that depend on it.";
+    if (method) method.textContent = "Maven itself adds the reactor entries each chosen entry needs and the entries that depend on it.";
   }
 
   var EXPECTED = {
@@ -832,7 +885,7 @@
       ["Tests failing in my baseline builds", conditions.failed_or_errored],
       ["Parallel build threads", conditions.threads],
       ["Download cache", conditions.cache],
-      ["One-service change", data.selective_builds.service_change.reactor_entries + " parts, " +
+      ["One-service change", data.selective_builds.service_change.reactor_entries + " reactor entries, " +
         data.selective_builds.service_change.tests + " tests"]
     ].forEach(function (item) {
       list.appendChild(h("dt", { text: item[0] }));

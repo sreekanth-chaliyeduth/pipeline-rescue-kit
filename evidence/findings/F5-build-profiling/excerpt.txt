@@ -1,0 +1,12 @@
+Maven Profiler 3.3, shaded classifier
+sha256sum -c: OK
+d235bc3f1d75d3eefde5627f33e7255c3d2f4476bad7f3c60fed6056a54f6f87
+
+JSON profiling report has been saved.
+projects: 43
+recorded time: 650762 ms
+Maven goal: verify
+
+Thin core extension:
+ProfilerEventSpy could not access com.google.common.base.Stopwatch
+No report was produced.

@@ -1,0 +1,12 @@
+$ python3 tools/prk-verify.py <jdk8-reports> <jdk11-reports>
+baseline cases: 626  candidate cases: 626
+baseline health: 405 passed, 27 failed, 194 errored, 0 skipped
+candidate health: 405 passed, 27 failed, 194 errored, 0 skipped
+parity: yes
+verdict: PASS (exact identity and outcome parity)
+
+Source commit: 313886e99befb94be6cd45f085c98e0019f59829
+Maven: 3.9.16
+JDK 8: Temurin 1.8.0_512
+JDK 11: Temurin 11.0.32.1
+Exit code: 0

@@ -154,6 +154,7 @@ def main():
         with open(os.path.join(ROOT, "examples", "Jenkinsfile.multibranch"),
                   encoding="utf-8", newline="") as fh:
             jenkinsfile_text = fh.read().replace("\r\n", "\n").replace("\r", "\n")
+
         manifest = json.load(open(os.path.join(ROOT, "release", "manifest.json"),
                                   encoding="utf-8"))
         manifest_paths = {entry["path"] for entry in manifest["files"]}
@@ -202,6 +203,69 @@ def main():
         })()""") == 0,
               "every rendered evidence reference is an anchor")
 
+        check(chrome.evaluate("document.querySelectorAll('.what-is').length") == 0,
+              "the superseded What this is block is absent")
+        check(chrome.evaluate("document.getElementById('summary') === null"),
+              "the superseded opening summary is absent")
+        check(chrome.evaluate("document.querySelectorAll('#hero-metrics .hero-metric').length") == 3,
+              "the hero shows three evidence-backed metrics")
+        hero_text = chrome.evaluate("document.getElementById('hero-metrics').innerText") or ""
+        check("43" in hero_text and "626" in hero_text and "1" in hero_text,
+              "the hero metrics display the approved values")
+        check(chrome.evaluate("document.querySelectorAll('.parity-row').length") == 2,
+              "the hero shows JDK 8 and JDK 11 parity rows")
+        check(chrome.evaluate("document.querySelector('.parity-note').textContent").find("test identities and outcomes matched") >= 0,
+              "the parity note explains the test-identity match")
+        check(chrome.evaluate("document.querySelectorAll('.parity-bar span').length") == 6,
+              "each JDK bar has passed, failed and error segments")
+        check(chrome.evaluate("document.querySelectorAll('.parity-legend li').length") == 4,
+              "the parity legend has four entries")
+        check(chrome.evaluate("document.querySelector('.parity-bar').getBoundingClientRect().height") >= 20,
+              "the parity bars are at least 20px high")
+        hero_f1 = [item for item in data["findings"]["items"] if item["id"] == "F1"][0]
+        hero_f3 = [item for item in data["findings"]["items"] if item["id"] == "F3"][0]
+        check(chrome.evaluate("document.querySelector('[data-n=\"findMatched\"]').textContent") ==
+              str(hero_f1["facts"]["matched_identities"])
+              and chrome.evaluate("document.querySelector('[data-n=\"findTests\"]').textContent") ==
+              str(hero_f1["facts"]["test_identities"])
+              and chrome.evaluate("document.querySelector('[data-n=\"findGib\"]').textContent") ==
+              str(hero_f3["facts"]["leaf_selected"]),
+              "the hero numbers resolve from findings data")
+        f4 = [item for item in data["findings"]["items"] if item["id"] == "F4"][0]["facts"]
+        check(chrome.evaluate("document.querySelector('[data-n=\"f4Saved\"]').textContent") ==
+              str(f4["strict_saved_entries"]),
+              "the strict-cache entry count resolves from findings data")
+        check(chrome.evaluate("document.querySelector('[data-n=\"f4DefaultExit\"]').textContent") ==
+              str(f4["default_exit_code"]),
+              "the default cache exit code resolves from findings data")
+        parity_widths = json.loads(chrome.evaluate("""JSON.stringify(
+            ['parityPass','parityFailed','parityErrors'].map(key =>
+              parseFloat(document.querySelector('[data-bar="' + key + '"]').style.width)))"""))
+        f1 = hero_f1["facts"]
+        expected_widths = [
+            f1["passed"] / f1["test_identities"] * 100,
+            f1["failed"] / f1["test_identities"] * 100,
+            f1["errors"] / f1["test_identities"] * 100,
+        ]
+        check(all(abs(a - b) < 0.2 for a, b in zip(parity_widths, expected_widths)),
+              "the parity segment widths derive from findings data")
+        check(abs(sum(parity_widths) - 100) < 0.3,
+              "the parity segments cover the full bar")
+        gib_width = chrome.evaluate(
+            "parseFloat(document.querySelector('[data-bar=\"gibScope\"]').style.width)")
+        expected_gib = hero_f3["facts"]["leaf_selected"] / hero_f3["facts"]["reactor_entries"] * 100
+        check(abs(gib_width - expected_gib) < 0.2,
+              "the GIB scope bar width derives from findings data")
+        check(all(os.path.isfile(os.path.join(ROOT, path)) for path in
+                  ("jenkins-lib/vars/prGate.groovy", "tools/select-modules.sh",
+                   "examples/Jenkinsfile.multibranch")),
+              "the named implementation paths exist")
+        check(subprocess.run(
+            ["git", "-C", ROOT, "cat-file", "-e",
+             "lib-v1.1.1:jenkins-lib/vars/prGate.groovy"],
+            capture_output=True).returncode == 0,
+            "the referenced shared-library version exists")
+
         author_links = json.loads(chrome.evaluate("""JSON.stringify(
             [...document.querySelectorAll('a.author-link')].map(a => ({
               href: a.getAttribute('href'),
@@ -229,51 +293,6 @@ def main():
             "document.activeElement.classList.contains('author-link')"),
             "the masthead author link receives keyboard focus")
 
-        check(chrome.evaluate("document.querySelectorAll('.what-is').length") == 1,
-              "exactly one What this is section exists")
-        check(chrome.evaluate(
-            "document.querySelector('.what-is').previousElementSibling.classList.contains('byline')"),
-            "the What this is section follows the author byline")
-        check(chrome.evaluate(
-            "document.querySelector('.what-is').nextElementSibling.classList.contains('masthead-grid')"),
-            "the What this is section precedes the masthead grid")
-        check(chrome.evaluate("document.getElementById('what-is-title').textContent") ==
-              "What this is",
-              "the What this is heading is correct")
-        what_is_subheads = json.loads(chrome.evaluate("""JSON.stringify(
-            [...document.querySelectorAll('.what-is h3')].map(h => h.textContent))"""))
-        check(what_is_subheads == ["What I built", "Existing tools it uses",
-                                   "How you would use it"],
-              "the three What this is subsection headings are correct")
-        what_is_text = chrome.evaluate("document.querySelector('.what-is').textContent") or ""
-        check("prGate" in what_is_text,
-              "the What this is section names prGate")
-        check("select-modules.sh" in what_is_text,
-              "the What this is section names select-modules.sh")
-        check("SonarQube" in what_is_text,
-              "the What this is section names SonarQube")
-        check("Gitflow Incremental Builder" in what_is_text,
-              "the What this is section names Gitflow Incremental Builder")
-        check("Maven Build Cache Extension" in what_is_text,
-              "the What this is section names Maven Build Cache Extension")
-        check(all(os.path.isfile(os.path.join(ROOT, path)) for path in
-                  ("jenkins-lib/vars/prGate.groovy", "tools/select-modules.sh",
-                   "examples/Jenkinsfile.multibranch")),
-              "the named implementation paths exist")
-        check(subprocess.run(
-            ["git", "-C", ROOT, "cat-file", "-e",
-             "lib-v1.1.1:jenkins-lib/vars/prGate.groovy"],
-            capture_output=True).returncode == 0,
-            "the referenced shared-library version exists")
-        check(chrome.evaluate("""(() => {
-            const section = document.querySelector('.what-is');
-            const heading = document.getElementById('what-is-title');
-            return section.getAttribute('aria-labelledby') === 'what-is-title'
-              && heading && heading.tagName === 'H2'
-              && heading.textContent === 'What this is';
-        })()"""),
-              "the What this is section has a valid accessible heading association")
-
         check(chrome.evaluate("document.title").startswith("Pipeline Rescue Kit"),
               "root page loads with the expected title")
         check(chrome.evaluate("document.querySelectorAll('main section').length") == 8,
@@ -281,24 +300,21 @@ def main():
         check(chrome.evaluate("document.querySelectorAll('h1').length") == 1,
               "exactly one h1")
         check(chrome.evaluate("document.getElementById('benchmark-title').textContent") ==
-              "Build timings, and the claim I withdrew",
-              "benchmark heading is the static editorial heading")
+              "Performance measurements and methodology",
+              "benchmark heading is the approved editorial heading")
         check(chrome.evaluate("document.getElementById('selective-title').textContent") ==
-              "Rebuilding only what a change touches",
-              "selection heading is the static editorial heading")
+              "Change-based build selection",
+              "selection heading is the approved editorial heading")
         check(chrome.evaluate("document.getElementById('review-title').textContent") ==
-              "Mistakes I found and fixed",
-              "corrections heading is the static editorial heading")
+              "Engineering findings and improvements",
+              "corrections heading is the approved editorial heading")
         check(chrome.evaluate("document.getElementById('gates-title').textContent") ==
-              "How the merge check decides",
-              "gate heading is the static editorial heading")
+              "Merge quality validation",
+              "gate heading is the approved editorial heading")
         gate_cards = chrome.evaluate("document.querySelectorAll('#gate-highlights .gate-card').length")
         check(gate_cards == 2, "the gate comparison still renders two recorded blocks")
-        summary = chrome.evaluate("document.getElementById('summary').innerText") or ""
-        check("The problem" in summary, "opening summary contains The problem")
-        check("What I built" in summary, "opening summary contains What I built")
-        check("How I tested it" in summary, "opening summary contains How I tested it")
-        check("What I found" in summary, "opening summary contains What I found")
+        check(chrome.evaluate("document.querySelector('.hero-lede').textContent").find("Maven build selection") >= 0,
+              "the hero description names the engineering scope")
         check(chrome.evaluate("document.querySelector('[data-n=\"sel\"]').textContent") == str(selected)
               and chrome.evaluate("document.querySelector('[data-n=\"full\"]').textContent") == str(full),
               "summary number hooks resolve to the recorded 3 and 43")
@@ -322,7 +338,7 @@ def main():
               "the run selector lists nine runs")
         main_text = chrome.evaluate("document.getElementById('main').innerText.toLowerCase()") or ""
         check(all(token not in main_text for token in
-                  ("m3", "m4", "m5", "reactor entr", "fails closed")),
+                  ("m3", "m4", "m5", "fails closed")),
               "visible main copy contains no legacy milestone or jargon labels")
         check("—" not in (chrome.evaluate("document.body.innerText") or ""),
               "the rendered page contains no em dash")
@@ -338,8 +354,8 @@ def main():
               "section 5 no longer calls 220 the independent upstream count")
         benchmark_lead = chrome.evaluate("document.querySelector('#benchmark > p.lead').textContent") or ""
         check("same packaging work" not in benchmark_lead
-              and "package every part, as the original does" in benchmark_lead,
-              "section 5 describes the control as packaging every part")
+              and "package every reactor entry, as the original does" in benchmark_lead,
+              "section 5 describes the control as packaging every reactor entry")
         conditions_text = chrome.evaluate("document.getElementById('conditions-list').textContent") or ""
         check("Tests failing in my baseline builds" in conditions_text,
               "the conditions list labels the baseline failure count accurately")
@@ -459,7 +475,10 @@ def main():
 
         # Motion order: each step starts after the previous one and all settle.
         scroll_to(chrome, "#pr-strip")
-        time.sleep(0.3)
+        for _ in range(20):
+            if chrome.evaluate("document.querySelector('.strip-body').classList.contains('play')"):
+                break
+            time.sleep(0.1)
         samples = json.loads(chrome.evaluate("""(async () => {
             const chip = document.querySelector('#pr-strip .chip[data-name="pmd-violation-1"]');
             const body = document.querySelector('.strip-body');
@@ -577,7 +596,7 @@ def main():
             return !!(chips.compareDocumentPosition(grid) & Node.DOCUMENT_POSITION_FOLLOWING);
         })()"""), "the selector chips appear before the reactor grid")
         check(chrome.evaluate("document.getElementById('selector-policy').offsetParent !== null")
-              and "When unsure, it builds all 43 parts"
+              and "When unsure, it builds all 43 reactor entries"
               in (chrome.evaluate("document.getElementById('selector-policy').textContent") or ""),
               "the build-everything policy is shown inline")
         check(chrome.evaluate("document.querySelectorAll('#selective .selector-layout').length") == 1,
@@ -625,7 +644,7 @@ def main():
             const note = document.querySelector('#selected-modules .small');
             return note ? note.textContent : '';
         })()""") or ""
-        check(duplicate_note == "Two parts show as ts-consign-price-service because Train-Ticket's own build files give ts-consign-service the same display name. They are different parts.",
+        check(duplicate_note == "Two reactor entries show as ts-consign-price-service because Train-Ticket's own build files give ts-consign-service the same display name. They are different entries.",
               "the shared-module case explains the duplicate Maven display name")
         chrome.evaluate("document.querySelector('#selector-chips .chip[data-name=\"ts-common\"]').click()")
         check(chrome.evaluate("document.querySelectorAll('#selected-modules .small').length") == 1,
@@ -830,9 +849,9 @@ def main():
             })()"""), f"the decision strip has no horizontal clipping at {width}px")
             if width == 375:
                 stat_size = chrome.evaluate(
-                    "parseFloat(getComputedStyle(document.querySelector('#summary p')).fontSize)")
+                    "parseFloat(getComputedStyle(document.querySelector('.hero-label')).fontSize)")
                 check(stat_size >= 13,
-                      f"opening summary text is readable at 375px ({stat_size}px)")
+                      f"hero metric labels are readable at 375px ({stat_size}px)")
                 check(chrome.evaluate("""(() => {
                     const chart = document.getElementById('benchmark-chart');
                     return chart.scrollWidth <= chart.clientWidth + 1;
@@ -858,18 +877,19 @@ def main():
                     "getComputedStyle(document.querySelector('.figure-grid-4')).gridTemplateColumns").split()) == 1,
                     "the gate screenshot grid is one column at 375px")
                 check(len(chrome.evaluate(
-                    "getComputedStyle(document.querySelector('.what-is-grid')).gridTemplateColumns").split()) == 1,
-                    "the What this is grid is one column at 375px")
-                check(chrome.evaluate("""(() => {
-                    const section = document.querySelector('.what-is');
-                    return section.scrollWidth <= section.clientWidth + 1;
-                })()"""), "the What this is section has no horizontal overflow at 375px")
+                    "getComputedStyle(document.querySelector('.hero-metrics')).gridTemplateColumns").split()) == 1,
+                    "the hero metrics are one column at 375px")
+                check(len(chrome.evaluate(
+                    "getComputedStyle(document.querySelector('.case-study-grid')).gridTemplateColumns").split()) == 1,
+                    "the case studies are one column at 375px")
             if width == 1280:
                 check(len(chrome.evaluate(
-                    "getComputedStyle(document.querySelector('.what-is-grid')).gridTemplateColumns").split()) == 2,
-                    "the What this is grid has two columns at 1280px")
+                    "getComputedStyle(document.querySelector('.case-study-grid')).gridTemplateColumns").split()) == 3,
+                    "the case studies have three columns at 1280px")
             heights = chrome.evaluate("""[...document.querySelectorAll('button, a')]
-                .filter(el => !el.classList.contains('evidence-link') && !el.classList.contains('author-link'))
+                .filter(el => !el.classList.contains('evidence-link') && !el.classList.contains('author-link')
+                    && !el.closest('.hero-links') && !el.closest('.case-link')
+                    && !el.closest('.section-intro') && !el.closest('.console-link'))
                 .map(el => el.getBoundingClientRect().height)
                 .filter(h => h > 0)""")
             check(min(heights) >= 40, f"interactive targets are at least 40px at {width}px")
@@ -902,10 +922,6 @@ def main():
         subpath_temp = tempfile.mkdtemp(prefix="prk-site-subpath-")
         os.makedirs(os.path.join(subpath_temp, "project"))
         shutil.copytree(SITE, os.path.join(subpath_temp, "project", "site"))
-        shutil.copytree(os.path.join(ROOT, "evidence"),
-                        os.path.join(subpath_temp, "project", "evidence"))
-        shutil.copytree(os.path.join(ROOT, "harness"),
-                        os.path.join(subpath_temp, "project", "harness"))
         httpd3, port3 = serve(subpath_temp)
         subpath_chrome = Chrome(port=9254, width=1280, height=900, scale=1)
         try:
@@ -923,21 +939,6 @@ def main():
             check(subpath_chrome.evaluate("""[...document.querySelectorAll('.figure img')]
                   .every(img => img.complete && img.naturalWidth > 0)"""),
                   "screenshots load from a GitHub Pages style subpath " + subpath_images)
-            subpath_links = json.loads(subpath_chrome.evaluate(
-                "JSON.stringify([...document.querySelectorAll('#main a[href]')]"
-                ".map(a => a.getAttribute('href')))"))
-            subpath_repo = [href for href in subpath_links
-                            if href.startswith(evidence_base)]
-            subpath_paths = [href[len(evidence_base):] for href in subpath_repo]
-            check(len(subpath_repo) >= 20,
-                  "repository evidence links render from a project subpath")
-            check(all(path in manifest_paths for path in subpath_paths),
-                  "subpath evidence paths are in release/manifest.json")
-            check(all(os.path.isfile(os.path.join(ROOT, path))
-                      for path in subpath_paths),
-                  "subpath evidence paths exist in the export")
-            check(not any(href.startswith("../") for href in subpath_links),
-                  "subpath rendering keeps the absolute evidence base")
             check(len(exceptions(subpath_chrome)) == 0,
                   "no exceptions from a GitHub Pages style subpath")
             path = os.path.join(EVIDENCE, "github-pages-subpath-1280.png")

@@ -1,0 +1,32 @@
+{
+  "id": "F4",
+  "title": "Build-cache safety assessment",
+  "subtitle": "Configuration determines whether quality signals survive",
+  "facts": {
+    "tool": "Apache Maven Build Cache Extension",
+    "version": "1.2.3",
+    "jdk": "Temurin 11",
+    "maven": "3.9.16",
+    "default_restored": 43,
+    "default_tests_executed": 0,
+    "default_exit_code": 0,
+    "uncached_tests": 626,
+    "uncached_failures": 27,
+    "uncached_errors": 194,
+    "uncached_exit_code": 1,
+    "reconciled_tests": 626,
+    "reconciled_exit_code": 1,
+    "strict_saved_entries": 11,
+    "selected_for_core": false
+  },
+  "display": {
+    "bce_restored": 43,
+    "bce_tests": 0,
+    "strict_tests": 626
+  },
+  "limitations": [
+    "The default result is configuration-dependent, not a security vulnerability.",
+    "The strict cache stored 11 of 43 entries for this application; this is not a universal cacheability limit.",
+    "BCE was evaluated and not selected for future core integration."
+  ]
+}

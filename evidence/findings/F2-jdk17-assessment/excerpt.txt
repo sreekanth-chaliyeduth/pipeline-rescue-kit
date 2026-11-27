@@ -1,0 +1,9 @@
+JDK 17, Maven 3.9.16, JaCoCo 0.8.2, -Dmaven.compiler.release=8
+Maven result: BUILD SUCCESS
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+Surefire forked JVM:
+FATAL ERROR in native method: processing of -javaagent failed, processJavaStart failed
+
+The run used -Dmaven.test.failure.ignore=true.
+The reported success therefore did not mean that tests passed.

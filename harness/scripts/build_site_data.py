@@ -32,6 +32,7 @@ FRESH = "evidence/fresh-clone/rerun/verify/verification.json"
 DEMO_VERIFY = "evidence/pr-flow/task-2.5/verify-local/verification.json"
 IMMUTABLE = "evidence/task-1.3a/immutable-tag.json"
 SELECTOR_REGRESSION = "evidence/v4/task-1.2/selector-regression/selector-regression.json"
+FINDINGS = "evidence/findings"
 
 REQUIRED = [CATALOG, IMAGES, LIBRARIES, M3, M3_TEST_INVENTORY, CONTROL, M4, M4_SCENARIOS, M5, M6,
             REVIEW_RUNS, V4_RUNS, PR, FRESH, DEMO_VERIFY, IMMUTABLE,
@@ -626,6 +627,33 @@ def reproducibility(catalog, fresh, demo_verify, libraries, immutable, m3, m6):
     }
 
 
+def findings():
+    entries = []
+    for name in sorted(os.listdir(os.path.join(ROOT, FINDINGS))):
+        path = os.path.join(FINDINGS, name, "summary.json")
+        if not os.path.isfile(os.path.join(ROOT, path)):
+            continue
+        item = load(path)
+        require(item, ("id", "title", "facts", "display"), path)
+        item["source"] = source(path)
+        entries.append(item)
+    if len(entries) != 5:
+        fail(f"expected five findings, found {len(entries)}")
+    by_id = {item["id"]: item for item in entries}
+    f1, f3 = by_id.get("F1"), by_id.get("F3")
+    if not f1 or not f3:
+        fail("F1 and F3 are required for the hero metrics")
+    hero = {
+        "reactor_entries": f1["display"]["reactor_entries"],
+        "test_identities": f1["facts"]["test_identities"],
+        "matched_identities": f1["facts"]["matched_identities"],
+        "gib_selected": f3["facts"]["leaf_selected"],
+        "gib_reactor_entries": f3["facts"]["reactor_entries"],
+    }
+    return {"hero": hero, "items": entries, "sources": sorted(
+        item["source"] for item in entries)}
+
+
 def main():
     catalog = load(CATALOG)
     image_catalog = load(IMAGES)
@@ -644,6 +672,7 @@ def main():
     demo_verify = load(DEMO_VERIFY)
     immutable = load(IMMUTABLE)
     load(SELECTOR_REGRESSION)
+    findings_data = findings()
 
     data = {
         "schema_version": 1,
@@ -663,6 +692,7 @@ def main():
         "reviews": reviews(catalog),
         "reproducibility": reproducibility(catalog, fresh, demo_verify,
                                            libraries, immutable, m3, m6),
+        "findings": findings_data,
     }
 
     # Every record that represents a measurement or finding must carry a source.
@@ -695,7 +725,8 @@ def main():
           f"{len(data['quality_gates']['petclinic']['m6'])} M6 gates, "
           f"{len(data['quality_gates']['petclinic']['pr'])} PR scenarios, "
           f"{len(data['reviews'])} reviews, "
-          f"{len(data['reproducibility']['library_releases'])} releases")
+          f"{len(data['reproducibility']['library_releases'])} releases, "
+          f"{len(data['findings']['items'])} findings")
     return 0
 
 

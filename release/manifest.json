@@ -3,7 +3,7 @@
   "repository": "pipeline-rescue-kit",
   "github_account": "sreekanth-chaliyeduth",
   "licence": "Apache-2.0",
-  "source_checkpoint": "accepted private main checkpoint",
+  "source_checkpoint": "private closure commit b9283578da04b92768c45986783977e7163c8a5c",
   "evidence_closure": "release/evidence-closure.txt",
   "redactions": 0,
   "files": [
@@ -41,13 +41,31 @@
       "path": "README.md",
       "action": "generated",
       "source": "generated",
-      "reason": "Public README corrected for F1 and F3 and author credit F5."
+      "reason": "v1.2.0 status, findings, verification utility and limitations."
+    },
+    {
+      "path": "docs/closure-review.md",
+      "action": "copied",
+      "source": "private-main:docs/closure-review.md",
+      "reason": "Public findings, closure review or publication allowlist."
     },
     {
       "path": "docs/decisions.md",
       "action": "generated",
       "source": "generated",
       "reason": "Public-safe technical decision summary with F1 D2 wording."
+    },
+    {
+      "path": "docs/findings.md",
+      "action": "copied",
+      "source": "private-main:docs/findings.md",
+      "reason": "Public findings, closure review or publication allowlist."
+    },
+    {
+      "path": "docs/publication-allowlist.md",
+      "action": "copied",
+      "source": "private-main:docs/publication-allowlist.md",
+      "reason": "Public findings, closure review or publication allowlist."
     },
     {
       "path": "evidence/M3/results.json",
@@ -96,6 +114,108 @@
       "action": "curated-evidence",
       "source": "private-main:evidence/M6/results.json",
       "reason": "Generator input: PetClinic gate reference runs."
+    },
+    {
+      "path": "evidence/findings/F1-java-migration/README.md",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/findings/F1-java-migration/README.md",
+      "reason": "Curated sanitized finding summary, excerpt, README or verification output."
+    },
+    {
+      "path": "evidence/findings/F1-java-migration/excerpt.txt",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/findings/F1-java-migration/excerpt.txt",
+      "reason": "Curated sanitized finding summary, excerpt, README or verification output."
+    },
+    {
+      "path": "evidence/findings/F1-java-migration/summary.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/findings/F1-java-migration/summary.json",
+      "reason": "Curated sanitized finding summary, excerpt, README or verification output."
+    },
+    {
+      "path": "evidence/findings/F1-java-migration/verification.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/findings/F1-java-migration/verification.json",
+      "reason": "Curated sanitized finding summary, excerpt, README or verification output."
+    },
+    {
+      "path": "evidence/findings/F1-java-migration/verification.txt",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/findings/F1-java-migration/verification.txt",
+      "reason": "Curated sanitized finding summary, excerpt, README or verification output."
+    },
+    {
+      "path": "evidence/findings/F2-jdk17-assessment/README.md",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/findings/F2-jdk17-assessment/README.md",
+      "reason": "Curated sanitized finding summary, excerpt, README or verification output."
+    },
+    {
+      "path": "evidence/findings/F2-jdk17-assessment/excerpt.txt",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/findings/F2-jdk17-assessment/excerpt.txt",
+      "reason": "Curated sanitized finding summary, excerpt, README or verification output."
+    },
+    {
+      "path": "evidence/findings/F2-jdk17-assessment/summary.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/findings/F2-jdk17-assessment/summary.json",
+      "reason": "Curated sanitized finding summary, excerpt, README or verification output."
+    },
+    {
+      "path": "evidence/findings/F3-build-selection/README.md",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/findings/F3-build-selection/README.md",
+      "reason": "Curated sanitized finding summary, excerpt, README or verification output."
+    },
+    {
+      "path": "evidence/findings/F3-build-selection/excerpt.txt",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/findings/F3-build-selection/excerpt.txt",
+      "reason": "Curated sanitized finding summary, excerpt, README or verification output."
+    },
+    {
+      "path": "evidence/findings/F3-build-selection/summary.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/findings/F3-build-selection/summary.json",
+      "reason": "Curated sanitized finding summary, excerpt, README or verification output."
+    },
+    {
+      "path": "evidence/findings/F4-build-cache/README.md",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/findings/F4-build-cache/README.md",
+      "reason": "Curated sanitized finding summary, excerpt, README or verification output."
+    },
+    {
+      "path": "evidence/findings/F4-build-cache/excerpt.txt",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/findings/F4-build-cache/excerpt.txt",
+      "reason": "Curated sanitized finding summary, excerpt, README or verification output."
+    },
+    {
+      "path": "evidence/findings/F4-build-cache/summary.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/findings/F4-build-cache/summary.json",
+      "reason": "Curated sanitized finding summary, excerpt, README or verification output."
+    },
+    {
+      "path": "evidence/findings/F5-build-profiling/README.md",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/findings/F5-build-profiling/README.md",
+      "reason": "Curated sanitized finding summary, excerpt, README or verification output."
+    },
+    {
+      "path": "evidence/findings/F5-build-profiling/excerpt.txt",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/findings/F5-build-profiling/excerpt.txt",
+      "reason": "Curated sanitized finding summary, excerpt, README or verification output."
+    },
+    {
+      "path": "evidence/findings/F5-build-profiling/summary.json",
+      "action": "curated-evidence",
+      "source": "private-main:evidence/findings/F5-build-profiling/summary.json",
+      "reason": "Curated sanitized finding summary, excerpt, README or verification output."
     },
     {
       "path": "evidence/fresh-clone/rerun/verify/verification.json",
@@ -254,6 +374,66 @@
       "reason": "Copied from the accepted private checkpoint."
     },
     {
+      "path": "harness/pipelines/v11-experimental/SANITIZED.md",
+      "action": "copied",
+      "source": "private-main:harness/pipelines/v11-experimental/SANITIZED.md",
+      "reason": "Sanitized experimental reproduction definition; not rerun."
+    },
+    {
+      "path": "harness/pipelines/v11-experimental/agent/Dockerfile",
+      "action": "copied",
+      "source": "private-main:harness/pipelines/v11-experimental/agent/Dockerfile",
+      "reason": "Sanitized experimental reproduction definition; not rerun."
+    },
+    {
+      "path": "harness/pipelines/v11-experimental/sanitized/bce-gate-strict.Jenkinsfile",
+      "action": "copied",
+      "source": "private-main:harness/pipelines/v11-experimental/sanitized/bce-gate-strict.Jenkinsfile",
+      "reason": "Sanitized experimental reproduction definition; not rerun."
+    },
+    {
+      "path": "harness/pipelines/v11-experimental/sanitized/bce-hazard2.Jenkinsfile",
+      "action": "copied",
+      "source": "private-main:harness/pipelines/v11-experimental/sanitized/bce-hazard2.Jenkinsfile",
+      "reason": "Sanitized experimental reproduction definition; not rerun."
+    },
+    {
+      "path": "harness/pipelines/v11-experimental/sanitized/bce-one-cached.Jenkinsfile",
+      "action": "copied",
+      "source": "private-main:harness/pipelines/v11-experimental/sanitized/bce-one-cached.Jenkinsfile",
+      "reason": "Sanitized experimental reproduction definition; not rerun."
+    },
+    {
+      "path": "harness/pipelines/v11-experimental/sanitized/bce-one-uncached.Jenkinsfile",
+      "action": "copied",
+      "source": "private-main:harness/pipelines/v11-experimental/sanitized/bce-one-uncached.Jenkinsfile",
+      "reason": "Sanitized experimental reproduction definition; not rerun."
+    },
+    {
+      "path": "harness/pipelines/v11-experimental/sanitized/fallback.Jenkinsfile",
+      "action": "copied",
+      "source": "private-main:harness/pipelines/v11-experimental/sanitized/fallback.Jenkinsfile",
+      "reason": "Sanitized experimental reproduction definition; not rerun."
+    },
+    {
+      "path": "harness/pipelines/v11-experimental/sanitized/gib-fixture-a.Jenkinsfile",
+      "action": "copied",
+      "source": "private-main:harness/pipelines/v11-experimental/sanitized/gib-fixture-a.Jenkinsfile",
+      "reason": "Sanitized experimental reproduction definition; not rerun."
+    },
+    {
+      "path": "harness/pipelines/v11-experimental/sanitized/profiler.Jenkinsfile",
+      "action": "copied",
+      "source": "private-main:harness/pipelines/v11-experimental/sanitized/profiler.Jenkinsfile",
+      "reason": "Sanitized experimental reproduction definition; not rerun."
+    },
+    {
+      "path": "harness/pipelines/v11-experimental/sanitized/smoke.Jenkinsfile",
+      "action": "copied",
+      "source": "private-main:harness/pipelines/v11-experimental/sanitized/smoke.Jenkinsfile",
+      "reason": "Sanitized experimental reproduction definition; not rerun."
+    },
+    {
       "path": "harness/scripts/bootstrap-secrets.sh",
       "action": "copied",
       "source": "private-main:harness/scripts/bootstrap-secrets.sh",
@@ -263,7 +443,7 @@
       "path": "harness/scripts/build_site_data.py",
       "action": "copied",
       "source": "private-main:harness/scripts/build_site_data.py",
-      "reason": "Copied from the accepted private checkpoint."
+      "reason": "Adds generated findings section from evidence/findings."
     },
     {
       "path": "harness/scripts/cdp.py",
@@ -365,13 +545,13 @@
       "path": "harness/scripts/site-data-test.py",
       "action": "copied",
       "source": "private-main:harness/scripts/site-data-test.py",
-      "reason": "Copied from the accepted private checkpoint."
+      "reason": "Adds findings validation and updated data checks."
     },
     {
       "path": "harness/scripts/site-ui-test.py",
       "action": "modified",
       "source": "private-main:harness/scripts/site-ui-test.py",
-      "reason": "F2 evidence-base checks and F5 author-link checks."
+      "reason": "Adds hero, chart, findings and responsive checks; public evidence-link checks retained."
     },
     {
       "path": "harness/scripts/up.sh",
@@ -431,7 +611,7 @@
       "path": "site/app.js",
       "action": "modified",
       "source": "private-main:site/app.js",
-      "reason": "F2 permanent GitHub evidence base."
+      "reason": "Findings data binding, chart segments and reactor-entry wording. Public evidence links retained."
     },
     {
       "path": "site/assets/coverage-modified-lines-1600.webp",
@@ -497,25 +677,37 @@
       "path": "site/data.json",
       "action": "regenerated-identical",
       "source": "private-main:site/data.json",
-      "reason": "Regenerated from the curated evidence; byte-identical to the accepted data.json."
+      "reason": "Regenerated from curated evidence and the five finding summaries."
     },
     {
       "path": "site/index.html",
       "action": "modified",
       "source": "private-main:site/index.html",
-      "reason": "F5 masthead and footer author credit."
+      "reason": "Private site closure rewrite, hero, case studies, evidence panels and chart fix."
     },
     {
       "path": "site/styles.css",
       "action": "modified",
       "source": "private-main:site/styles.css",
-      "reason": "F5 minimal byline styling."
+      "reason": "Private site closure layout, chart and responsive styles."
+    },
+    {
+      "path": "tools/prk-verify.py",
+      "action": "copied",
+      "source": "private-main:tools/prk-verify.py",
+      "reason": "Standalone verification utility or its synthetic tests."
     },
     {
       "path": "tools/select-modules.sh",
       "action": "copied",
       "source": "private-main:tools/select-modules.sh",
       "reason": "Copied from the accepted private checkpoint."
+    },
+    {
+      "path": "tools/test_prk_verify.py",
+      "action": "copied",
+      "source": "private-main:tools/test_prk_verify.py",
+      "reason": "Standalone verification utility or its synthetic tests."
     }
   ]
 }

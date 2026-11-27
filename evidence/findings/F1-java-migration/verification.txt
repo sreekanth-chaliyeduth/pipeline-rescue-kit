@@ -1,0 +1,5 @@
+baseline cases: 626  candidate cases: 626
+baseline health: 405 passed, 27 failed, 194 errored, 0 skipped
+candidate health: 405 passed, 27 failed, 194 errored, 0 skipped
+parity: yes
+verdict: PASS (exact identity and outcome parity)

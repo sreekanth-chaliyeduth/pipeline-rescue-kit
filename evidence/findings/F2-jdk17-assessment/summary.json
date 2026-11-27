@@ -1,0 +1,23 @@
+{
+  "id": "F2",
+  "title": "JDK 17 compatibility assessment",
+  "subtitle": "A legacy JaCoCo and failure-policy interaction",
+  "facts": {
+    "jdk": "Temurin 17.0.21.1",
+    "maven": "3.9.16",
+    "jacoco": "0.8.2",
+    "modules_built": 43,
+    "tests_executed": 0,
+    "test_failures_ignored": true,
+    "maven_exit_code": 0,
+    "build_result": "SUCCESS",
+    "observed_error": "FATAL ERROR in native method: processing of -javaagent failed, processJavaStart failed"
+  },
+  "display": {
+    "jdk17_tests_executed": 0
+  },
+  "limitations": [
+    "The zero-test result is specific to the tested legacy JaCoCo and failure-ignore configuration.",
+    "It is not evidence of a general Java 17 defect."
+  ]
+}

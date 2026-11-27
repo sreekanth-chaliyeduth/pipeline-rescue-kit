@@ -1,0 +1,12 @@
+GIB 4.8.1, JDK 11, Maven 3.9.16, isolated base-commit repository
+Changed artifactIds (1):
+- ts-order-service
+
+gib-impacted.txt:
+ts-order-service
+
+Reactor: 1 entry
+Tests: 51, failures: 3, errors: 22
+
+Shared-module fixture: 43 of 43 reactor entries selected
+Root POM fixture: 43 of 43 reactor entries selected

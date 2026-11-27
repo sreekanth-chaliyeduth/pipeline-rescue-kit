@@ -39,3 +39,20 @@ privacy_findings_in_closure	8 local_path_username findings, all container_home, 
 
 Incidental references: evidence strings inside closure JSON that point to private work trees, raw directories or raw logs were inspected and classed as historical provenance, not generator or test inputs. They are not published as dependencies.
 No closure file contains a personal home path, private address, personal email, employer reference or credential value.
+evidence/findings/F1-java-migration/README.md	1522	A,B	INCLUDE	Curated sanitized finding evidence for the v1.2.0 verification and website.
+evidence/findings/F1-java-migration/excerpt.txt	427	A,B	INCLUDE	Curated sanitized finding evidence for the v1.2.0 verification and website.
+evidence/findings/F1-java-migration/summary.json	882	A,B	INCLUDE	Curated sanitized finding evidence for the v1.2.0 verification and website.
+evidence/findings/F1-java-migration/verification.json	412	A,B	INCLUDE	Curated sanitized finding evidence for the v1.2.0 verification and website.
+evidence/findings/F1-java-migration/verification.txt	231	A,B	INCLUDE	Curated sanitized finding evidence for the v1.2.0 verification and website.
+evidence/findings/F2-jdk17-assessment/README.md	1412	A,B	INCLUDE	Curated sanitized finding evidence for the v1.2.0 verification and website.
+evidence/findings/F2-jdk17-assessment/excerpt.txt	360	A,B	INCLUDE	Curated sanitized finding evidence for the v1.2.0 verification and website.
+evidence/findings/F2-jdk17-assessment/summary.json	706	A,B	INCLUDE	Curated sanitized finding evidence for the v1.2.0 verification and website.
+evidence/findings/F3-build-selection/README.md	2304	A,B	INCLUDE	Curated sanitized finding evidence for the v1.2.0 verification and website.
+evidence/findings/F3-build-selection/excerpt.txt	308	A,B	INCLUDE	Curated sanitized finding evidence for the v1.2.0 verification and website.
+evidence/findings/F3-build-selection/summary.json	921	A,B	INCLUDE	Curated sanitized finding evidence for the v1.2.0 verification and website.
+evidence/findings/F4-build-cache/README.md	3327	A,B	INCLUDE	Curated sanitized finding evidence for the v1.2.0 verification and website.
+evidence/findings/F4-build-cache/excerpt.txt	310	A,B	INCLUDE	Curated sanitized finding evidence for the v1.2.0 verification and website.
+evidence/findings/F4-build-cache/summary.json	980	A,B	INCLUDE	Curated sanitized finding evidence for the v1.2.0 verification and website.
+evidence/findings/F5-build-profiling/README.md	1635	A,B	INCLUDE	Curated sanitized finding evidence for the v1.2.0 verification and website.
+evidence/findings/F5-build-profiling/excerpt.txt	329	A,B	INCLUDE	Curated sanitized finding evidence for the v1.2.0 verification and website.
+evidence/findings/F5-build-profiling/summary.json	791	A,B	INCLUDE	Curated sanitized finding evidence for the v1.2.0 verification and website.

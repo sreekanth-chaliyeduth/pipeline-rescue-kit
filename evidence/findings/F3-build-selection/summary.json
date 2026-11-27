@@ -1,0 +1,30 @@
+{
+  "id": "F3",
+  "title": "Established build-selection alternative",
+  "subtitle": "GIB 4.8.1 on the Train-Ticket reactor",
+  "facts": {
+    "tool": "Gitflow Incremental Builder",
+    "version": "4.8.1",
+    "jdk": "Temurin 11",
+    "maven": "3.9.16",
+    "reactor_entries": 43,
+    "leaf_selected": 1,
+    "leaf_tests": 51,
+    "leaf_failures": 3,
+    "leaf_errors": 22,
+    "shared_selected": 43,
+    "root_selected": 43,
+    "isolated_repository_base": "46ca4217ea77af6fc3ddb5f2449a4285226baed8",
+    "integrated_in_product": false,
+    "leaf_matched_identities": 51
+  },
+  "display": {
+    "gib_selected": 1,
+    "reactor_entries": 43
+  },
+  "limitations": [
+    "GIB was evaluated as an alternative and was not integrated into the v1.0 selector.",
+    "Shared-module and root POM changes selected the full reactor in the tested configuration.",
+    "Selection scope is not a measured build-time improvement."
+  ]
+}

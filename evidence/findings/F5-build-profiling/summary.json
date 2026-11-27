@@ -1,0 +1,26 @@
+{
+  "id": "F5",
+  "title": "Build profiling assessment",
+  "subtitle": "Maven Profiler 3.3 with a shaded artifact",
+  "facts": {
+    "tool": "Maven Profiler",
+    "version": "3.3",
+    "classifier": "shaded",
+    "sha256": "d235bc3f1d75d3eefde5627f33e7255c3d2f4476bad7f3c60fed6056a54f6f87",
+    "jdk": "Temurin 11",
+    "maven": "3.9.16",
+    "projects": 43,
+    "recorded_time_ms": 650762,
+    "valid_json": true,
+    "thin_extension_report": false,
+    "classloader_conflict": true
+  },
+  "display": {
+    "profiled_projects": 43
+  },
+  "limitations": [
+    "Profiling success does not imply test success.",
+    "The thin core extension did not produce a report because of a classloader conflict; the shaded artifact was used.",
+    "No universal performance bottleneck is claimed."
+  ]
+}

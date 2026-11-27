@@ -13,6 +13,30 @@ database or dashboard.
 
 Author: [Sreekanth C](https://www.linkedin.com/in/sreekanth-chaliyeduth/)
 
+Status: v1.2.0 completes the engineering case study and adds a standalone test
+verification utility. The v1.0 merge gate and selector remain the implemented
+product.
+
+### Engineering findings and test verification (v1.2.0)
+
+- **Verification utility**: `tools/prk-verify.py` compares two Surefire report
+  trees by module, test class and test case. Exit codes are 0 for PASS under the
+  regression policy, 1 for FAIL and 2 for INVALID. Exact identity and outcome
+  parity is reported separately. `tools/test_prk_verify.py` has 13 synthetic
+  tests.
+- **Curated findings**: `docs/findings.md` indexes F1 to F5: JDK 8 versus JDK 11
+  parity, the JDK 17 toolchain assessment, GIB 4.8.1 selection, BCE 1.2.3 cache
+  safety and Maven Profiler 3.3.
+- **Scope**: GIB was evaluated as an established alternative and was not
+  integrated into the selector. BCE was evaluated and not selected for future
+  core integration. No performance improvement is claimed.
+- **Evidence**: the historical JDK comparison used the original private Surefire
+  reports. This repository contains the curated findings and verification
+  output, not the complete report trees. The comparison is not independently
+  reproducible from the public repository alone.
+- **Review record**: `docs/closure-review.md` maps claims to evidence and records
+  limitations. `docs/publication-allowlist.md` lists the intended public files.
+
 ### What I built
 
 - **prGate**: a Jenkins Shared Library step, written in Groovy, that turns test, coverage and code-quality reports into a clear pass or block decision for each pull request. `jenkins-lib/vars/prGate.groovy`
@@ -198,6 +222,8 @@ working results and are not part of the curated public evidence.
 ### Validation commands
 
 ```sh
+python3 tools/test_prk_verify.py
+python3 tools/prk-verify.py <baseline-reports> <candidate-reports>
 python3 harness/scripts/site-data-test.py
 python3 harness/scripts/site-ui-test.py
 python3 harness/scripts/evidence-integrity-test.py
@@ -230,6 +256,9 @@ PetClinic package namespace.
 ## More detail
 
 - `docs/decisions.md`: public technical decision record.
+- `docs/findings.md`: curated engineering findings and evidence index.
+- `docs/closure-review.md`: claim-to-evidence mapping and limitations.
+- `tools/prk-verify.py`: standalone test-report comparison utility.
 - `site/`: the evidence-driven case study.
 - `release/evidence-closure.txt`: the curated evidence list.
 - `release/EXCLUDED.md`: what remains private and why.

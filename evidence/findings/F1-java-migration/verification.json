@@ -1,0 +1,26 @@
+{
+  "verdict": "PASS",
+  "parity": true,
+  "baseline": 626,
+  "candidate": 626,
+  "missing": [],
+  "added": [],
+  "failed": [],
+  "improvements": [],
+  "additions": [],
+  "transitions": [],
+  "health": {
+    "baseline": {
+      "PASS": 405,
+      "FAIL": 27,
+      "ERROR": 194,
+      "SKIPPED": 0
+    },
+    "candidate": {
+      "PASS": 405,
+      "FAIL": 27,
+      "ERROR": 194,
+      "SKIPPED": 0
+    }
+  }
+}
